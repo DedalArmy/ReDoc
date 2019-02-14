@@ -69,7 +69,7 @@ public class Relation {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		
-		str.append("\n" + endA.getSimpleName() + " --> " + endB.getSimpleName() + " : " + this.name);
+		str.append("\n" + endA.getFullName() + " --> " + endB.getFullName() + " : " + this.name);
 		
 		return str.toString();
 	}	

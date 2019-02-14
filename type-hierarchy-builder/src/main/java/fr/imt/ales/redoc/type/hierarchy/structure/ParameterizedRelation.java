@@ -42,7 +42,7 @@ public class ParameterizedRelation extends Relation {
 					else sb.append(", " + pt.asString());
 				});
 			str.append("\n class " + parameterType.getNameAsString()+"<? " + sb + "> {\n}");
-			str.append("\n" + endA.getSimpleName() + " --> " + parameterType.getNameAsString() + " : " + this.name);
+			str.append("\n" + endA.getFullName() + " --> " + parameterType.getNameAsString() + " : " + this.name);
 		}
 		else if(this.endB != null)
 		{

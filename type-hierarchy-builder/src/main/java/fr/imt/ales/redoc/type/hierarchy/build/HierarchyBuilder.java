@@ -6,6 +6,7 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import com.github.javaparser.ast.type.Type;
 
 import fr.imt.ales.redoc.jarloader.JarLoader;
 import fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer;
+import fr.imt.ales.redoc.type.hierarchy.structure.CompiledJavaType;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaNestedType;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaPackage;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
@@ -48,6 +50,8 @@ public class HierarchyBuilder {
 	 * ATTRIBUTES
 	 */
 	static final String JAVA_EXTENSION = ".java";
+
+	private static final String JAVA_LANG = "java.lang";
 	private List<File> javaFiles;
 	private List<CompilationUnit> compilationUnits;
 	private List<JavaPackage> packages;
@@ -165,31 +169,19 @@ public class HierarchyBuilder {
 				try {
 					this.compilationUnits.add(JavaParser.parse(f));
 				} catch (FileNotFoundException e) {
-					if(logger.isErrorEnabled())
-					{
-						logger.error("A problem occured while parsing a Java file : " + f.getAbsolutePath(),e);
-					}
+					logger.error("A problem occured while parsing a Java file : " + f.getAbsolutePath(),e);
 				}
-				if(logger.isDebugEnabled())
-				{
-					logger.debug(f.getAbsolutePath() + " has been successfuly parsed.");
-				}
+				logger.debug(f.getAbsolutePath() + " has been successfuly parsed.");
 			});
 			if(!this.compilationUnits.isEmpty())
 			{
 				this.exploreHierarchy();
+				this.packages.forEach(logger::trace);
 				this.exploreRelations();
 			}
-			else if(logger.isWarnEnabled())
-			{
-				logger.warn("The list of Java compilation units is empty and then the hierarchy construction cannot go further.");
-			}
+			else logger.warn("The list of Java compilation units is empty and then the hierarchy construction cannot go further.");
 		}
-		else if(logger.isWarnEnabled())
-		{
-			logger.warn("The list of Java files is empty.");
-		}
-
+		else logger.warn("The list of Java files is empty.");
 	}
 
 	/**
@@ -197,8 +189,10 @@ public class HierarchyBuilder {
 	 */
 	private void exploreHierarchy() {
 		this.loadNecessaryData();
-		for(JavaPackage pack : getPackages())
+		int length = getPackages().size();
+		for(int i = 0; i < length; i++)
 		{
+			JavaPackage pack = getPackages().get(i);
 			for(JavaType type : pack.getJavaTypes())
 			{
 				type.setjImports(this.getImportedJavaTypes(type));
@@ -264,18 +258,12 @@ public class HierarchyBuilder {
 						{
 							JavaNestedType javaNestedType = new JavaNestedType(m.asTypeDeclaration().getNameAsString(), jPackage, m.asTypeDeclaration(), cu, javaType);
 							javaType.addNestedType(javaNestedType);
-							jPackage.addJavaType(javaNestedType);
 						}
 					}
 				} else {
-					javaType = new JavaType(typeName, jPackage, type, cu);
+					new JavaType(typeName, jPackage, type, cu);
 				}
-				jPackage.addJavaType(javaType);
 			}
-		}
-		if(logger.isTraceEnabled())
-		{
-			logger.trace("packages \n" + this.getPackages());
 		}
 	}
 
@@ -291,7 +279,7 @@ public class HierarchyBuilder {
 				return pack;
 		}
 		JavaPackage pack = new JavaPackage(packageName);
-		this.getPackages().add(pack);
+		this.packages.add(pack);
 		return pack;
 	}
 
@@ -347,16 +335,30 @@ public class HierarchyBuilder {
 	 * This method explores and extracts relations between types
 	 */
 	private void exploreRelations() {
-		for(JavaPackage pack : getPackages())
+		int length = getPackages().size();
+		for(int i = 0; i < length; i++)
 		{
+			JavaPackage pack = getPackages().get(i);
 			for(JavaType type : pack.getJavaTypes())
 			{
-				for( FieldDeclaration fd : type.getTypeDeclaration().getFields())
-				{
-					exploreRelations(pack, type, fd);
+				if(type instanceof CompiledJavaType) {
+					CompiledJavaType cjt = ((CompiledJavaType)type);
+					for(Field fd : cjt.getClazz().getFields()) {
+						exploreRelations(pack, type, fd);
+					}
+				} else if(type instanceof JavaType) {
+					for(FieldDeclaration fd : type.getTypeDeclaration().getFields())
+					{
+						exploreRelations(pack, type, fd);
+					}
 				}
 			}
 		}
+	}
+
+	private void exploreRelations(JavaPackage pack, JavaType type, Field fd) {
+		// TODO Auto-generated method stub
+		logger.debug("External reference." + fd.getType().getCanonicalName());
 	}
 
 	/**
@@ -383,17 +385,11 @@ public class HierarchyBuilder {
 							pack.addRelation(new Relation(type, tempJType, fd.getVariable(0).getNameAsString()));
 						}
 					});
-				} 
-				else { //The type may be a nested type, or it may have been imported from external source.
-					if(logger.isDebugEnabled())
-					{
-						logger.debug("External dependencies should be investigated, \"" + fd + "\" could not be determined.");
-					}
 				}
 			}					
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param nodeList
@@ -411,7 +407,7 @@ public class HierarchyBuilder {
 					result.addAll(this.computeParameterTypes(typeArguments.get()));
 				} else result.add(type);
 			}
-			
+
 		}
 		return result;
 	}
@@ -451,61 +447,112 @@ public class HierarchyBuilder {
 	}
 
 	private JavaType findExternalClassOrInterface(JavaType type, ClassOrInterfaceType coi) {
-		
+
 		logger.debug("External ---------------------------------------> "+coi.asString());
-		
+
 		JavaType result = null;
+
 		/*
-		 * MEME PACKAGE OK PACKAGE.CLASSE
-		 * PACKAGE DIFFERENT OK PACKAGE.CLASSE
-		 * PACKAGE SANS NOM... PAS OK, A VOIR AVEC DES ESSAIS (JAR SANS PACKAGE + IMPORT --> VOIR AVEC LE CLASSPATH?) SINON ON CONSIDERE QUE PERSONNE FAIT CA!
+		 * FIND IN DEFAULT PACKAGES
 		 */
-//		List<String> truc = this.jarLoader.getPackageNameToClassNames().get("net.sourceforge.plantuml");
-		System.out.println();
-		
+		result = findTypeInDefaultPackages(type, coi);
+		if(result != null)
+			return result;	
+
 		/*
 		 * FIND IN IMPORTS
 		 */
-		try {
-			result = findTypeInImports(type, coi);
-			if(result != null)
-				return result;
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-		/*
-		 * FIND IN DEFAULT PACKAGE
-		 */
-		result = findTypeInDefaultPackages(type, coi);
+		result = findTypeInImports(type, coi);
 		return (result != null)? result : null;
 	}
 
-	private JavaType findTypeInImports(JavaType type, ClassOrInterfaceType coi) throws ClassNotFoundException {
+	/**
+	 * 
+	 * @param type
+	 * @param coi
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
+	private JavaType findTypeInDefaultPackages(JavaType type, ClassOrInterfaceType coi) {
 		int index = this.jarLoader.getClassNames().indexOf(coi.asString());
-		JavaType result;
-		if(index>=0) {
-			
-			Class<?> clazz = this.jarLoader.loadClass(this.jarLoader.getClassNames().get(index));
-			if(clazz != null) {
-//				result = new JavaType(clazz.getSimpleName(), jPackage, typeDeclaration, compilationUnit);
+		if(index>=0) { // The class name is explicit (a.b.c.ClassName)
+			return getJavaType(index);
+		} else {
+			index = this.jarLoader.getClassNames().indexOf(type.getjPackage().getName()+"."+coi.asString());
+			if(index>=0) { // The class is located into the same package
+				return getJavaType(index);
+			}
+			else {
+				String cName = JAVA_LANG+"."+coi.asString();
+				try { // The class is located into java.lang package
+					Class<?> clazz = Class.forName(cName);
+					String simpleName = clazz.getSimpleName();
+					String packageName = clazz.getPackageName();
+					return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+				}catch(ClassNotFoundException e) {
+					// The class is not located into java.lang
+					return null;
+				}
 			}
 		}
-		NodeList<ImportDeclaration> imports = type.getCompilationUnit().getImports();
-		for(ImportDeclaration imp : imports) {
-			if(imp.isAsterisk()) {
-				
-			} else {
-				
-			}
-		}
-		return null;
 	}
 
-	private JavaType findTypeInDefaultPackages(JavaType type, ClassOrInterfaceType coi) {
-		// TODO Auto-generated method stub
+	/**
+	 * @param result
+	 * @param index
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
+	private JavaType getJavaType(int index) {
+		Class<?> clazz;
+		try {
+			clazz = this.jarLoader.loadClass(this.jarLoader.getClassNames().get(index));
+			return new CompiledJavaType(clazz.getSimpleName(), this.getPackage(clazz.getPackageName()), null, null, clazz);
+		} catch (ClassNotFoundException e) {
+			if(logger.isErrorEnabled())
+				logger.error("An error occured while loading a class in HierarchyBuilder.",e);
+			return null;
+		}
+	}
+
+
+
+	private JavaType findTypeInImports(JavaType type, ClassOrInterfaceType coi) {
+		NodeList<ImportDeclaration> imports = type.getCompilationUnit().getImports();
+		for(ImportDeclaration imp : imports) {
+			if(imp.isAsterisk()) { // It could be the package that contains the class we want
+				List<String> classNames = this.jarLoader.getPackageNameToClassNames().get(imp.getNameAsString());
+				if(classNames!=null) {
+					for(String cn : classNames) {
+						if(cn.endsWith(coi.asString())) { // This is the class that must be loaded
+							try { // This is the class that must be loaded
+								Class<?> clazz = this.jarLoader.loadClass(cn);
+								String simpleName = clazz.getSimpleName();
+								String packageName = clazz.getPackageName();
+								return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+							}catch(ClassNotFoundException e) {
+								// This is an actual error
+								if(logger.isErrorEnabled())
+									logger.error("An error occured while loading class into HierarchyBuilder", e);
+								return null;
+							}
+						}
+					}
+				}
+			} else if(imp.getNameAsString().endsWith(coi.asString())){
+				try { // This is the class that must be loaded
+					Class<?> clazz = this.jarLoader.loadClass(imp.getNameAsString());
+					String simpleName = clazz.getSimpleName();
+					String packageName = clazz.getPackageName();
+					return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+				}catch(ClassNotFoundException e) {
+					// This is an actual error
+					if(logger.isErrorEnabled())
+						logger.error("An error occured while loading class into HierarchyBuilder", e);
+					return null;
+				}
+			}
+		}
 		return null;
 	}
 }

@@ -44,7 +44,7 @@ public class Main {
 			in = ((PATH.equals(args[0]))||(PATH2.equals(args[0])))? args[1] : ""; // if -p or --path is the first argument
 			in = (in.equals("") && ((PATH.equals(args[2]))||(PATH2.equals(args[2]))))? args[3] : in; // if -p or --path is the third argument
 			out = ((OUT.equals(args[0]))||(OUT2.equals(args[0])))? args[1] : ""; // if -o or --out is the first argument
-			out = (out.equals("") && ((PATH.equals(args[2]))||(PATH2.equals(args[2]))))? args[3] : out; // if -o or --out is the third argument
+			out = (out.equals("") && ((OUT.equals(args[2]))||(OUT2.equals(args[2]))))? args[3] : out; // if -o or --out is the third argument
 			break;
 		default:
 			break;
@@ -62,10 +62,11 @@ public class Main {
 			HierarchyBuilder hierarchyBuilder;
 			
 			try {
-				hierarchyBuilder = new HierarchyBuilder(in, M2_DIRECTORY);
-//				hierarchyBuilder = new HierarchyBuilder(in);
+//				hierarchyBuilder = new HierarchyBuilder(in, M2_DIRECTORY);
+				hierarchyBuilder = new HierarchyBuilder(in);
 				hierarchyBuilder.build();
 				PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
+				PlantUMLWritter.generateSVG(out);
 			} catch (IOException e) {
 				if(logger.isErrorEnabled())
 					logger.error("An error occured during hierarchy reconstruction.", e);

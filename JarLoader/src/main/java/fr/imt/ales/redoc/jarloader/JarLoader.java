@@ -19,8 +19,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -29,7 +29,7 @@ import java.util.jar.JarInputStream;
  */
 public class JarLoader extends URLClassLoader {
 
-//	static final Logger logger = LogManager.getLogger(JarLoader.class);
+	static final Logger logger = LogManager.getLogger(JarLoader.class);
 
 	private static final String JAR = ".jar";
 	private static final String WAR = ".war";
@@ -76,9 +76,9 @@ public class JarLoader extends URLClassLoader {
 			try {
 				jarUrls.add(je.toURL());
 			} catch (MalformedURLException e) {
-//				if(logger.isErrorEnabled()) {
-//					logger.error("A problem occured during URL extraction", e);
-//				}
+				if(logger.isErrorEnabled()) {
+					logger.error("A problem occured during URL extraction", e);
+				}
 			}
 		});
 		this.jars = jarUrls.toArray(new URL[0]);
@@ -116,8 +116,8 @@ public class JarLoader extends URLClassLoader {
 		try (InputStream in = new FileInputStream(url.getFile()); JarInputStream jar = new JarInputStream(in);)
 		{
 			entry = jar.getNextJarEntry();
-//			if(logger.isInfoEnabled())
-//				logger.info(url.toString());
+			if(logger.isInfoEnabled())
+				logger.info(url.toString());
 			while(entry != null)
 			{
 				/*
@@ -131,7 +131,7 @@ public class JarLoader extends URLClassLoader {
 				entry = jar.getNextJarEntry();
 			}
 		} catch (IOException e) {
-//			logger.error("Error when getting files from jar", e);
+			logger.error("Error when getting files from jar", e);
 		}
 	}
 
@@ -152,9 +152,9 @@ public class JarLoader extends URLClassLoader {
 				this.packageNameToClassNames.get(packageName).add(cannonicalClassNane);
 				this.classNames.add(cannonicalClassNane);
 			} catch(Exception e) {
-//				if(logger.isErrorEnabled()) {
-//					logger.error("A problem occured while setting class names in JarLoader", e);
-//				}
+				if(logger.isErrorEnabled()) {
+					logger.error("A problem occured while setting class names in JarLoader", e);
+				}
 			}
 		}
 	}
@@ -180,8 +180,8 @@ public class JarLoader extends URLClassLoader {
 			try (InputStream in = new FileInputStream(url.getFile()); JarInputStream jar = new JarInputStream(in);)
 			{
 				entry = jar.getNextJarEntry();
-//				if(logger.isInfoEnabled())
-//					logger.info(url.toString());
+				if(logger.isInfoEnabled())
+					logger.info(url.toString());
 				while(entry != null)
 				{
 					/*
@@ -194,7 +194,7 @@ public class JarLoader extends URLClassLoader {
 					entry = jar.getNextJarEntry();
 				}
 			} catch (IOException e) {
-//				logger.error("Error when getting files from jar", e);
+				logger.error("Error when getting files from jar", e);
 			}
 		}
 		return result ;

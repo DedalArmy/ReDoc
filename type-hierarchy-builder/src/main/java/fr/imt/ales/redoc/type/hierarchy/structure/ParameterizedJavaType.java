@@ -11,7 +11,6 @@ public class ParameterizedJavaType extends JavaType {
 	public ParameterizedJavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration,
 			CompilationUnit compilationUnit) {
 		super(simpleName, jPackage, typeDeclaration, compilationUnit);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -20,11 +19,15 @@ public class ParameterizedJavaType extends JavaType {
 		StringBuilder sb = new StringBuilder();
 		for(TypeParameter type : typeArgs)
 		{
-			
+				if(typeArgs.indexOf(type) == 0)
+				{
+					sb.append(type.asString());
+				}
+				else sb.append(", " + type.asString());
 		}
 		if(tempCOID.isInterface())
 		{
-			str.append("interface " + tempCOID.getNameAsString() + "<? {");
+			str.append("interface " + tempCOID.getNameAsString() + "<?" + sb + " > {");
 		} else {
 			if(tempCOID.isAbstract())
 				str.append("abstract ");

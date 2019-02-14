@@ -16,12 +16,11 @@ public class JavaType {
 	private JavaPackage jPackage;
 	private TypeDeclaration<?> typeDeclaration;
 	private CompilationUnit compilationUnit;
-	private Class<?> clazz;
 	private List<JavaType> jImports;
 	private List<JavaType> jExtends;
 	private List<JavaType> jImplements;
 	private List<JavaNestedType> nestedTypes;
-	
+
 	/**
 	 * @param simpleName
 	 * @param fullName
@@ -35,35 +34,13 @@ public class JavaType {
 		super();
 		this.simpleName = simpleName;
 		this.jPackage = jPackage;
+		this.jPackage.addJavaType(this);
 		this.typeDeclaration = typeDeclaration;
 		this.compilationUnit = compilationUnit;
 		this.jImports = new ArrayList<>();
 		this.jExtends = new ArrayList<>();
 		this.jImplements = new ArrayList<>();
 		this.nestedTypes = new ArrayList<>();
-		this.clazz=null;
-	}
-	
-
-	/**
-	 * @param simpleName
-	 * @param jPackage
-	 * @param typeDeclaration
-	 * @param compilationUnit
-	 * @param clazz
-	 */
-	public JavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration,
-			CompilationUnit compilationUnit, Class<?> clazz) {
-		super();
-		this.simpleName = simpleName;
-		this.jPackage = jPackage;
-		this.typeDeclaration = typeDeclaration;
-		this.compilationUnit = compilationUnit;
-		this.jImports = new ArrayList<>();
-		this.jExtends = new ArrayList<>();
-		this.jImplements = new ArrayList<>();
-		this.nestedTypes = new ArrayList<>();
-		this.clazz=clazz;
 	}
 
 
@@ -85,7 +62,7 @@ public class JavaType {
 	 * @return the fullName
 	 */
 	public String getFullName() {
-		return jPackage.getName()+'.'+this.simpleName;
+		return "".equals(this.jPackage.getName())?this.simpleName : jPackage.getName()+'.'+this.simpleName;
 	}
 
 	/**
@@ -171,7 +148,7 @@ public class JavaType {
 	public void setNestedTypes(List<JavaNestedType> nestedTypes) {
 		this.nestedTypes = nestedTypes;
 	}
-	
+
 	/**
 	 * @return the jImplements
 	 */
@@ -185,26 +162,10 @@ public class JavaType {
 	public void setjImplements(List<JavaType> jImplements) {
 		this.jImplements = jImplements;
 	}
-	
+
 	/*
 	 * METHODS
 	 */
-
-	/**
-	 * @return the clazz
-	 */
-	public Class<?> getClazz() {
-		return clazz;
-	}
-
-
-	/**
-	 * @param clazz the clazz to set
-	 */
-	public void setClazz(Class<?> clazz) {
-		this.clazz = clazz;
-	}
-
 
 	/**
 	 * 
@@ -213,7 +174,7 @@ public class JavaType {
 	public void addImport(JavaType jImport) {
 		this.jImports.add(jImport);
 	}	
-	
+
 	/**
 	 * 
 	 * @param jExt
@@ -221,7 +182,7 @@ public class JavaType {
 	public void addExtends(JavaType jExt) {
 		this.jExtends.add(jExt);
 	}
-	
+
 	/**
 	 * 
 	 * @param nested
@@ -229,11 +190,10 @@ public class JavaType {
 	public void addNestedType(JavaNestedType nested) {
 		this.nestedTypes.add(nested);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		
 		if(this.typeDeclaration.isClassOrInterfaceDeclaration())
 		{
 			str.append(this.writeClassOrInterface());
@@ -241,17 +201,15 @@ public class JavaType {
 		{
 			str.append(this.writeEnum());
 		}
-		
 		return str.toString();
 	}
-
 
 	String writeClassOrInterface() {
 		StringBuilder str = new StringBuilder();
 		str.append("\n\t");
 		ClassOrInterfaceDeclaration tempCOID = this.typeDeclaration.asClassOrInterfaceDeclaration();
 		writeCOID(str, tempCOID);
-		
+
 		for(FieldDeclaration field : tempCOID.getFields())
 		{
 			str.append(this.writeField(field));
@@ -271,50 +229,50 @@ public class JavaType {
 	void writeCOID(StringBuilder str, ClassOrInterfaceDeclaration tempCOID) {
 		if(tempCOID.isInterface())
 		{
-			str.append("interface " + tempCOID.getNameAsString() + " {");
+			str.append("interface " + this.getFullName() + " {");
 		} else {
 			if(tempCOID.isAbstract())
 				str.append("abstract ");
-			str.append("class " + tempCOID.getNameAsString() + " {");
+			str.append("class " + this.getFullName() + " {");
 		}
 	}
 
 	String writeEnum() {
 		StringBuilder str = new StringBuilder();
 		EnumDeclaration tempEnum = this.typeDeclaration.asEnumDeclaration();
-		str.append("\n\tenum " + tempEnum.getNameAsString() + " {");
+		str.append("\n\tenum " + this.getFullName() + " {");
 		for(EnumConstantDeclaration lit : tempEnum.getEntries())
 		{
-			str.append("\n"+lit.toString());
+			str.append("\n\t\t"+lit.toString());
 		}
 		str.append("\n\t}");
 		return str.toString();
 	}
-	
+
 	String writeField(FieldDeclaration field) {
 		StringBuilder str = new StringBuilder();
 
 		if(field.isPublic())
-			str.append("\n\t\t+" + field.getElementType().asString() + " " + field.getVariable(0));
+			str.append("\n\t\t+" + field.getElementType().asString() + " " + field.getVariable(0).getNameAsString());
 		else if(field.isPrivate())
-			str.append("\n\t\t-" + field.getElementType().asString() + " " + field.getVariable(0));
+			str.append("\n\t\t-" + field.getElementType().asString() + " " + field.getVariable(0).getNameAsString());
 		else if(field.isProtected())
-			str.append("\n\t\t#" + field.getElementType().asString() + " " + field.getVariable(0));
-		else str.append("\n\t\t~" + field.getElementType().asString() + " " + field.getVariable(0));
-		
+			str.append("\n\t\t#" + field.getElementType().asString() + " " + field.getVariable(0).getNameAsString());
+		else str.append("\n\t\t~" + field.getElementType().asString() + " " + field.getVariable(0).getNameAsString());
+
 		return str.toString();
 	}
 
 	Object writeMethod(MethodDeclaration method) {
 		StringBuilder str = new StringBuilder();
 		if(method.isPublic())
-			str.append("\n\t\t+" + method.getSignature().asString());
-		if(method.isPrivate())
-			str.append("\n\t\t-" + method.getSignature().asString());
-		if(method.isProtected())
-			str.append("\n\t\t#" + method.getSignature().asString());
-		else str.append("\n\t\t~" + method.getSignature().asString());
-		
+			str.append("\n\t\t+" + method.getTypeAsString() + " " + method.getSignature().asString());
+		else if(method.isPrivate())
+			str.append("\n\t\t-" + method.getTypeAsString() + " " + method.getSignature().asString());
+		else if(method.isProtected())
+			str.append("\n\t\t#" + method.getTypeAsString() + " " + method.getSignature().asString());
+		else str.append("\n\t\t~" + method.getTypeAsString() + " " + method.getSignature().asString());
+
 		return str.toString();
 	}
 }

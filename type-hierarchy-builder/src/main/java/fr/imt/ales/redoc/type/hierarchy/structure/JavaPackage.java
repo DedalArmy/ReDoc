@@ -7,7 +7,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class JavaPackage {
 	
-	private String name;
+	private String name = "";
 	private List<JavaType> javaTypes;
 	private List<Relation> relations;
 
@@ -125,7 +125,7 @@ public class JavaPackage {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("\npackage " + this.name +" {");
+		str.append("\npackage " + (("".equals(this.name))?"_default_": this.name) +" {");
 		for(JavaType jt : this.javaTypes)
 		{
 			str.append(jt);
