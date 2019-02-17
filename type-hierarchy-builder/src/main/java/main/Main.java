@@ -52,39 +52,32 @@ public class Main {
 
 		if(!(in.equals("")))
 		{
-			if(logger.isInfoEnabled())
-			{
-				logger.info("path = " + in);
-				logger.info("out = " + out);
-			}
+			logger.info("path = " + in);
+			logger.info("out = " + out);
 			if("".contentEquals(out))
 				out = in+"/uml.txt";
-			HierarchyBuilder hierarchyBuilder;
-			
+			HierarchyBuilder hierarchyBuilder = null;
+
 			try {
 //				hierarchyBuilder = new HierarchyBuilder(in, M2_DIRECTORY);
 				hierarchyBuilder = new HierarchyBuilder(in);
 				hierarchyBuilder.build();
-				PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
-				PlantUMLWritter.generateSVG(out);
 			} catch (IOException e) {
-				if(logger.isErrorEnabled())
-					logger.error("An error occured during hierarchy reconstruction.", e);
-				Thread.currentThread().interrupt();
+				logger.error("An error occured during hierarchy reconstruction.");
 			}
-			
-			try {
-				net.sourceforge.plantuml.Run.main(new String[]{out});
-			} catch (IOException | InterruptedException e) {
-				if(logger.isErrorEnabled())
-					logger.error("An error occured while writting plantuml file.", e);
-				Thread.currentThread().interrupt();
+
+			if(hierarchyBuilder != null) {
+				try {
+					PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
+					PlantUMLWritter.generateSVG(out);
+				} catch (IOException e) {
+					logger.error("An error occured while writting plantuml file.");
+				}
+			} else {
+				logger.fatal("Nothing could be generated from the input.");
 			}
 		}else {
-			if(logger.isErrorEnabled())
-			{
-				logger.error("You should at least give a path for finding your project.");
-			}
+			logger.warn("You should at least give a path for finding your project.");
 		}
 
 	}

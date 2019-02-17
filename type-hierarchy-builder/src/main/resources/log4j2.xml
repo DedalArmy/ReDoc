@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="30">
 	<Properties>
-        <Property name="LOG_PATTERN">%d{yyyy-MM-dd :: HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_PATTERN">%highlight{%d{yyyy-MM-dd :: HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n}{STYLE=DEFAULT, noConsoleNoAnsi=false}</Property>
     </Properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT" follow="true">
@@ -11,7 +11,10 @@
 	</Appenders>
 	<Loggers>
 		<Logger name="main.Main" level="info" />
-		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder" level="debug" />
+		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder" level="info" />
+		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer" level="info" />
+		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.FolderLoader" level="info" />
+		<Logger name="fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter" level="info" />
 		<Root level="error">
 			<AppenderRef ref="Console" />
 		</Root>

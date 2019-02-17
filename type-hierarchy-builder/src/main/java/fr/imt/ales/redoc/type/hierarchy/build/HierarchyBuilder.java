@@ -301,7 +301,10 @@ public class HierarchyBuilder {
 				{
 					logger.debug(type.getSimpleName() + " --|> " + et);
 				}
-				result.add(findClassOrInterface(type, et));
+				JavaType coi = findClassOrInterface(type, et);
+				if(coi != null)
+					result.add(coi);
+				else logger.warn("Missing dependency : " + et.asString());
 			}
 		}
 		return result;
@@ -325,7 +328,10 @@ public class HierarchyBuilder {
 				{
 					logger.debug(type.getSimpleName() + " ..|> " + et);
 				}
-				result.add(findClassOrInterface(type, et));
+				JavaType coi = findClassOrInterface(type, et);
+				if(coi != null)
+					result.add(coi);
+				else logger.warn("Missing dependency : " + et.asString());
 			}
 		}
 		return result;
@@ -510,7 +516,7 @@ public class HierarchyBuilder {
 			return new CompiledJavaType(clazz.getSimpleName(), this.getPackage(clazz.getPackageName()), null, null, clazz);
 		} catch (ClassNotFoundException e) {
 			if(logger.isErrorEnabled())
-				logger.error("An error occured while loading a class in HierarchyBuilder.",e);
+				logger.warn(e.getCause());
 			return null;
 		}
 	}
@@ -531,9 +537,7 @@ public class HierarchyBuilder {
 								String packageName = clazz.getPackageName();
 								return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
 							}catch(ClassNotFoundException e) {
-								// This is an actual error
-								if(logger.isErrorEnabled())
-									logger.error("An error occured while loading class into HierarchyBuilder", e);
+								// This is a missing dependency
 								return null;
 							}
 						}
@@ -546,9 +550,7 @@ public class HierarchyBuilder {
 					String packageName = clazz.getPackageName();
 					return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
 				}catch(ClassNotFoundException e) {
-					// This is an actual error
-					if(logger.isErrorEnabled())
-						logger.error("An error occured while loading class into HierarchyBuilder", e);
+					// This is a missing dependency
 					return null;
 				}
 			}

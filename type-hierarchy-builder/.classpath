@@ -34,7 +34,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/resources/plantuml.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/example.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

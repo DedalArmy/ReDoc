@@ -47,13 +47,12 @@ public class PlantUMLWritter {
 			pack.getRelations().forEach(strBuilder::append);
 		}
 		strBuilder.append("\n@enduml");
+		File f = new File(filename);
+		f.getParentFile().mkdirs();
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename));){
 			writer.write(strBuilder.toString());
 		} catch (IOException e) {
-			if(logger.isErrorEnabled())
-			{
-				logger.error("The UML file could not be generated", e);
-			}
+			logger.error("The UML file could not be generated", e);
 		}
 	}
 
@@ -62,13 +61,11 @@ public class PlantUMLWritter {
 		source = Files.readString(Paths.get(out));
 		SourceStringReader reader = new SourceStringReader(source);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		// Write the first image to "os"
-//		String desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG));
-		reader.outputImage(os, new FileFormatOption(FileFormat.SVG));
+		reader.generateImage(os, new FileFormatOption(FileFormat.SVG));
 		File output = new File(out.substring(0, out.lastIndexOf('.'))+SVG_EXTENSION);
 		Files.write(output.toPath(), os.toByteArray());
-		
 		os.close();
+		logger.info(out.substring(0, out.lastIndexOf('.'))+SVG_EXTENSION + " has successfully been generated.");
 	}
 
 }

@@ -35,6 +35,7 @@ public class FolderLoader {
 		Stream<Path> stream = Files.list(path);
 		stream.forEach(p -> uris.add(p.toUri()));
 		stream.close();
+		logger.trace(path.toAbsolutePath().toString() + "successfully explored.");
 		return uris;
 	}
 
