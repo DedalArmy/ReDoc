@@ -56,13 +56,13 @@ function LoadDependencies
 		if [[ $project != "project" ]] # so it is not the first line
 		then
 			cd $project
-			if [[ $pom != "" ]] # a pom.xml exists
-			then
-				mvn dependency:resolve -Dmaven.repo.local="$project/.m2"
-			fi
 			if [[ $gradle != "" ]] # a build.gradle exists
 			then
 				gradle --refresh-dependencies --gradle-user-home "$project/.gradle"
+			fi
+			if [[ $pom != "" ]] # a pom.xml exists
+			then
+				mvn dependency:resolve -fae -Dmaven.repo.local="$project/.m2"
 			fi
 		fi
     done < $1
