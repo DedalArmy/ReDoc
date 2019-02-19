@@ -18,6 +18,7 @@
 		<module>type-hierarchy-builder</module>
 
 		<module>JarLoader</module>
+		<module>XMLMerge</module>
 	</modules>
 	<dependencies>
 		<dependency>

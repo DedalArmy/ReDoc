@@ -24,7 +24,7 @@ function GenerateProjectListFile
 		then
 			firstDirname=$(dirname $first)
 			firstBasename=$(basename $first)
-			if [[ $first == "*pom.xml" ]]
+			if [[ $first == *"pom.xml" ]]
 			then
 				echo $firstDirname","$first","$second >> $outFile
 			else
@@ -37,7 +37,7 @@ function GenerateProjectListFile
 			local firstBasename=$(basename $first)
 			if [[ $fileDirname != $firstDirname* ]]
 			then # This is another project
-				if [[ $first == "*pom.xml" ]]
+				if [[ $first == *"pom.xml" ]]
 				then
 					echo $firstDirname","$first","$second >> $outFile
 				else
@@ -56,13 +56,36 @@ function LoadDependencies
 		if [[ $project != "project" ]] # so it is not the first line
 		then
 			cd $project
+			if [ -d "./.gradle" ]
+			then
+				rm -rf "$project/.gradle"
+			fi 
+			if [ -d "./.m2" ]
+			then
+				rm -rf "$project/.m2"
+			fi
 			if [[ $gradle != "" ]] # a build.gradle exists
 			then
-				gradle --refresh-dependencies --gradle-user-home "$project/.gradle"
+				gradle --refresh-dependencies --gradle-user-home "$project/.gradle" --continue > "$project/log_gradleOutput.txt"
+				 STATUS=$?
+                                if [ $STATUS -eq 0 ]
+                                then
+                                        echo "$project ---> SUCCESS" >> $logFile
+                                else
+                                        echo "$project ---> FAILED" >> $logFile
+                                fi
+
 			fi
 			if [[ $pom != "" ]] # a pom.xml exists
 			then
-				mvn dependency:resolve -fae -Dmaven.repo.local="$project/.m2"
+				mvn dependency:resolve -T 3 -fae -Dmaven.repo.local="$project/.m2" > "$project/log_mvnOutput.txt"
+				STATUS=$?
+				if [ $STATUS -eq 0 ]
+				then
+					echo "$project ---> SUCCESS" >> $logFile
+				else
+					echo "$project ---> FAILED" >> $logFile
+				fi	
 			fi
 		fi
     done < $1
@@ -77,13 +100,14 @@ function ExploreSandbox
     	for repository in $owner/*
     	do
     		if [ -d $repository ]
-            then
-            	local outFile=$repository/"buildFilesCSV.txt"
-            	if [ -f $outFile ]
-            	then
-            		rm $outFile 
-            	fi
-            	touch $outFile;
+        	then
+			local txt="buildFilesCSV.txt"
+			local outFile="$repository/$txt"
+            		if [ -f $outFile ]
+            		then
+            			rm $outFile 
+            		fi
+            	touch $outFile
             	echo "project,pom,gradle" >> $outFile 
             	local repoDir=$(basename $repository)
     			echo $repository
@@ -123,7 +147,14 @@ function ExploreSandbox
 
 #Main
 [ $1 ] && {
-   ExploreSandbox $1
+   	export MAVEN_OPTS="-Xmx4000m"
+	logFile="$(pwd)/logDep.txt"
+	if [ -f $logFile ]
+	then
+		rm $logFile
+	fi
+	touch $logFile
+	ExploreSandbox $1
 } || {
    echo "You must give the path of the sandbox."
 }

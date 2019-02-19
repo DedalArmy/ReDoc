@@ -5,7 +5,8 @@ function copyProjects
 	local csv=$1
 	local repo=$2
 	local output=$3
-	while IFS=';' read -r numb1 numb2 name other; do
+	echo $output
+	while IFS=';' read -r numb1 name other; do
 		if [[ $name != "project_name" ]] # so it is not the first line
 		then
 			if [ ! -d $output/$name ]
@@ -20,7 +21,7 @@ function copyProjects
 
 #Main
 [ $1 ] && [ $2 ] && [ $3 ] && {
-   copyProjects $1
+   copyProjects $1 $2 $3
 } || {
    echo "You must give the path of the csv file, the path of the repository and the output path."
 }
