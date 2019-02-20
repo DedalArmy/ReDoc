@@ -56,35 +56,35 @@ function LoadDependencies
 		if [[ $project != "project" ]] # so it is not the first line
 		then
 			cd $project
-			if [ -d "./.gradle" ]
-			then
-				rm -rf "$project/.gradle"
-			fi 
-			if [ -d "./.m2" ]
-			then
-				rm -rf "$project/.m2"
-			fi
+#			if [ -d "./.gradle" ]
+#			then
+#				rm -rf "$project/.gradle"
+#			fi 
+#			if [ -d "./.m2" ]
+#			then
+#				rm -rf "$project/.m2"
+#			fi
 			if [[ $gradle != "" ]] # a build.gradle exists
 			then
 				gradle --refresh-dependencies --gradle-user-home "$project/.gradle" --continue > "$project/log_gradleOutput.txt"
 				 STATUS=$?
                                 if [ $STATUS -eq 0 ]
                                 then
-                                        echo "$project ---> SUCCESS" >> $logFile
+                                        echo "$project,gradle,SUCCESS" >> $logFile
                                 else
-                                        echo "$project ---> FAILED" >> $logFile
+                                        echo "$project,gradle,FAILED" >> $logFile
                                 fi
 
 			fi
 			if [[ $pom != "" ]] # a pom.xml exists
 			then
-				mvn dependency:resolve -T 3 -fae -Dmaven.repo.local="$project/.m2" > "$project/log_mvnOutput.txt"
+				mvn dependency:resolve -T 3 -fn -Dmaven.repo.local="$project/.m2" > "$project/log_mvnOutput.txt"
 				STATUS=$?
 				if [ $STATUS -eq 0 ]
 				then
-					echo "$project ---> SUCCESS" >> $logFile
+					echo "$project,mvn,SUCCESS" >> $logFile
 				else
-					echo "$project ---> FAILED" >> $logFile
+					echo "$project,mvn,FAILED" >> $logFile
 				fi	
 			fi
 		fi

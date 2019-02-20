@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.imt.ales.redoc.jarloader;
+package fr.imt.ales.redoc.folderLoader;
 
 import java.io.IOException;
 import java.net.URI;
