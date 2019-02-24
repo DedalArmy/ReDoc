@@ -363,7 +363,6 @@ public class HierarchyBuilder {
 	}
 
 	private void exploreRelations(JavaPackage pack, JavaType type, Field fd) {
-		// TODO Auto-generated method stub
 		logger.debug("External reference." + fd.getType().getCanonicalName());
 	}
 
@@ -424,15 +423,16 @@ public class HierarchyBuilder {
 	 * @param coi Class or Interface type to find
 	 */
 	private JavaType findClassOrInterface(JavaType type, ClassOrInterfaceType coi) {
+		String name = coi.getName().toString();
 		/*
 		 * LOCAL DEPENDENCIES
 		 */
 		for(JavaType imp : type.getjImports()) {
-			if(imp.getSimpleName().equals(coi.getNameAsString()) || imp.getFullName().equals(coi.getNameAsString()))
+			if(imp.getSimpleName().equals(name) || imp.getFullName().equals(name))
 				return imp;
 		}
 		// If still into the method, the dependency is not into the imports it is maybe into the same package
-		JavaType tempJavaType = type.getjPackage().findTypeByName(coi.getNameAsString());
+		JavaType tempJavaType = type.getjPackage().findTypeByName(name);
 		if(tempJavaType!=null)
 		{
 			return tempJavaType;
@@ -440,7 +440,7 @@ public class HierarchyBuilder {
 		//If still running, then it could be an explicit type (fr.package.name.ClassName)
 		for(JavaPackage pack : this.packages)
 		{
-			tempJavaType = pack.findTypeByName(coi.getNameAsString());
+			tempJavaType = pack.findTypeByName(name);
 			if(tempJavaType!=null)
 				return tempJavaType;
 		}
@@ -480,16 +480,17 @@ public class HierarchyBuilder {
 	 * @throws ClassNotFoundException
 	 */
 	private JavaType findTypeInDefaultPackages(JavaType type, ClassOrInterfaceType coi) {
-		int index = this.jarLoader.getClassNames().indexOf(coi.asString());
+		String name = coi.getName().toString();
+		int index = this.jarLoader.getClassNames().indexOf(name);
 		if(index>=0) { // The class name is explicit (a.b.c.ClassName)
 			return getJavaType(index);
 		} else {
-			index = this.jarLoader.getClassNames().indexOf(type.getjPackage().getName()+"."+coi.asString());
+			index = this.jarLoader.getClassNames().indexOf(type.getjPackage().getName()+"."+name);
 			if(index>=0) { // The class is located into the same package
 				return getJavaType(index);
 			}
 			else {
-				String cName = JAVA_LANG+"."+coi.asString();
+				String cName = JAVA_LANG+"."+name;
 				try { // The class is located into java.lang package
 					Class<?> clazz = Class.forName(cName);
 					String simpleName = clazz.getSimpleName();
@@ -526,11 +527,12 @@ public class HierarchyBuilder {
 	private JavaType findTypeInImports(JavaType type, ClassOrInterfaceType coi) {
 		NodeList<ImportDeclaration> imports = type.getCompilationUnit().getImports();
 		for(ImportDeclaration imp : imports) {
+			String name = coi.getName().toString();
 			if(imp.isAsterisk()) { // It could be the package that contains the class we want
 				List<String> classNames = this.jarLoader.getPackageNameToClassNames().get(imp.getNameAsString());
 				if(classNames!=null) {
 					for(String cn : classNames) {
-						if(cn.endsWith(coi.asString())) { // This is the class that must be loaded
+						if(cn.endsWith(name)) { // This is the class that must be loaded
 							try { // This is the class that must be loaded
 								Class<?> clazz = this.jarLoader.loadClass(cn);
 								String simpleName = clazz.getSimpleName();
@@ -543,7 +545,7 @@ public class HierarchyBuilder {
 						}
 					}
 				}
-			} else if(imp.getNameAsString().endsWith(coi.asString())){
+			} else if(imp.getNameAsString().endsWith(name)){
 				try { // This is the class that must be loaded
 					Class<?> clazz = this.jarLoader.loadClass(imp.getNameAsString());
 					String simpleName = clazz.getSimpleName();

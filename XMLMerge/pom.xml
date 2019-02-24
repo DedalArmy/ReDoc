@@ -6,4 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>XMLMerge</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>fr.imt.ales.reverse-engineering</groupId>
+  		<artifactId>JarLoader</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

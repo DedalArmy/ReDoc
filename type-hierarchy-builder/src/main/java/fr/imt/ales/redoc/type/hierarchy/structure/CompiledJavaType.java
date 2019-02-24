@@ -8,6 +8,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class CompiledJavaType extends JavaType {
 
+	private static final String LIGHT_GREY = "#LightGrey";
 	private Class<?> clazz;
 
 	public CompiledJavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration,
@@ -25,9 +26,8 @@ public class CompiledJavaType extends JavaType {
 	
 	@Override
 	public String getFullName() {
-		return this.clazz.getName();
+		return this.clazz.getCanonicalName();
 	}
-
 
 	/**
 	 * @param clazz the clazz to set
@@ -52,11 +52,11 @@ public class CompiledJavaType extends JavaType {
 		StringBuilder str = new StringBuilder();
 		str.append("\n\t");
 		if(this.clazz.isInterface())
-			str.append("interface " + this.getFullName() + " {");
+			str.append("interface " + this.getFullName() + " " + LIGHT_GREY + " {");
 		else if(Modifier.isAbstract(this.clazz.getModifiers()))
-			str.append("abstract class " + this.getFullName() + " {");
+			str.append("abstract class " + this.getFullName() + " " + LIGHT_GREY + " {");
 		else
-			str.append("class " + this.getFullName() + " {");
+			str.append("class " + this.getFullName() + " " + LIGHT_GREY + " {");
 		for(Field field : this.clazz.getFields()) {
 			this.writeField(str, field);
 		}
@@ -113,7 +113,7 @@ public class CompiledJavaType extends JavaType {
 
 	private String writeClassEnum() {
 		StringBuilder str = new StringBuilder();
-		str.append("\n\tenum " + this.getFullName() + " {");
+		str.append("\n\tenum " + this.getFullName() + " " + LIGHT_GREY +" {");
 		for(Object lit : this.clazz.getEnumConstants()) {
 			str.append("\n\t\t"+lit.toString());
 		}

@@ -22,7 +22,7 @@ import java.util.jar.JarInputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.imt.ales.redoc.folderLoader.FolderLoader;
+import fr.imt.ales.redoc.folderloader.FolderLoader;
 
 
 /**

@@ -8,6 +8,13 @@ import com.github.javaparser.ast.type.TypeParameter;
 
 public class ParameterizedJavaType extends JavaType {
 
+	/**
+	 * 
+	 * @param simpleName
+	 * @param jPackage
+	 * @param typeDeclaration
+	 * @param compilationUnit
+	 */
 	public ParameterizedJavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration,
 			CompilationUnit compilationUnit) {
 		super(simpleName, jPackage, typeDeclaration, compilationUnit);
@@ -27,11 +34,11 @@ public class ParameterizedJavaType extends JavaType {
 		}
 		if(tempCOID.isInterface())
 		{
-			str.append("interface " + tempCOID.getNameAsString() + "<?" + sb + " > {");
+			str.append("interface " + this.getFullName() + "<? " + sb + "> {");
 		} else {
 			if(tempCOID.isAbstract())
 				str.append("abstract ");
-			str.append("class " + tempCOID.getNameAsString() + " {");
+			str.append("class " + this.getFullName() + "<? " + sb + "> {");
 		}
 	}
 

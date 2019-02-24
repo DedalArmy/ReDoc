@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.imt.ales.redoc.folderLoader;
+package fr.imt.ales.redoc.folderloader;
 
 import java.io.IOException;
 import java.net.URI;
@@ -48,9 +48,7 @@ public class FolderLoader {
 				try {
 					uris.addAll(recursivelyLoadFolder(p));
 				} catch (IOException e) {
-					if(logger.isErrorEnabled()) {
-						logger.error("The directory " + p.toString() + " could not be explored.", e);
-					}
+					logger.error("The directory " + p.toString() + " could not be explored.", e);
 				}
 			}
 		});
@@ -76,9 +74,7 @@ public class FolderLoader {
 				try {
 					uris.addAll(recursivelyLoadFolder(p, fileExtensions));
 				} catch (IOException e) {
-					if(logger.isErrorEnabled()) {
-						logger.error("The directory " + p.toString() + " could not be explored.", e);
-					}
+					logger.error("The directory " + p.toString() + " could not be explored.", e);
 				}
 			}
 		});

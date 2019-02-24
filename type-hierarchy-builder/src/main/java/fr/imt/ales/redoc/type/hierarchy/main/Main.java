@@ -1,4 +1,4 @@
-package main;
+package fr.imt.ales.redoc.type.hierarchy.main;
 /**
  * 
  */
@@ -59,7 +59,6 @@ public class Main {
 			HierarchyBuilder hierarchyBuilder = null;
 
 			try {
-//				hierarchyBuilder = new HierarchyBuilder(in, M2_DIRECTORY);
 				hierarchyBuilder = new HierarchyBuilder(in);
 				hierarchyBuilder.build();
 			} catch (IOException e) {

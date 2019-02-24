@@ -5,4 +5,4 @@
  * @author mrale
  *
  */
-package fr.imt.ales.redoc.folderLoader;
+package fr.imt.ales.redoc.folderloader;
