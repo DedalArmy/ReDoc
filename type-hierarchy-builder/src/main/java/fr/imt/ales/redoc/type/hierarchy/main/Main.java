@@ -12,20 +12,48 @@ import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
 
 /**
+ * Main class for running the program
  * @author Alexandre Le Borgne
- *
  */
 public class Main {
-
+	/*
+	 * LOGGER
+	 */
+	/**
+	 * {@link Logger} of the class
+	 */
 	static final Logger logger = LogManager.getLogger(Main.class);
 
+	/*
+	 * OPTIONS
+	 */
+	/**
+	 * Option PATH -p
+	 */
 	private static final String PATH = "-p";
+	/**
+	 * Option PATH --path
+	 */
 	private static final String PATH2 = "--path";
+	/**
+	 * Option OUT -o
+	 */
 	private static final String OUT = "-o";
+	/**
+	 * Option OUT --output
+	 */
 	private static final String OUT2 = "--output";
+	
+	/*
+	 * CONSTANT
+	 */
+	/**
+	 * default .m2 directory
+	 */
 	private static final String M2_DIRECTORY = System.getProperty("user.home") + "/.m2";
 
 	/**
+	 * main method
 	 * @param args the programs needs a path to a project
 	 */
 	public static void main(String[] args) {

@@ -26,8 +26,8 @@ import fr.imt.ales.redoc.folderloader.FolderLoader;
 
 
 /**
- * @author Alexandre Le Borgne
  * A class for loading java classes from jar/war archives
+ * @author Alexandre Le Borgne
  */
 public class JarLoader extends URLClassLoader {
 
@@ -35,7 +35,7 @@ public class JarLoader extends URLClassLoader {
 	 * LOGGER
 	 */
 	/**
-	 * Logger of the class
+	 * {@link Logger} of the class
 	 */
 	static final Logger logger = LogManager.getLogger(JarLoader.class);
 
@@ -70,7 +70,7 @@ public class JarLoader extends URLClassLoader {
 	 * The URLs of the jar/war archives
 	 */
 	private URL[] jars;
-	
+
 	/*
 	 * CONSTRUCTORS
 	 */
@@ -107,9 +107,7 @@ public class JarLoader extends URLClassLoader {
 			try {
 				jarUrls.add(je.toURL());
 			} catch (MalformedURLException e) {
-				if(logger.isErrorEnabled()) {
-					logger.error("A problem occured during URL extraction", e);
-				}
+				logger.error("A problem occured during URL extraction", e);
 			}
 		});
 		this.jars = jarUrls.toArray(new URL[0]);
@@ -148,9 +146,7 @@ public class JarLoader extends URLClassLoader {
 				this.packageNameToClassNames.get(packageName).add(cannonicalClassNane);
 				this.classNames.add(cannonicalClassNane);
 			} catch(Exception e) {
-				if(logger.isErrorEnabled()) {
-					logger.error("A problem occured while setting class names in JarLoader", e);
-				}
+				logger.error("A problem occured while setting class names in JarLoader", e);
 			}
 		}
 	}
@@ -179,8 +175,7 @@ public class JarLoader extends URLClassLoader {
 			try (InputStream in = new FileInputStream(url.getFile()); JarInputStream jar = new JarInputStream(in);)
 			{
 				entry = jar.getNextJarEntry();
-				if(logger.isInfoEnabled())
-					logger.info(url.toString());
+				logger.info(url.toString());
 				while(entry != null)
 				{
 					/*

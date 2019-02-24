@@ -5,12 +5,35 @@ import java.util.List;
 
 import com.github.javaparser.ast.body.TypeDeclaration;
 
+/**
+ * A class to represent Java package structure
+ * @author Alexandre Le Borgne
+ *
+ */
 public class JavaPackage {
-	
+	/*
+	 * ATTRIBUTES
+	 */
+	/**
+	 * The name of the package
+	 */
 	private String name = "";
+	/**
+	 * The {@link List} of {@link JavaType}s in the package
+	 */
 	private List<JavaType> javaTypes;
+	/**
+	 * The {@link List} of {@link Relation}s of the package
+	 */
 	private List<Relation> relations;
 
+	/*
+	 * CONSTRUCTOR
+	 */
+	/**
+	 * Parameterized constructor
+	 * @param name the name of the package
+	 */
 	public JavaPackage(String name) {
 		super();
 		this.name = name;
@@ -65,9 +88,9 @@ public class JavaPackage {
 	 */
 	
 	/**
-	 * 
-	 * @param name
-	 * @return
+	 * Finds a {@link JavaType} into the package by its name
+	 * @param name can be the simple name or the full name of the {@link JavaType}
+	 * @return the corresponding {@link JavaType} if it exists or <code>null</code> otherwise
 	 */
 	public JavaType findTypeByName(String name){
 		for(JavaType type : this.javaTypes)
@@ -86,9 +109,9 @@ public class JavaPackage {
 	}
 	
 	/**
-	 * 
-	 * @param typeDeclaration
-	 * @return
+	 * Finds a {@link JavaType} into the package by its {@link TypeDeclaration}
+	 * @param typeDeclaration the {@link TypeDeclaration} of the {@link JavaType} that is required
+	 * @return the corresponding {@link JavaType} if it exists or <code>null</code> otherwise
 	 */
 	public JavaType findByTypeDeclaration(TypeDeclaration<?> typeDeclaration) {
 		for(JavaType type : this.javaTypes)
@@ -107,21 +130,24 @@ public class JavaPackage {
 	}
 	
 	/**
-	 * 
-	 * @param type
+	 * Adds a {@link JavaType} to {@code javaTypes}
+	 * @param type the {@link JavaType} to add
 	 */
 	public void addJavaType(JavaType type) {
 		this.javaTypes.add(type);
 	}
 	
 	/**
-	 * 
-	 * @param relation
+	 * Adds a {@link Relation} to {@code javaTypes}
+	 * @param relation {@link Relation} to add
 	 */
 	public void addRelation(Relation relation) {
 		this.relations.add(relation);
 	}
 		
+	/**
+	 * @return a plantuml based String description of the {@link JavaPackage}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

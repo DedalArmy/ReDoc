@@ -1,17 +1,25 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+/**
+ * A class for representing relation between {@link JavaType}s
+ * @author Alexandre Le Borgne
+ *
+ */
 public class Relation {
 	JavaType endA;
 	JavaType endB;
 	String name;
 	
+	/**
+	 * protected default constructor for avoiding default instantiation from outside the package
+	 */
 	protected Relation() {}
 	
 	/**
-	 * @param endA
-	 * @param endB
-	 * @param role
-	 * @param name
+	 * Parameterized constructor
+	 * @param endA source of the relation 
+	 * @param endB target of the relation
+	 * @param name the name of the relation
 	 */
 	public Relation(JavaType endA, JavaType endB, String name) {
 		super();
@@ -64,6 +72,9 @@ public class Relation {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
+	 */
+	/**
+	 * @return a plantuml based String description of the {@link Relation}
 	 */
 	@Override
 	public String toString() {

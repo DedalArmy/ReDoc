@@ -6,14 +6,19 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.type.TypeParameter;
 
+/**
+ * A class for representing parameterized Java types
+ * @author Alexandre Le Borgne
+ *
+ */
 public class ParameterizedJavaType extends JavaType {
 
 	/**
-	 * 
-	 * @param simpleName
-	 * @param jPackage
-	 * @param typeDeclaration
-	 * @param compilationUnit
+	 * Parameterized constructor
+	 * @param simpleName the simple name of the Java type
+	 * @param jPackage the {@link JavaPackage} that is the parent of the current {@link JavaType}
+	 * @param typeDeclaration the type declaration of the {@link JavaType} from the source code
+	 * @param compilationUnit the parsed Java file
 	 */
 	public ParameterizedJavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration,
 			CompilationUnit compilationUnit) {

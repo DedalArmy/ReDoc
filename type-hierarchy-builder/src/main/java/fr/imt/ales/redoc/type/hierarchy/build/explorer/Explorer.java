@@ -9,19 +9,35 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import fr.imt.ales.redoc.folderloader.FolderLoader;
+
+/**
+ * A class for exploring folders and getting {@link File}s from them.
+ * @author Alexandre Le Borgne
+ *
+ */
 public class Explorer {
-	
+	/*
+	 * LOGGER
+	 */
+	/**
+	 * The {@link Logger} of the class.
+	 */
 	static final Logger logger = LogManager.getLogger(Explorer.class);
-	
+
+	/**
+	 * Private constructor for avoiding instantiation.
+	 */
 	private Explorer() {}
-	
+
 	/**
 	 * This method explores the file system and identifies files with a certain extension.
 	 * @param path The URI of the directory to explore.
 	 * @param ext The extension to consider.
 	 * @return The list of files corresponding to the good extension.
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
-	public static List<File> getFiles(String path, String ext) {		
+	public static List<File> getFiles(String path, String ext) throws IOException {		
 		return getFiles(Paths.get(path).toFile().toURI(), ext);
 	}
 
@@ -30,24 +46,17 @@ public class Explorer {
 	 * @param uri The URI of the file to explore.
 	 * @param ext The extension to consider.
 	 * @return The list of files corresponding to the good extension.
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
-	private static List<File> getFiles(URI uri, String ext) {
+	private static List<File> getFiles(URI uri, String ext) throws IOException {
 		List<File> result = new ArrayList<>();
-		try {
-			for(URI uri2 : FolderLoader.loadFolder(Paths.get(uri)))
-			{
-				if(new File(uri2).isDirectory())
-				{
-					result.addAll(Explorer.getFiles(uri2, ext));
-				}
-				else if(uri2.toString().endsWith(ext)) result.add(new File(uri2));
-			}
-		} catch (IOException e) {
-			logger.error("The path (" + uri + ") given in argument probaly contains an error.", e);
+		List<URI> uris = FolderLoader.recursivelyLoadFolder(Paths.get(uri), ext);
+		for(URI uri2 : uris)
+		{
+			result.add(new File(uri2));
 		}
-		
 		return result;
 	}
-	
-	
+
+
 }

@@ -15,8 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * @author Alexandre Le Borgne
  * A class for loading folders
+ * @author Alexandre Le Borgne
  */
 public class FolderLoader {
 	
@@ -24,7 +24,7 @@ public class FolderLoader {
 	 * LOGGER
 	 */
 	/**
-	 * Logger of the class
+	 * {@link Logger} of the class
 	 */
 	static final Logger logger = LogManager.getLogger(FolderLoader.class);
 
@@ -51,6 +51,7 @@ public class FolderLoader {
 		Stream<Path> stream = Files.list(path);
 		stream.forEach(p -> uris.add(p.toUri()));
 		stream.close();
+		logger.trace(path.toAbsolutePath().toString() + "successfully explored.");
 		return uris;
 	}
 	

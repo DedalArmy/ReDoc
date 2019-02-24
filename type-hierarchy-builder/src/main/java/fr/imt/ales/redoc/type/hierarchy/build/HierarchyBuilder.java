@@ -6,7 +6,6 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,25 +35,45 @@ import fr.imt.ales.redoc.type.hierarchy.structure.ParameterizedJavaType;
 import fr.imt.ales.redoc.type.hierarchy.structure.Relation;
 
 /**
+ * A class for re-documenting the type hierarchy of a Java project, considering source code and compiled dependencies
  * @author Alexandre Le Borgne
- *
  */
 public class HierarchyBuilder {
 
 	/*
 	 * LOGGER
 	 */
+	/**
+	 * {@link Logger} of the class
+	 */
 	static final Logger logger = LogManager.getLogger(HierarchyBuilder.class);
 
 	/*
 	 * ATTRIBUTES
 	 */
+	/**
+	 * Java file extension
+	 */
 	static final String JAVA_EXTENSION = ".java";
-
+	/**
+	 * java.lang package
+	 */
 	private static final String JAVA_LANG = "java.lang";
+	/**
+	 * Jar file extension
+	 */
 	private List<File> javaFiles;
+	/**
+	 * {@link List} of {@link CompilationUnit}
+	 */
 	private List<CompilationUnit> compilationUnits;
+	/**
+	 * {@link List} of {@link JavaPackage}
+	 */
 	private List<JavaPackage> packages;
+	/**
+	 * For loading jar/war archives and analyze compiled dependencies
+	 */
 	private JarLoader jarLoader;
 
 	/*
@@ -74,9 +93,10 @@ public class HierarchyBuilder {
 	/**
 	 * Constructor that automatically loads the Java files contained into a folder identified by {@code path}
 	 * @param path the path that identifies the Java project folder
-	 * @throws IOException 
+	 * @param dependencyPaths the paths that identify the dependency folders
+	 * @throws IOException  if an I/O error occurs when opening the directory
 	 */
-	public HierarchyBuilder(String path, String ... dependencyPaths) throws IOException {
+	public HierarchyBuilder(String path, String ... dependencyPaths) throws IOException  {
 		this.javaFiles = Explorer.getFiles(path, JAVA_EXTENSION);
 		this.packages = new ArrayList<>();
 		this.compilationUnits=new ArrayList<>();
@@ -88,10 +108,9 @@ public class HierarchyBuilder {
 	 */
 
 	/**
-	 * 
-	 * @param path
-	 * @param dependencyPaths
-	 * @return
+	 * @param path single {@link String}
+	 * @param dependencyPaths an array of {@link String}
+	 * @return a single array that is the union of the parameters
 	 */
 	private String[] getUnion(String path, String[] dependencyPaths) {
 		int length = dependencyPaths.length;
@@ -154,8 +173,9 @@ public class HierarchyBuilder {
 	/**
 	 * Loads the Java files contained into a directory
 	 * @param path the path that identifies the directory
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
-	public void loadJavaFiles(String path) {
+	public void loadJavaFiles(String path) throws IOException {
 		this.javaFiles = Explorer.getFiles(path, JAVA_EXTENSION);
 	}
 
@@ -165,6 +185,7 @@ public class HierarchyBuilder {
 	public void build() {
 		if(!this.javaFiles.isEmpty())
 		{
+			// parsing Java files
 			this.javaFiles.forEach(f -> {
 				try {
 					this.compilationUnits.add(JavaParser.parse(f));
@@ -173,6 +194,8 @@ public class HierarchyBuilder {
 				}
 				logger.debug(f.getAbsolutePath() + " has been successfuly parsed.");
 			});
+			
+			// building type hierarchy
 			if(!this.compilationUnits.isEmpty())
 			{
 				this.exploreHierarchy();
@@ -203,21 +226,20 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * 
-	 * @param type
-	 * @return
+	 * @param type JavaType to get imported {@link JavaType}s from
+	 * @return a {@link List} of {@link JavaType}s that are imported by <code>type</code>
 	 */
 	private List<JavaType> getImportedJavaTypes(JavaType type) {
 		List<JavaType> result = new ArrayList<>();
 		for(ImportDeclaration imp : type.getCompilationUnit().getImports() ) {
-			if(imp.isAsterisk())
+			if(imp.isAsterisk()) // import a.b.*
 			{
-				for(JavaPackage pack : packages)
+				for(JavaPackage pack : packages) // all packages of the asterisk import
 				{
 					if(pack.getName().equals(imp.getNameAsString()))
 						result.addAll(pack.getJavaTypes());
 				}
-			} else {
+			} else { // import a.b.C
 				for(JavaPackage pack : packages)
 				{
 					JavaType jType = pack.findTypeByName(imp.getNameAsString());
@@ -235,23 +257,29 @@ public class HierarchyBuilder {
 	 */
 	private void loadNecessaryData() {
 		for(CompilationUnit cu : this.compilationUnits)
-		{
-			String typeName = null;
+		{			
+			// getting package name
 			Optional<PackageDeclaration> packageDeclaration = cu.getPackageDeclaration();
 			String packageName = (packageDeclaration.isPresent())?packageDeclaration.get().getNameAsString():"";
-
+			
+			// getting JavaPackage from package name
 			JavaPackage jPackage = this.getPackage(packageName);
+			
+			// getting types from type declarations
 			NodeList<TypeDeclaration<?>> types = cu.getTypes();
 			for(TypeDeclaration<?> type : types)
 			{
 				JavaType javaType = null;
-				typeName = type.getNameAsString();
-				if(type.isClassOrInterfaceDeclaration())
+				String tempTypeName = type.getNameAsString();
+				if(type.isClassOrInterfaceDeclaration()) // the type declaration is a class or an interface declaration
 				{
+					// constructing the JavaType object
 					ClassOrInterfaceDeclaration coid = type.asClassOrInterfaceDeclaration();
-					if(coid.getTypeParameters().isEmpty())
-						javaType = new JavaType(typeName, jPackage, coid, cu);
-					else javaType = new ParameterizedJavaType(typeName, jPackage, coid, cu);
+					if(coid.getTypeParameters().isEmpty()) // the declared class or interface is not parameterized
+						javaType = new JavaType(tempTypeName, jPackage, coid, cu);
+					else javaType = new ParameterizedJavaType(tempTypeName, jPackage, coid, cu);
+					
+					// finding nested types
 					for(BodyDeclaration<?> m : coid.getMembers())
 					{
 						if(m.isTypeDeclaration())
@@ -261,7 +289,7 @@ public class HierarchyBuilder {
 						}
 					}
 				} else {
-					new JavaType(typeName, jPackage, type, cu);
+					new JavaType(tempTypeName, jPackage, type, cu);
 				}
 			}
 		}
@@ -269,15 +297,18 @@ public class HierarchyBuilder {
 
 	/**
 	 * This method returns the JavaPackage named {@code packageName} if it exists {@code packages} or a new package with the name {@code packageName} if it does not.
-	 * @param packageName
-	 * @return the package
+	 * @param packageName the name of the package to return
+	 * @return the package corresponding to <code>packageName</code>
 	 */
 	private JavaPackage getPackage(String packageName) {
+		// trying to find and return the package corresponding to packageName
 		for(JavaPackage pack : getPackages())
 		{
 			if(pack.getName().equals(packageName))
 				return pack;
 		}
+		
+		// creating and returning a new package
 		JavaPackage pack = new JavaPackage(packageName);
 		this.packages.add(pack);
 		return pack;
@@ -297,10 +328,7 @@ public class HierarchyBuilder {
 			NodeList<ClassOrInterfaceType> extendedTypes = typeDeclaration.asClassOrInterfaceDeclaration().getExtendedTypes();
 			for(ClassOrInterfaceType et : extendedTypes)
 			{
-				if(logger.isDebugEnabled())
-				{
-					logger.debug(type.getSimpleName() + " --|> " + et);
-				}
+				logger.debug(type.getSimpleName() + " --|> " + et);
 				JavaType coi = findClassOrInterface(type, et);
 				if(coi != null)
 					result.add(coi);
@@ -311,9 +339,9 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * 
-	 * @param type
-	 * @return
+	 * This method returns the list of {@link JavaType} that correspond to implemented types of {@code type}.
+	 * @param type {@link JavaType} which is investigated.
+	 * @return the list of {@link JavaType} that correspond to implemented types of {@code type}.
 	 */
 	private List<JavaType> getImplementedJavaTypes(JavaType type) {
 		List<JavaType> result = new ArrayList<>();
@@ -347,12 +375,7 @@ public class HierarchyBuilder {
 			JavaPackage pack = getPackages().get(i);
 			for(JavaType type : pack.getJavaTypes())
 			{
-				if(type instanceof CompiledJavaType) {
-					CompiledJavaType cjt = ((CompiledJavaType)type);
-					for(Field fd : cjt.getClazz().getFields()) {
-						exploreRelations(pack, type, fd);
-					}
-				} else if(type instanceof JavaType) {
+				if((!(type instanceof CompiledJavaType)) && (type instanceof JavaType)) {
 					for(FieldDeclaration fd : type.getTypeDeclaration().getFields())
 					{
 						exploreRelations(pack, type, fd);
@@ -362,14 +385,11 @@ public class HierarchyBuilder {
 		}
 	}
 
-	private void exploreRelations(JavaPackage pack, JavaType type, Field fd) {
-		logger.debug("External reference." + fd.getType().getCanonicalName());
-	}
-
 	/**
-	 * @param pack
-	 * @param type
-	 * @param fd
+	 * Method that investigates {@link Relation}s between {@link JavaType}s
+	 * @param pack package that is investigated
+	 * @param type {@link JavaType} from which {@link Relation}s are extracted
+	 * @param fd the {@link FieldDeclaration} that gives the {@link Relation}
 	 */
 	private void exploreRelations(JavaPackage pack, JavaType type, FieldDeclaration fd) {
 		if(fd.getElementType().isClassOrInterfaceType())
@@ -396,9 +416,9 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * 
-	 * @param nodeList
-	 * @return
+	 * Computes the parameter types.
+	 * @param nodeList the elements which are investigated
+	 * @return the {@link List} of {@link Type} of elements in <code>nodeList</code>
 	 */
 	private List<Type> computeParameterTypes(NodeList<Type> nodeList){
 		List<Type> result = new ArrayList<>();
@@ -418,9 +438,10 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * This method finds the ClassOrInterfaceDeclaration ({@code coid}) corresponding to {@code coi}.
-	 * @param type Current compilation unit.
+	 * This method finds the {@link JavaType} corresponding to {@code coi}.
+	 * @param type the current {@link JavaType}
 	 * @param coi Class or Interface type to find
+	 * @return the corresponding {@link JavaType}
 	 */
 	private JavaType findClassOrInterface(JavaType type, ClassOrInterfaceType coi) {
 		String name = coi.getName().toString();
@@ -452,6 +473,12 @@ public class HierarchyBuilder {
 		return findExternalClassOrInterface(type, coi);
 	}
 
+	/**
+	 * This method finds the {@link JavaType} ({@code coid}) corresponding to {@code coi} from external source.
+	 * @param type the current {@link JavaType}
+	 * @param coi Class or Interface type to find
+	 * @return the corresponding {@link JavaType}
+	 */
 	private JavaType findExternalClassOrInterface(JavaType type, ClassOrInterfaceType coi) {
 
 		logger.debug("External ---------------------------------------> "+coi.asString());
@@ -473,11 +500,10 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * 
-	 * @param type
-	 * @param coi
-	 * @return
-	 * @throws ClassNotFoundException
+	 * This methods finds an imported {@link JavaType} from external sources into default packages.
+	 * @param type current {@link JavaType}
+	 * @param coi Class or Interface type to find
+	 * @return the corresponding {@link JavaType}
 	 */
 	private JavaType findTypeInDefaultPackages(JavaType type, ClassOrInterfaceType coi) {
 		String name = coi.getName().toString();
@@ -505,10 +531,9 @@ public class HierarchyBuilder {
 	}
 
 	/**
-	 * @param result
-	 * @param index
-	 * @return
-	 * @throws ClassNotFoundException
+	 * 
+	 * @param index of the {@link JavaType} to return
+	 * @return the {@link JavaType} at the corresponding code<code>index</code>
 	 */
 	private JavaType getJavaType(int index) {
 		Class<?> clazz;
@@ -516,14 +541,17 @@ public class HierarchyBuilder {
 			clazz = this.jarLoader.loadClass(this.jarLoader.getClassNames().get(index));
 			return new CompiledJavaType(clazz.getSimpleName(), this.getPackage(clazz.getPackageName()), null, null, clazz);
 		} catch (ClassNotFoundException e) {
-			if(logger.isErrorEnabled())
-				logger.warn(e.getCause());
+			logger.warn("A dependency is probably missing.",e);
 			return null;
 		}
 	}
 
-
-
+	/**
+	 * This methods finds an imported {@link JavaType} from external sources into imported packages.
+	 * @param type current {@link JavaType}
+	 * @param coi Class or Interface type to find
+	 * @return the corresponding {@link JavaType}
+	 */
 	private JavaType findTypeInImports(JavaType type, ClassOrInterfaceType coi) {
 		NodeList<ImportDeclaration> imports = type.getCompilationUnit().getImports();
 		for(ImportDeclaration imp : imports) {

@@ -11,24 +11,54 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
+/**
+ * A class for representing Java types
+ * @author Alexandre Le Borgne
+ *
+ */
 public class JavaType {
+	/*
+	 * ATTRIBUTES
+	 */
+	/**
+	 * Simple name of the {@link JavaType}
+	 */
 	private String simpleName;
+	/**
+	 * The parent {@link JavaPackage}
+	 */
 	private JavaPackage jPackage;
+	/**
+	 * The {@link TypeDeclaration} of the {@link JavaType}
+	 */
 	private TypeDeclaration<?> typeDeclaration;
+	/**
+	 * The {@link CompilationUnit} corresponding to the Java file of the {@link JavaType}
+	 */
 	private CompilationUnit compilationUnit;
+	/**
+	 * Imported {@link JavaType}s
+	 */
 	private List<JavaType> jImports;
+	/**
+	 * Extended {@link JavaType}s
+	 */
 	private List<JavaType> jExtends;
+	/**
+	 * Implemented {@link JavaType}s
+	 */
 	private List<JavaType> jImplements;
+	/**
+	 * Nested {@link JavaType}s
+	 */
 	private List<JavaNestedType> nestedTypes;
 
 	/**
-	 * @param simpleName
-	 * @param fullName
-	 * @param jPackage
-	 * @param typeDeclaration
-	 * @param jImports
-	 * @param jExtends
-	 * @param nestedTypes
+	 * Parameterized constructor
+	 * @param simpleName the simple name of the Java type
+	 * @param jPackage the {@link JavaPackage} that is the parent of the current {@link JavaType}
+	 * @param typeDeclaration the type declaration of the {@link JavaType} from the source code
+	 * @param compilationUnit the parsed Java file
 	 */
 	public JavaType(String simpleName, JavaPackage jPackage, TypeDeclaration<?> typeDeclaration, CompilationUnit compilationUnit) {
 		super();
@@ -168,29 +198,32 @@ public class JavaType {
 	 */
 
 	/**
-	 * 
-	 * @param jImport
+	 * This method adds a {@link JavaType} to {@code jImport}
+	 * @param jImport {@link JavaType} to add
 	 */
 	public void addImport(JavaType jImport) {
 		this.jImports.add(jImport);
 	}	
 
 	/**
-	 * 
-	 * @param jExt
+	 * This method adds a {@link JavaType} to {@code jExtends}
+	 * @param jExt {@link JavaType} to add
 	 */
 	public void addExtends(JavaType jExt) {
 		this.jExtends.add(jExt);
 	}
 
 	/**
-	 * 
-	 * @param nested
+	 * This method adds a {@link JavaType} to {@code nestedTypes}
+	 * @param nested {@link JavaType} to add
 	 */
 	public void addNestedType(JavaNestedType nested) {
 		this.nestedTypes.add(nested);
 	}
 
+	/**
+	 * @return a plantuml based String description of the {@link JavaType}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
@@ -203,7 +236,11 @@ public class JavaType {
 		}
 		return str.toString();
 	}
-
+	
+	/**
+	 * 
+	 * @return {@code typeDeclaration} as a {@link String}
+	 */
 	String writeClassOrInterface() {
 		StringBuilder str = new StringBuilder();
 		str.append("\n\t");
@@ -223,8 +260,8 @@ public class JavaType {
 	}
 
 	/**
-	 * @param str
-	 * @param tempCOID
+	 * @param str the {@link StringBuilder}
+	 * @param tempCOID the {@link ClassOrInterfaceDeclaration} being written
 	 */
 	void writeCOID(StringBuilder str, ClassOrInterfaceDeclaration tempCOID) {
 		if(tempCOID.isInterface())
@@ -236,7 +273,11 @@ public class JavaType {
 			str.append("class " + this.getFullName() + " {");
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @return {@code typeDeclaration} as a {@link String} if it is an {@link EnumDeclaration}
+	 */
 	String writeEnum() {
 		StringBuilder str = new StringBuilder();
 		EnumDeclaration tempEnum = this.typeDeclaration.asEnumDeclaration();
@@ -249,6 +290,11 @@ public class JavaType {
 		return str.toString();
 	}
 
+	/**
+	 * 
+	 * @param field the {@link FieldDeclaration}
+	 * @return {@code field} as a {@link String}
+	 */
 	String writeField(FieldDeclaration field) {
 		StringBuilder str = new StringBuilder();
 
@@ -263,7 +309,12 @@ public class JavaType {
 		return str.toString();
 	}
 
-	Object writeMethod(MethodDeclaration method) {
+	/**
+	 * 
+	 * @param method the {@link MethodDeclaration}
+	 * @return {@code method} as a {@link String}
+	 */
+	String writeMethod(MethodDeclaration method) {
 		StringBuilder str = new StringBuilder();
 		if(method.isPublic())
 			str.append("\n\t\t+" + method.getTypeAsString() + " " + method.getSignature().asString());

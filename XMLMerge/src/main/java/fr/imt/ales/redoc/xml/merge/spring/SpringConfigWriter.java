@@ -8,10 +8,8 @@ import java.nio.file.Paths;
 import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -20,10 +18,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 
-import fr.imt.ales.redoc.xml.merge.spring.structure.XMLFile;
+import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
 /**
- * 
+ * A class for writing merged Spring deployment descriptors
  * @author Alexandre Le Borgne
  *
  */
@@ -31,19 +29,27 @@ public class SpringConfigWriter {
 	/*
 	 * LOGGER
 	 */
+	/**
+	 * {@link Logger} of the class
+	 */
 	static final Logger logger = LogManager.getLogger(SpringConfigWriter.class);
 	
+	/*
+	 * Constructor
+	 */
+	/**
+	 * private constructor for avoiding instantiation
+	 */
 	private SpringConfigWriter() {}
 	
 	/**
-	 * @param path
-	 * @param xml
-	 * @param doc
-	 * @throws TransformerFactoryConfigurationError
-	 * @throws TransformerConfigurationException
-	 * @throws TransformerException
+	 * Writes the merged XML Spring deployment descriptor
+	 * @param path the output directory
+	 * @param xml the {@link XMLFile} corresponding to the top deployment descriptor
+	 * @param doc the merged Document
+	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation
 	 */
-	public static void writeMergedSpringConfig(Path path, XMLFile xml, Document doc) throws TransformerFactoryConfigurationError, TransformerException {
+	public static void writeMergedSpringConfig(Path path, XMLFile xml, Document doc) throws TransformerException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		

@@ -18,15 +18,41 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 
+/**
+ * A class for writing a plantuml description from a type hierarchy
+ * @author Alexandre Le Borgne
+ *
+ */
 public class PlantUMLWritter {
 	/*
 	 * LOGGER
 	 */
+	/**
+	 * {@link Logger} of the class
+	 */
 	static final Logger logger = LogManager.getLogger(PlantUMLWritter.class);
+	
+	/*
+	 * CONSTANTS
+	 */
+	/**
+	 * Svg file extension
+	 */
 	private static final String SVG_EXTENSION = ".svg";
-
+	
+	/*
+	 * CONSTRUCTOR
+	 */
+	/**
+	 * private constructor for avoiding instantiation
+	 */
 	private PlantUMLWritter() {}
 
+	/**
+	 * Write the plantuml description into the file
+	 * @param builder for getting the hierarchy
+	 * @param filename name of the output file
+	 */
 	public static void writeHierarchy(HierarchyBuilder builder, String filename) {
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append("@startuml");
@@ -56,12 +82,17 @@ public class PlantUMLWritter {
 		}
 	}
 
+	/**
+	 * Generate a SVG file
+	 * @param out name of the output SVG file
+	 * @throws IOException if an I/O error occurs writing to or creating the file
+	 */
 	public static void generateSVG(String out) throws IOException {
 		String source;
 		source = Files.readString(Paths.get(out));
 		SourceStringReader reader = new SourceStringReader(source);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		reader.generateImage(os, new FileFormatOption(FileFormat.SVG));
+		reader.outputImage(os, new FileFormatOption(FileFormat.SVG));
 		File output = new File(out.substring(0, out.lastIndexOf('.'))+SVG_EXTENSION);
 		Files.write(output.toPath(), os.toByteArray());
 		os.close();

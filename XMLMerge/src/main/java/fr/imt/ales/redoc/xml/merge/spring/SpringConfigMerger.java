@@ -2,31 +2,52 @@ package fr.imt.ales.redoc.xml.merge.spring;
 
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import fr.imt.ales.redoc.xml.merge.spring.structure.XMLFile;
+import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
 /**
- * 
+ * A class for merging Spring deployment descriptors
  * @author Alexandre Le Borgne
  *
  */
 public class SpringConfigMerger {
+	/*
+	 * CONSTANTS
+	 */
+	/**
+	 * import tag
+	 */
 	private static final String IMPORT = "import";
+	/**
+	 * beans tag
+	 */
 	private static final String BEANS = "beans";
+	
+	/*
+	 * ATTRIBUTES
+	 */
+	/**
+	 * The {@link DocumentBuilder}
+	 */
 	private DocumentBuilder builder;
+	/**
+	 * The {@link Document} representing the content of {@code xmlFile}
+	 */
 	private Document document;
+	/**
+	 * The {@link XMLFile}
+	 */
 	private XMLFile xmlFile;
 	
 	/**
-	 * 
-	 * @throws ParserConfigurationException
+	 * Parameterized constructor
+	 * @param builder the {@link DocumentBuilder}
+	 * @param xmlFile the {@link XMLFile}
 	 */
 	public SpringConfigMerger(DocumentBuilder builder, XMLFile xmlFile) {
 		this.builder = builder;
@@ -35,9 +56,9 @@ public class SpringConfigMerger {
 	
 	/**
 	 * 
-	 * @param xml
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @param xml the {@link XMLFile} to append the beans from
+	 * @throws IOException If any I/O errors occur.
+	 * @throws SAXException If any parse errors occur.
 	 */
 	private void appendBeans(XMLFile xml) throws SAXException, IOException {
 		for(XMLFile x : xml.getImports()) {
@@ -58,9 +79,9 @@ public class SpringConfigMerger {
 	
 	/**
 	 * 
-	 * @return
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @return the merged document
+	 * @throws IOException If any I/O errors occur.
+	 * @throws SAXException If any parse errors occur.
 	 */
 	public Document merge() throws SAXException, IOException {
 		this.document = null; // to reset the document
