@@ -27,54 +27,83 @@ import fr.imt.ales.redoc.folderloader.FolderLoader;
 
 /**
  * @author Alexandre Le Borgne
- *
+ * A class for loading java classes from jar/war archives
  */
 public class JarLoader extends URLClassLoader {
 
+	/*
+	 * LOGGER
+	 */
+	/**
+	 * Logger of the class
+	 */
 	static final Logger logger = LogManager.getLogger(JarLoader.class);
 
-	private static final String JAR = ".jar";
-	private static final String WAR = ".war";
-
+	/*
+	 * CONSTANTS
+	 */
+	/**
+	 * Jar file extension
+	 */
 	private static final String JAR_FILE_EXTENSION = ".jar";
+	/**
+	 * War file extension
+	 */
 	private static final String WAR_FILE_EXTENSION = ".war";
+	/**
+	 * Class file extension
+	 */
 	private static final String CLASS_FILE_EXTENSION = ".class";
 
-	private Map<String, List<String>> packageNameToClassNames;
-	private List<String> classNames;
-
-	private URL[] jars;
-
+	/*
+	 * ATTRIBUTES
+	 */
 	/**
-	 * Parameterized constructor
+	 * Map from packae name to the list of the classes that are contained into the package
+	 */
+	private Map<String, List<String>> packageNameToClassNames;
+	/**
+	 * The list of the class names of the Java project
+	 */
+	private List<String> classNames;
+	/**
+	 * The URLs of the jar/war archives
+	 */
+	private URL[] jars;
+	
+	/*
+	 * CONSTRUCTORS
+	 */
+	/**
+	 * Parameterized constructor that allows to load not only jar/war archives
 	 * @param urls should not be null
-	 * @param jarUrls should not be null
+	 * @param jarUrls specific jar/war URLs, should not be null
 	 */
 	public JarLoader(URL[] urls, URL[] jarUrls) {
-		super(urls);
+		super(urls); // load everithing (class, jar...)
 		this.packageNameToClassNames = new HashMap<>();
 		this.classNames = new ArrayList<>();
 		jars = jarUrls;
-		this.initURLs();
+		this.initURLs(); // add jar url to the loader
 		this.setClassNames();
 	}
 
 	/**
-	 * 
-	 * @param paths
-	 * @throws IOException 
+	 * Parameterized constructor for loading only jar/war archives
+	 * @param paths The array that contains paths of the directories where to find jar/war archives
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
 	public JarLoader(String ... paths) throws IOException {
 
-		super(new URL[]{});
+		super(new URL[]{}); // Construct super with an empty array of URLs to only load jar/war archives
 		this.packageNameToClassNames = new HashMap<>();
 		this.classNames = new ArrayList<>();
 		List<URI> jarEntries = new ArrayList<>();
-		for(String path : paths) {
+		for(String path : paths) { // find jar/war archives to load them
 			jarEntries.addAll(FolderLoader.recursivelyLoadFolder(Paths.get(path), JAR_FILE_EXTENSION, WAR_FILE_EXTENSION));
 		}
 		List<URL> jarUrls = new ArrayList<>();
-		jarEntries.forEach(je -> {
+		jarEntries.forEach(je -> { // convert jar/war entries to URLs
 			try {
 				jarUrls.add(je.toURL());
 			} catch (MalformedURLException e) {
@@ -84,10 +113,13 @@ public class JarLoader extends URLClassLoader {
 			}
 		});
 		this.jars = jarUrls.toArray(new URL[0]);
-		this.initURLs();
+		this.initURLs(); // load jar/war archives
 		this.setClassNames();
 	}
 
+	/**
+	 * Load jar/war URLs
+	 */
 	private void initURLs()
 	{
 		for(URL url : jars)
@@ -96,47 +128,9 @@ public class JarLoader extends URLClassLoader {
 		}
 	}
 
-	public List<URI> getFilesFromJars(String fileExtension) {
-		List<URI> result = new ArrayList<>();
-		URL[] urls = this.getURLs();
-		for (URL url : urls) {
-			if(url.getPath().endsWith(JAR) || url.getPath().endsWith(WAR))
-			{
-				extractFiles(fileExtension, result, url);
-			}
-		}
-		return result ;
-	}
-
 	/**
-	 * @param fileExtension
-	 * @param result
-	 * @param url
+	 * Sets <code>packageNameToClassNames</code> and <code>classNames</code> to ease class research and loading afterwards
 	 */
-	private void extractFiles(String fileExtension, List<URI> result, URL url) {
-		JarEntry entry = null;
-		try (InputStream in = new FileInputStream(url.getFile()); JarInputStream jar = new JarInputStream(in);)
-		{
-			entry = jar.getNextJarEntry();
-			if(logger.isInfoEnabled())
-				logger.info(url.toString());
-			while(entry != null)
-			{
-				/*
-				 * WE NEED TO AVOID TO ANALYZE FRAMEWORK DEPENDENCIES
-				 */
-				if(entry.getName().endsWith(fileExtension))
-				{
-					String tempURL = url.toString() + "!/" + entry.getName();
-					result.add(URI.create(tempURL));
-				}
-				entry = jar.getNextJarEntry();
-			}
-		} catch (IOException e) {
-			logger.error("Error when getting files from jar", e);
-		}
-	}
-
 	private void setClassNames() {
 		List<String> result = getJarEntries();
 		for(String entry : result) {
@@ -175,6 +169,9 @@ public class JarLoader extends URLClassLoader {
 		return classNames;
 	}
 
+	/**
+	 * @return the entries of the jar/war archives as a {@link List} of {@link String}
+	 */
 	public List<String> getJarEntries() {
 		List<String> result = new ArrayList<>();
 		for (URL url : jars) {

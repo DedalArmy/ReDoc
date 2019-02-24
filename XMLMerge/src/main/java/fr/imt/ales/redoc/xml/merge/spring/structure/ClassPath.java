@@ -38,6 +38,14 @@ public class ClassPath {
 	private DocumentBuilder builder;
 	private Path path;
 
+	/*
+	 * CONSTRUCTOR
+	 */
+	/**
+	 * 
+	 * @param path
+	 * @throws ParserConfigurationException
+	 */
 	public ClassPath(Path path) throws ParserConfigurationException {
 		this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		this.xmlFiles = new ArrayList<>();
@@ -46,7 +54,9 @@ public class ClassPath {
 
 	/**
 	 * 
-	 * @param textContent
+	 * @param path
+	 * @param currentFile
+	 * @return
 	 */
 	public XMLFile findFileByPath(String path, XMLFile currentFile) {
 		File tempFile = null;

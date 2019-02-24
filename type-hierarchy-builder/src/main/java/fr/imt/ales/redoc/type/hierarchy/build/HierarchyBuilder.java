@@ -80,7 +80,7 @@ public class HierarchyBuilder {
 		this.javaFiles = Explorer.getFiles(path, JAVA_EXTENSION);
 		this.packages = new ArrayList<>();
 		this.compilationUnits=new ArrayList<>();
-		this.jarLoader = new JarLoader(getUnion(path, dependencyPaths));
+		this.jarLoader = new JarLoader(this.getUnion(path, dependencyPaths));
 	}
 
 	/*

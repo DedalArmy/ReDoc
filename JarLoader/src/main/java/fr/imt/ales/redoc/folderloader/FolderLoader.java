@@ -16,14 +16,36 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * @author Alexandre Le Borgne
- *
+ * A class for loading folders
  */
 public class FolderLoader {
-
+	
+	/*
+	 * LOGGER
+	 */
+	/**
+	 * Logger of the class
+	 */
 	static final Logger logger = LogManager.getLogger(FolderLoader.class);
 
+	/*
+	 * CONSTRUCTOR
+	 */
+	/**
+	 * Private constructor to avoid instantiation
+	 */
 	private FolderLoader() {}
 
+	/*
+	 * METHODS
+	 */
+	
+	/**
+	 * Loads a specific folder
+	 * @param path The path to the folder
+	 * @return The list of all the URIs contained of the folder
+	 * @throws IOException if an I/O error occurs when opening the directory
+	 */
 	public static final List<URI> loadFolder(Path path) throws IOException {
 		List<URI> uris = new ArrayList<>();
 		Stream<Path> stream = Files.list(path);
@@ -33,10 +55,10 @@ public class FolderLoader {
 	}
 	
 	/**
-	 * 
-	 * @param path
-	 * @return
-	 * @throws IOException
+	 * Loads a folder and all its sub-folders
+	 * @param path The path to the folder
+	 * @return The list of all the URIs contained of the folder and sub-folders
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
 	public static final List<URI> recursivelyLoadFolder(Path path) throws IOException {
 		List<URI> uris = new ArrayList<>();
@@ -57,11 +79,11 @@ public class FolderLoader {
 	}
 	
 	/**
-	 * 
-	 * @param path
-	 * @param fileExtension
-	 * @return files that contain the extension given by {@code fileExtension}
-	 * @throws IOException
+	 * Loads a folder and all its sub-folders, only targeting specific file extensions
+	 * @param path The path to the folder
+	 * @param fileExtensions The file extensions to focus on
+	 * @return All the files that contain the extensions given by {@code fileExtension}
+	 * @throws IOException if an I/O error occurs when opening the directory
 	 */
 	public static final List<URI> recursivelyLoadFolder(Path path, String ... fileExtensions) throws IOException {
 		List<URI> uris = new ArrayList<>();
@@ -83,10 +105,10 @@ public class FolderLoader {
 	}
 	
 	/**
-	 * 
-	 * @param path
-	 * @param fileExtensions
-	 * @return
+	 * This method verifies that a file has the right extension
+	 * @param path The path of the file
+	 * @param fileExtensions The extensions to verify
+	 * @return <code>true</code> if the given path ends with a file extension contained in {@code fileExtensions}, <code>false</code> otherwise
 	 */
 	private static final boolean endsWidth(Path path, String ... fileExtensions) {
 		for(String fileExtension : fileExtensions) {
