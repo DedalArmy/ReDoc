@@ -19,6 +19,7 @@
 
 		<module>JarLoader</module>
 		<module>XMLMerge</module>
+		<module>component-based-architechture-builder</module>
 	</modules>
 	<dependencies>
 		<dependency>
