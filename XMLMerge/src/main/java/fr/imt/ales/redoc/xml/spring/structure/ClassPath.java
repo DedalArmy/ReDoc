@@ -118,6 +118,9 @@ public class ClassPath {
 					this.xmlFiles.add(xmlFile);
 			}
 		}
+		for(XMLFile xml : xmlFiles) {
+			xml.setImports(); // to set the imports and the parents
+		}
 	}
 
 	/**

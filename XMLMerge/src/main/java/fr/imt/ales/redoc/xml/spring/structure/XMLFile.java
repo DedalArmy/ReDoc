@@ -70,7 +70,7 @@ public class XMLFile extends File {
 	}
 
 	/**
-	 * 
+	 * If the document is not parsed then it parses it and return the beans tag
 	 * @return the beans tag
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
@@ -92,7 +92,7 @@ public class XMLFile extends File {
 	}
 	
 	/**
-	 * 
+	 * If imports is empty, then it will try to find import and resolve them.
 	 * @return the imported {@link XMLFile}s
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
@@ -104,11 +104,11 @@ public class XMLFile extends File {
 	}
 
 	/**
-	 * 
+	 * Sets the imports and the parents
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
 	 */
-	private void setImports() throws SAXException, IOException {
+	public void setImports() throws SAXException, IOException {
 		if(this.document == null)
 			this.parseXML();
 		NodeList imps = document.getElementsByTagName(IMPORT);
@@ -128,8 +128,6 @@ public class XMLFile extends File {
 	 * @throws SAXException If any parse errors occur.
 	 */
 	public List<XMLFile> getParentXMLFiles() throws SAXException, IOException {
-		if(this.imports.isEmpty())
-			this.setImports();
 		return parentXMLFiles;
 	}
 
