@@ -15,7 +15,6 @@ import javax.xml.transform.TransformerException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import fr.imt.ales.redoc.folderloader.FolderLoader;
@@ -59,6 +58,16 @@ public class ClassPath {
 	public ClassPath(Path path) throws ParserConfigurationException  {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		this.builder = builderFactory.newDocumentBuilder();
+		//		builder.setEntityResolver(new EntityResolver() { //to ignore DTDs
+		//			@Override
+		//			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+		//				if (systemId.contains(".dtd")) {
+		//					return new InputSource(new StringReader(""));
+		//				} else {
+		//					return null;
+		//				}
+		//			}
+		//		});
 		this.xmlFiles = new ArrayList<>();
 		this.path = path;
 	}
@@ -112,9 +121,8 @@ public class ClassPath {
 					|| xmlURI.toString().contains("\\test\\")
 					|| xmlURI.toString().contains("\\target\\"))) {
 				XMLFile xmlFile = new XMLFile(xmlURI, this.builder, this);
-				NodeList truc = xmlFile.getSpringConfigurations();
-				int length = truc.getLength();
-				if(length > 0)
+				xmlFile.parseXML(); // parse the XML file
+				if(xmlFile.isSpring())
 					this.xmlFiles.add(xmlFile);
 			}
 		}
@@ -222,26 +230,31 @@ public class ClassPath {
 	 * @param args program arguments
 	 */
 	public static void main(String[] args) {
-		Path path = Paths.get("D:\\mrale\\Documents\\Travail\\SandBox2\\abel533\\Mybatis-Spring");
-		ClassPath cp;
-		try {
-			cp = new ClassPath(path);
-			cp.exploreClassPath();
-			for(XMLFile x : cp.xmlFiles) {
-				if(x.isCyclic()) {
-					logger.debug(x.toString() + " is Cyclic");
+		//				Path path = Paths.get("D:\\mrale\\Documents\\Travail\\SandBox2\\abel533\\Mybatis-Spring");
+		//				Path path = Paths.get("D:\\mrale\\Documents\\Travail\\SandBox2\\alibaba\\cobarclient");
+		//		Path path = Paths.get("D:\\mrale\\Documents\\Travail\\SandBox2\\ameizi\\spring-quartz-cluster-sample");
+		if(args.length>0) {
+			Path path = Paths.get(args[0]).toAbsolutePath();
+			ClassPath cp;
+			try {
+				cp = new ClassPath(path);
+				cp.exploreClassPath();
+				for(XMLFile x : cp.xmlFiles) {
+					if(x.isCyclic()) {
+						logger.debug(x.toString() + " is Cyclic");
+					}
 				}
+				List<XMLFile> mergeable = cp.getMergeableXMLFiles();
+				for(XMLFile xml : mergeable) {
+					cp.merge(path, xml);
+				}
+			} catch (ParserConfigurationException e) {
+				logger.fatal("An error occured while constructing the ClassPath object. The Spring deployment descritor discovery could not be executed.", e);
+			} catch (SAXException e) {
+				logger.fatal("An error occured while parsing XML. The Spring deployment descritor discovery could not be executed.", e);
+			} catch (IOException e) {
+				logger.fatal("An error occured due to wrong Path argument. The Spring deployment descritor discovery could not be executed.", e);
 			}
-			List<XMLFile> mergeable = cp.getMergeableXMLFiles();
-			for(XMLFile xml : mergeable) {
-				cp.merge(path, xml);
-			}
-		} catch (ParserConfigurationException e) {
-			logger.fatal("An error occured while constructing the ClassPath object. The Spring deployment descritor discovery could not be executed.", e);
-		} catch (SAXException e) {
-			logger.fatal("An error occured while parsing XML. The Spring deployment descritor discovery could not be executed.", e);
-		} catch (IOException e) {
-			logger.fatal("An error occured due to wrong Path argument. The Spring deployment descritor discovery could not be executed.", e);
 		}
 	}
 

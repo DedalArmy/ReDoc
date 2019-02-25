@@ -16,6 +16,7 @@ import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
  *
  */
 public class SpringConfigMerger {
+	private static final String BEAN = "bean";
 	/*
 	 * CONSTANTS
 	 */
@@ -27,7 +28,7 @@ public class SpringConfigMerger {
 	 * beans tag
 	 */
 	private static final String BEANS = "beans";
-	
+
 	/*
 	 * ATTRIBUTES
 	 */
@@ -43,7 +44,7 @@ public class SpringConfigMerger {
 	 * The {@link XMLFile}
 	 */
 	private XMLFile xmlFile;
-	
+
 	/**
 	 * Parameterized constructor
 	 * @param builder the {@link DocumentBuilder}
@@ -53,9 +54,9 @@ public class SpringConfigMerger {
 		this.builder = builder;
 		this.xmlFile = xmlFile;
 	}
-	
+
 	/**
-	 * 
+	 * Appends only bean tags to the merged description
 	 * @param xml the {@link XMLFile} to append the beans from
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
@@ -67,18 +68,17 @@ public class SpringConfigMerger {
 			}
 		}
 		Element beans = document.getDocumentElement();
-		NodeList nodes = xml.getSpringConfigurations();
+
+		NodeList nodes = xml.getSpringConfigurations().getChildNodes();
 		for(int i = 0; i < nodes.getLength(); i++) {
-			NodeList nlist = nodes.item(i).getChildNodes();
-			for(int j = 0; j < nlist.getLength(); j++) {
-				Node node = document.importNode(nlist.item(j), true);
+			Node node = document.importNode(nodes.item(i), true);
+			if(node.getNodeName().equals(BEAN)) // To keep only bean tags into the description
 				beans.appendChild(node);
-			}
 		}
 	}
-	
+
 	/**
-	 * 
+	 * Merges the description with its imported descriptions
 	 * @return the merged document
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
@@ -98,5 +98,5 @@ public class SpringConfigMerger {
 		}
 		return document;
 	}
-	
+
 }

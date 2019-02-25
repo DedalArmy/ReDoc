@@ -59,7 +59,7 @@ public class SpringConfigWriter {
 		DOMSource source = new DOMSource(doc);
 		Path outpath = Paths.get(path.toString(), "TOPDESCRIPTIONS");
 		outpath.toFile().mkdirs();
-		Path filepath = Paths.get(outpath.toString(), xml.getName());
+		Path filepath = Paths.get(outpath.toString(), xml.getName().replace(".xml", ".sdsl"));
 		StreamResult result = new StreamResult(new File(filepath.toString()));
 		transformer.transform(source, result);
 

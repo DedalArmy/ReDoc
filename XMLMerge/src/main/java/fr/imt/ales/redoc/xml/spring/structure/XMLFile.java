@@ -1,13 +1,18 @@
 package fr.imt.ales.redoc.xml.spring.structure;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -18,6 +23,13 @@ import org.xml.sax.SAXException;
  */
 public class XMLFile extends File {
 
+	/*
+	 * LOGGER
+	 */
+	/**
+	 * {@link Logger} of the class
+	 */
+	static final Logger logger = LogManager.getLogger(XMLFile.class);
 	/*
 	 * CONSTANTS
 	 */
@@ -75,10 +87,10 @@ public class XMLFile extends File {
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
 	 */
-	public NodeList getSpringConfigurations() throws SAXException, IOException {
+	public Element getSpringConfigurations() throws SAXException, IOException {
 		if(this.document == null)
 			this.parseXML();
-		return document.getElementsByTagName(BEANS);
+		return document.getDocumentElement();
 	}
 
 	/**
@@ -87,8 +99,12 @@ public class XMLFile extends File {
 	 * @throws SAXException If any parse errors occur.
 	 * 
 	 */
-	private void parseXML() throws SAXException, IOException {
-		this.document = builder.parse(this);
+	public void parseXML() throws SAXException, IOException {
+		try {
+			this.document = builder.parse(this);
+		} catch (FileNotFoundException e) {
+			logger.warn("File not found exception : " + e.getMessage());
+		}
 	}
 	
 	/**
@@ -219,6 +235,14 @@ public class XMLFile extends File {
 				return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
+	}
+
+	/**
+	 * Checks whether the current {@link XMLFile} is a Spring deployment descriptor or not
+	 * @return <code>true</code> if the current {@link XMLFile} is a Spring deployment descriptor, <code>false</code> otherwise
+	 */
+	public Boolean isSpring() {
+		return (this.document!=null && this.document.getElementsByTagName(BEANS).getLength()>0)?Boolean.TRUE:Boolean.FALSE;
 	}
 	
 }
