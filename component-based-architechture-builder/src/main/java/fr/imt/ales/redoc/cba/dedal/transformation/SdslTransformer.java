@@ -5,8 +5,8 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -35,12 +35,7 @@ import dedal.DedalPackage;
  *
  */
 public class SdslTransformer {
-
-	/**
-	 * URI to the Spring to Dedal transformation file
-	 */
-	static final String TRANSFORMATION_URI = "fr.ema.dedal.componentinspector/transforms/springToDedal.qvto";
-	static final String TRANSFORMATION_JAR_URI = "fr/ema/dedal/componentinspector/transforms/springToDedal.qvto";
+	
 	/**
 	 * Logger
 	 */
@@ -61,11 +56,11 @@ public class SdslTransformer {
 		TransformationExecutor executor;
 		ClassLoader cl = SdslTransformer.class.getClassLoader();
 		URL resource = cl.getResource("springToDedal.qvto");
-		System.out.println("RESOURCE : " + resource);
+		logger.debug("RESOURCE : " + resource);
 		java.net.URI uri = resource.toURI();
-		System.out.println("URI : " + uri);
+		logger.debug("URI : " + uri);
 		String path = uri.getRawPath();
-		System.out.println("PATH : " + path);
+		logger.debug("PATH : " + path);
 		executor = new TransformationExecutor(URI.createFileURI(path));
 
 		Injector injector = new SpringConfigDslStandaloneSetup().createInjectorAndDoEMFRegistration();

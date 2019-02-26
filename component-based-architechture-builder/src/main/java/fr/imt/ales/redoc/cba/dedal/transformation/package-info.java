@@ -1,7 +1,5 @@
 /**
  * A package for Deployment descriptor to Dedal transformations
- */
-/**
  * @author Alexandre Le Borgne
  *
  */

@@ -1,7 +1,5 @@
 /**
  * 
- */
-/**
  * @author Alexandre Le Borgne
  *
  */
