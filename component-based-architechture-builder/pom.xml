@@ -7,4 +7,36 @@
   </parent>
   <artifactId>component-based-architechture-builder</artifactId>
   <name>component-based-architechture-builder</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>fr.imt.ales.reverse-engineering</groupId>
+  		<artifactId>JarLoader</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>fr.imt.ales.reverse-engineering</groupId>
+  		<artifactId>type-hierarchy-builder</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>fr.imt.ales.reverse-engineering</groupId>
+  		<artifactId>XMLMerge</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.core</groupId>
+  		<artifactId>runtime</artifactId>
+  		<version>3.10.0-v20140318-2214</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.emf</groupId>
+  		<artifactId>common</artifactId>
+  		<version>2.3.0-v200706262000</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.emf</groupId>
+  		<artifactId>ecore</artifactId>
+  		<version>2.3.0-v200706262000</version>
+  	</dependency>
+  </dependencies>
 </project>

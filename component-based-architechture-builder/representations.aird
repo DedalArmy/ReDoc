@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_A5m3oDmqEemtHZtdN13XnA" version="13.0.0.201804031646">
+  <semanticResources>src/main/resources/transforms/springToDedal.qvto</semanticResources>
+  <semanticResources>http://www.eclipse.org/m2m/qvt/oml/1.0.0/Stdlib</semanticResources>
+  <semanticResources>http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore</semanticResources>
+  <semanticResources>http://www.xtext.org/spring/SpringConfigDsl</semanticResources>
+  <semanticResources>http://www.dedal.fr/metamodel</semanticResources>
+</viewpoint:DAnalysis>
