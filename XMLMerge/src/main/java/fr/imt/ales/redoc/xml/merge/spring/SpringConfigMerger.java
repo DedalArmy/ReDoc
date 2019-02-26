@@ -72,7 +72,7 @@ public class SpringConfigMerger {
 		NodeList nodes = xml.getSpringConfigurations().getChildNodes();
 		for(int i = 0; i < nodes.getLength(); i++) {
 			Node node = document.importNode(nodes.item(i), true);
-			if(node.getNodeName().equals(BEAN)) // To keep only bean tags into the description
+//			if(node.getNodeName().equals(BEAN)) // To keep only bean tags into the description
 				beans.appendChild(node);
 		}
 	}
