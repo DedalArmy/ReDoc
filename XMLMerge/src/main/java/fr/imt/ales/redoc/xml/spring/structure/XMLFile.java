@@ -67,6 +67,22 @@ public class XMLFile extends File {
 	 */
 	private List<XMLFile> parentXMLFiles;
 	
+	
+	
+	/**
+	 * @return the builder
+	 */
+	public DocumentBuilder getBuilder() {
+		return builder;
+	}
+
+	/**
+	 * @return the classPath
+	 */
+	public ClassPath getClassPath() {
+		return classPath;
+	}
+
 	/**
 	 * Parameterized constructor
 	 * @param xmlURI the URI for constructing the {@link File}

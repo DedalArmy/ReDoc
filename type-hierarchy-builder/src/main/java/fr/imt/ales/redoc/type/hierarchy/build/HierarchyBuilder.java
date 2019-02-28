@@ -166,6 +166,20 @@ public class HierarchyBuilder {
 		this.packages = packages;
 	}
 
+	/**
+	 * @return the jarLoader
+	 */
+	public JarLoader getJarLoader() {
+		return jarLoader;
+	}
+
+	/**
+	 * @param jarLoader the jarLoader to set
+	 */
+	public void setJarLoader(JarLoader jarLoader) {
+		this.jarLoader = jarLoader;
+	}
+
 	/*
 	 * METHODS
 	 */

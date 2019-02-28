@@ -26,6 +26,7 @@ import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
  *
  */
 public class SpringConfigWriter {
+	public static final String TOPDESCRIPTIONS = "TOPDESCRIPTIONS";
 	/*
 	 * LOGGER
 	 */
@@ -47,9 +48,10 @@ public class SpringConfigWriter {
 	 * @param path the output directory
 	 * @param xml the {@link XMLFile} corresponding to the top deployment descriptor
 	 * @param doc the merged Document
+	 * @return the merged {@link XMLFile}
 	 * @throws TransformerException If an unrecoverable error occurs during the course of the transformation
 	 */
-	public static void writeMergedSpringConfig(Path path, XMLFile xml, Document doc) throws TransformerException {
+	public static XMLFile writeMergedSpringConfig(Path path, XMLFile xml, Document doc) throws TransformerException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		
@@ -57,7 +59,7 @@ public class SpringConfigWriter {
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		
 		DOMSource source = new DOMSource(doc);
-		Path outpath = Paths.get(path.toString(), "TOPDESCRIPTIONS");
+		Path outpath = Paths.get(path.toString(), TOPDESCRIPTIONS);
 		outpath.toFile().mkdirs();
 		Path filepath = Paths.get(outpath.toString(), xml.getName().replace(".xml", ".sdsl"));
 		StreamResult result = new StreamResult(new File(filepath.toString()));
@@ -71,5 +73,6 @@ public class SpringConfigWriter {
 		}
 		
 		logger.info("The merged deployment description " + xml + " has been successfuly writen");
+		return new XMLFile(filepath.toUri(), xml.getBuilder(), xml.getClassPath());
 	}
 }

@@ -209,17 +209,15 @@ public class ClassPath {
 	 * Merges and writes top XML Spring deployment descriptors with their imported {@link XMLFile}s
 	 * @param path the output directory
 	 * @param xml the XMLFile corresponding to the top deployment descriptor
+	 * @return the merged {@link XMLFile} or null if an error occurs
+	 * @throws IOException If any I/O errors occur during during the writing process of the merged XML file.
+	 * @throws SAXException If any parse errors occur during the merging process.
+	 * @throws TransformerException If an unrecoverable error occurs during the merging process.
 	 */
-	public void merge(Path path, XMLFile xml) {
-		try {
-			SpringConfigMerger merger = new SpringConfigMerger(this.builder, xml);
-			Document doc = merger.merge();
-			SpringConfigWriter.writeMergedSpringConfig(path, xml, doc);
-		} catch (TransformerException e) {
-			logger.fatal("An error occured while writing the merged deployment descriptor : " + xml.getName(), e);
-		} catch (IOException | SAXException e) {
-			logger.fatal("An error occured while merging the deployment descriptor : " + xml.getName(), e);
-		}
+	public XMLFile merge(Path path, XMLFile xml) throws SAXException, IOException, TransformerException {
+		SpringConfigMerger merger = new SpringConfigMerger(this.builder, xml);
+		Document doc = merger.merge();
+		return SpringConfigWriter.writeMergedSpringConfig(path, xml, doc);
 	}
 
 }

@@ -27,6 +27,7 @@ import org.xtext.spring.SpringConfigDslStandaloneSetup;
 import com.google.inject.Injector;
 
 import dedal.DedalPackage;
+import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
 /**
  * This class uses SpringDSL language for parsing Spring XML files and then it uses a transformation written in 
@@ -48,11 +49,11 @@ public class SdslTransformer {
 
 	/**
 	 * Extract artifacts from the parsing of Spring files and then transform them into the Dedal language
-	 * @param sdslPath is the String representing the Path to the Spring XML file
+	 * @param deploymentDescriptor is the XML file containing the Spring deployment description
 	 * @return The List<EObject> containing Dedal features if the extraction finished normally, and an <b>empty</b> List<EObject> otherwise
 	 * @throws URISyntaxException if this URL is not formatted strictly according toto RFC2396 and cannot be converted to a URI.
 	 */
-	public static List<EObject> extractDedalArtifacts(String sdslPath) throws URISyntaxException {
+	public static List<EObject> extractDedalArtifacts(XMLFile deploymentDescriptor) throws URISyntaxException {
 		TransformationExecutor executor;
 		ClassLoader cl = SdslTransformer.class.getClassLoader();
 		URL resource = cl.getResource("springToDedal.qvto");
@@ -66,7 +67,7 @@ public class SdslTransformer {
 		Injector injector = new SpringConfigDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 		ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 		Resource inResource;
-		inResource = resourceSet.getResource(org.eclipse.emf.common.util.URI.createFileURI(sdslPath),true);
+		inResource = resourceSet.getResource(org.eclipse.emf.common.util.URI.createFileURI(deploymentDescriptor.getAbsolutePath()),true);
 		EList<EObject> inObjects = inResource.getContents();
 
 		/**
