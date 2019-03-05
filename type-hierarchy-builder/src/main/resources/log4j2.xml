@@ -11,7 +11,7 @@
 	</Appenders>
 	<Loggers>
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.main.Main" level="info" />
-		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder" level="info" />
+		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderImpl" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.FolderLoader" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter" level="info" />

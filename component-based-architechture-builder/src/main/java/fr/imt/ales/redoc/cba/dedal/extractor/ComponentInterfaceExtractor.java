@@ -14,136 +14,31 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import dedal.Configuration;
-import dedal.DedalDiagram;
+import dedal.DedalFactory;
 import dedal.Interface;
 import dedal.InterfaceType;
 import dedal.Parameter;
 import dedal.Repository;
 import dedal.Signature;
 import dedal.impl.DedalFactoryImpl;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 /**
  * @author Alexandre Le Borgne
  *
  */
-public class ComponentInterfaceExtractor {
+public class ComponentInterfaceExtractor extends ArtefactExtractor {
 
 	static final Logger logger = LogManager.getLogger(ComponentInterfaceExtractor.class);
-	private Map<Interface, Class<?>> interfaceToClassMap;
 	private Map<Interface, List<Interface>> candidateInterfaces;
 
-	private Class<?> objectToInspect;
-	private DedalDiagram dedaldiagram;
-	private Configuration configuration;
-	private Repository repository;
-
 	/**
-	 * @param config 
-	 * @param repo 
-	 * 
+	 * @param jType
+	 * @param dedalFactory
 	 */
-	public ComponentInterfaceExtractor(Class<?> object, DedalDiagram dd, Configuration config, Repository repo) {
-		this.objectToInspect = object;
-		this.dedaldiagram = dd;
-		this.configuration = config;
-		this.repository = repo;
-		this.setInterfaceToClassMap(new HashMap<>());
+	public ComponentInterfaceExtractor(JavaType jType, DedalFactory dedalFactory) {
+		super(jType, dedalFactory);
 		this.setCandidateInterfaces(new HashMap<>());
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public DedalDiagram getDedaldiagram() {
-		return dedaldiagram;
-	}
-
-	/**
-	 * 
-	 * @param dedaldiagram
-	 */
-	public void setDedaldiagram(DedalDiagram dedaldiagram) {
-		this.dedaldiagram = dedaldiagram;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Configuration getConfiguration() {
-		return configuration;
-	}
-
-	/**
-	 * 
-	 * @param configuration
-	 */
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Repository getRepository() {
-		return repository;
-	}
-
-	/**
-	 * 
-	 * @param repository
-	 */
-	public void setRepository(Repository repository) {
-		this.repository = repository;
-	}
-
-	/**
-	 * 
-	 * @param object
-	 */
-	public void setObjectToInspect(Class<?> object) {
-		this.objectToInspect = object;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return this.objectToInspect.getName();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getSimpleName() {
-		return this.objectToInspect.getSimpleName();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Class<?> getObjectToInspect() {
-		return objectToInspect;
-	}
-
-	/**
-	 * @return the interfaceToClassMap
-	 */
-	public Map<Interface, Class<?>> getInterfaceToClassMap() {
-		return interfaceToClassMap;
-	}
-
-	/**
-	 * @param interfaceToClassMap the interfaceToClassMap to set
-	 */
-	public void setInterfaceToClassMap(Map<Interface, Class<?>> interfaceToClassMap) {
-		this.interfaceToClassMap = interfaceToClassMap;
 	}
 
 	public Map<Interface, List<Interface>> getCandidateInterfaces() {
@@ -165,30 +60,14 @@ public class ComponentInterfaceExtractor {
 
 	/**
 	 * 
-	 * @param objectToInspect
+	 * @param objectToInspect2
 	 * @return
 	 */
-	public List<Interface> calculateInterfaces(Class<?> objectToInspect)
+	public List<Interface> calculateInterfaces(JavaType objectToInspect2)
 	{
-//		Metrics.addNbClasses();
 		List<Interface> result = new ArrayList<>();
-//		if(objectToInspect.getInterfaces().length > 0)
-//		{
-//			Class<?>[] interfaces = objectToInspect.getInterfaces();
-//			for (Class<?> i : interfaces) {
-//				Interface tempInt = this.getDedalInterface(i);
-////				Metrics.addNbInterfaces();
-//				result.add(tempInt);
-//			}
-//		}
-//		if(objectToInspect.isInterface())
-//		{
-//			result.add(this.getDedalInterface(objectToInspect));
-////			Metrics.addNbInterfaces();
-//			return result;
-//		}
-		Interface current = mapAsInterface(objectToInspect);
-		computeCandidateInterfaces(objectToInspect, current);
+		Interface current = mapAsInterface(objectToInspect2);
+		computeCandidateInterfaces(objectToInspect2, current);
 		result.add(current);
 		
 		return result;
@@ -196,45 +75,42 @@ public class ComponentInterfaceExtractor {
 	
 
 	/**
-	 * @param objectToInspect
+	 * @param objectToInspect2
 	 * @param result
 	 * @throws SecurityException
 	 */
-	private Interface mapAsInterface(Class<?> objectToInspect) {
+	private Interface mapAsInterface(JavaType objectToInspect2) {
 		List<Method> methods = new ArrayList<>();
-		methods.addAll(recursivelyGetMethods(objectToInspect));
+		methods.addAll(recursivelyGetMethods(objectToInspect2));
 		if(!methods.isEmpty())
 		{
-//			Interface derivedInterface = this.deriveInterface("I" + objectToInspect.getSimpleName(), "I" + objectToInspect.getSimpleName() + "_Type",methods);
-			Interface derivedInterface = this.deriveInterface(EcoreUtil.generateUUID().replaceAll("-", ""), "I" + objectToInspect.getSimpleName(),methods);
-			this.interfaceToClassMap.put(derivedInterface, objectToInspect);
+			Interface derivedInterface = this.deriveInterface(EcoreUtil.generateUUID().replaceAll("-", ""), "I" + objectToInspect2.getSimpleName(),methods);
+//			TODO Add the corresponding Java to the interface
 			return derivedInterface;
 		}
 		return null;
 	}
 
 	/**
-	 * @param objectToInspect
+	 * @param objectToInspect2
 	 * @param derivedInterface
 	 */
-	private void computeCandidateInterfaces(Class<?> objectToInspect, Interface derivedInterface) {
-		if(!(Object.class).equals(objectToInspect.getSuperclass()) && objectToInspect.getSuperclass()!=null)
+	private void computeCandidateInterfaces(JavaType objectToInspect2, Interface derivedInterface) {
+		if(!(Object.class.getName()).equals(objectToInspect2.getSuperclass().getFullName()) && objectToInspect2.getSuperclass()!=null)
 		{
-//			List<Interface> calculateInterfaces = this.calculateInterfaces(objectToInspect.getSuperclass());
-			List<Interface> calculateInterfaces = new ArrayList<Interface>();
-			calculateInterfaces.add(this.mapAsInterface(objectToInspect.getSuperclass()));
+			List<Interface> calculateInterfaces = new ArrayList<>();
+			calculateInterfaces.add(this.mapAsInterface(objectToInspect2.getSuperclass()));
 			if(this.candidateInterfaces.get(derivedInterface)!=null)
 				this.candidateInterfaces.get(derivedInterface).addAll(calculateInterfaces);
 			else
 				this.candidateInterfaces.put(derivedInterface, calculateInterfaces);
-			this.computeCandidateInterfaces(objectToInspect.getSuperclass(), calculateInterfaces.get(0));
+			this.computeCandidateInterfaces(objectToInspect2.getSuperclass(), calculateInterfaces.get(0));
 		}
-		if(objectToInspect.getInterfaces().length > 0)
+		if(!objectToInspect2.getInterfaces().isEmpty())
 		{
-			Class<?>[] interfaces = objectToInspect.getInterfaces();
+			Class<?>[] interfaces = objectToInspect2.getInterfaces();
 			for (Class<?> i : interfaces) {
 				List<Interface> calculateInterfaces = this.calculateInterfaces(i);
-//				this.candidateInterfaces.put(derivedInterface, calculateInterfaces);
 				if(this.candidateInterfaces.get(derivedInterface)!=null)
 					this.candidateInterfaces.get(derivedInterface).addAll(calculateInterfaces);
 				else
@@ -243,13 +119,13 @@ public class ComponentInterfaceExtractor {
 		}
 	}
 
-	private Collection<? extends Method> recursivelyGetMethods(Class<?> objectToInspect) {
+	private Collection<? extends Method> recursivelyGetMethods(JavaType objectToInspect) {
 		List<Method> methods = new ArrayList<>();
-		if(!(Object.class).equals(objectToInspect.getSuperclass()) && objectToInspect.getSuperclass()!=null)
+		if(!(Object.class.getName()).equals(objectToInspect.getSuperclass().getFullName()) && objectToInspect.getSuperclass()!=null)
 		{
 			methods.addAll(recursivelyGetMethods(objectToInspect.getSuperclass()));
 		}
-		for(Class<?> i : objectToInspect.getInterfaces())
+		for(JavaType i : objectToInspect.getInterfaces())
 		{
 			methods.addAll(recursivelyGetMethods(i));
 		}
@@ -275,27 +151,6 @@ public class ComponentInterfaceExtractor {
 
 	/**
 	 * 
-	 * @param inter
-	 * @return
-	 */
-//	private Interface getDedalInterface(Class<?> inter)
-//	{
-////		Metrics.addNbClasses();
-//		Interface result = new DedalFactoryImpl().createInterface();
-//		if(inter.getMethods().length > 0)
-//		{
-//			List<Method> tempMethods = new ArrayList<>();
-//			for (Method method : inter.getMethods()) {
-//				tempMethods.add(method);
-//			}
-//			result = deriveInterface("I" + inter.getSimpleName(), inter.getSimpleName(),tempMethods);
-//			this.interfaceToClassMap.put(result, inter);
-//		}
-//		return result;
-//	}
-
-	/**
-	 * 
 	 * @param name
 	 * @param typeName
 	 * @param tempMethods
@@ -303,29 +158,12 @@ public class ComponentInterfaceExtractor {
 	 */
 	public Interface deriveInterface(String name, String typeName,List<Method> tempMethods)
 	{
-		Interface tempInterface = new DedalFactoryImpl().createInterface();
+		Interface tempInterface = this.dedalFactory.createInterface();
 		tempInterface.setName(name);
-		InterfaceType tempInterfaceType = new DedalFactoryImpl().createInterfaceType();
+		InterfaceType tempInterfaceType = this.dedalFactory.createInterfaceType();
 		tempInterfaceType.setName(typeName);
 		tempInterfaceType.getSignatures().addAll(this.getSignatures(tempMethods));
-
-
-		if(!existsInRepo(tempInterfaceType))
-		{
-			if(!existsInConfig(tempInterfaceType))
-			{
-				configuration.getInterfaceTypes().add(tempInterfaceType);
-				tempInterface.setType(tempInterfaceType);
-			}
-			else {
-				tempInterface.setType(this.getInterfaceTypeFromConfig(tempInterfaceType));
-			}
-			repository.getInterfaceTypes().add(tempInterfaceType);
-		}
-		else {
-			tempInterface.setType(this.getInterfaceTypeFromRepo(tempInterfaceType));
-		}
-
+		tempInterface.setType(tempInterfaceType);
 		return tempInterface;
 	}
 
@@ -339,11 +177,11 @@ public class ComponentInterfaceExtractor {
 		List<Signature> result = new ArrayList<>();
 		for (Method m : tempMethods)
 		{
-			Signature tempSignature = new DedalFactoryImpl().createSignature();
+			Signature tempSignature = this.dedalFactory.createSignature();
 			tempSignature.setName(m.getName());
 			tempSignature.setType(m.getReturnType().getCanonicalName());
 			for (int i = 0; i < m.getParameters().length; i++) {
-				Parameter tempParameter = new DedalFactoryImpl().createParameter();
+				Parameter tempParameter = this.dedalFactory.createParameter();
 				java.lang.reflect.Parameter p = m.getParameters()[i];
 				tempParameter.setName(p.getName());
 				tempParameter.setType(p.getType().getCanonicalName());
@@ -354,63 +192,63 @@ public class ComponentInterfaceExtractor {
 		return result;
 	}
 
-	/**
-	 * 
-	 * @param type
-	 * @return
-	 */
-	private boolean existsInConfig(InterfaceType type)
-	{
-		for(InterfaceType it : configuration.getInterfaceTypes())
-		{
-			if(it.getName().equals(type.getName()))
-				return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param type
-	 * @return
-	 */
-	private boolean existsInRepo(InterfaceType type)
-	{
-		for(InterfaceType it : repository.getInterfaceTypes())
-		{
-			if(it.getName().equals(type.getName()))
-				return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param interfaceType
-	 * @return
-	 */
-	private InterfaceType getInterfaceTypeFromConfig(InterfaceType interfaceType)
-	{
-		for(InterfaceType it : configuration.getInterfaceTypes())
-		{
-			if(it.getName().equals(interfaceType.getName()))
-				return it;
-		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param interfaceType
-	 * @return
-	 */
-	private InterfaceType getInterfaceTypeFromRepo(InterfaceType interfaceType) {
-		for(InterfaceType it : repository.getInterfaceTypes())
-		{
-			if(it.getName().equals(interfaceType.getName()))
-				return it;
-		}
-		return null;
-	}
+//	/**
+//	 * 
+//	 * @param type
+//	 * @return
+//	 */
+//	private boolean existsInConfig(InterfaceType type)
+//	{
+//		for(InterfaceType it : configuration.getInterfaceTypes())
+//		{
+//			if(it.getName().equals(type.getName()))
+//				return true;
+//		}
+//		return false;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param type
+//	 * @return
+//	 */
+//	private boolean existsInRepo(InterfaceType type)
+//	{
+//		for(InterfaceType it : repository.getInterfaceTypes())
+//		{
+//			if(it.getName().equals(type.getName()))
+//				return true;
+//		}
+//		return false;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param interfaceType
+//	 * @return
+//	 */
+//	private InterfaceType getInterfaceTypeFromConfig(InterfaceType interfaceType)
+//	{
+//		for(InterfaceType it : configuration.getInterfaceTypes())
+//		{
+//			if(it.getName().equals(interfaceType.getName()))
+//				return it;
+//		}
+//		return null;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param interfaceType
+//	 * @return
+//	 */
+//	private InterfaceType getInterfaceTypeFromRepo(InterfaceType interfaceType) {
+//		for(InterfaceType it : repository.getInterfaceTypes())
+//		{
+//			if(it.getName().equals(interfaceType.getName()))
+//				return it;
+//		}
+//		return null;
+//	}
 	
 }

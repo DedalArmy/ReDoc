@@ -10,6 +10,7 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
 /**
  * A class for representing Java types
@@ -325,5 +326,42 @@ public class JavaType {
 		else str.append("\n\t\t~" + method.getTypeAsString() + " " + method.getSignature().asString());
 
 		return str.toString();
+	}
+
+	
+	public JavaType getSuperclass() {
+		
+		return null;
+	}
+
+
+	/**
+	 * @return
+	 */
+	public List<JavaType> getInterfaces() {
+		if(this.typeDeclaration.isClassOrInterfaceDeclaration()) {
+			if(this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface())
+				return jExtends;
+			else return jImplements;
+		}
+		return null;
+	}
+
+
+	public Object getDeclaredMethods() {
+		this.typeDeclaration.getMethods().forEach(m -> {System.out.println(m.toMethodDeclaration().get().getMetaModel().getType().getCanonicalName());});
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<JavaField> getDeclaredFields() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Boolean isEnum() {
+		return this.typeDeclaration.isEnumDeclaration();
 	}
 }

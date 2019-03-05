@@ -14,9 +14,9 @@ import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import dedal.DedalDiagram;
-import dedal.impl.DedalFactoryImpl;
 import fr.imt.ales.redoc.cba.dedal.builder.DedalArchitectureBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
 import fr.imt.ales.redoc.xml.spring.structure.ClassPath;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
@@ -51,7 +51,7 @@ public class DedalDiagramGenerator {
 		List<DedalDiagram> result = Collections.emptyList();
 		
 		// Generates the type hierarchy
-		HierarchyBuilder hierarchyBuilder = new HierarchyBuilder(projectPath);
+		HierarchyBuilder hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
 		hierarchyBuilder.build();
 		
 		// Write the extracted UML diagram for comparison purpose
@@ -77,7 +77,7 @@ public class DedalDiagramGenerator {
 		
 		// Generate a Dedal Diagram for each merged deployment descriptor
 		for(XMLFile xml : topDescriptions) {
-			result.add(generate(hierarchyBuilder, xml));
+			result.add(generate(projectPath, xml));
 		}
 		
 		return result;
@@ -89,12 +89,13 @@ public class DedalDiagramGenerator {
 	 * @param springXMLFile
 	 * @return
 	 * @throws URISyntaxException 
+	 * @throws IOException 
 	 */
-	public static DedalDiagram generate(HierarchyBuilder hierarchyBuilder, XMLFile springXMLFile) throws URISyntaxException {
+	public static DedalDiagram generate(String projectPath, XMLFile springXMLFile) throws URISyntaxException, IOException {
 		/**
 		 * we instantiate a new Dedal diagram that we will return as the result of this method
 		 */
-		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(hierarchyBuilder);
+		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(projectPath);
 		return dBuilder.build(springXMLFile);
 	}
 }

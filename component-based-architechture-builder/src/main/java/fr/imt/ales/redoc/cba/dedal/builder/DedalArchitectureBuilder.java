@@ -1,5 +1,6 @@
 package fr.imt.ales.redoc.cba.dedal.builder;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,6 +34,8 @@ import fr.imt.ales.redoc.cba.dedal.extractor.ComponentRoleExtractor;
 import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
 import fr.imt.ales.redoc.cba.dedal.transformation.SdslTransformer;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderImpl;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
 /**
@@ -86,13 +89,15 @@ public class DedalArchitectureBuilder {
 	 */
 	DedalFactory factory;
 	HierarchyBuilder hierarchyBuilder;
+	private String projectPath;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// Constructor, init, accessors	//////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public DedalArchitectureBuilder(HierarchyBuilder hierarchyBuilder) {
-		this.hierarchyBuilder = hierarchyBuilder;
+	public DedalArchitectureBuilder(String projectPath) throws IOException {
+		this.projectPath = projectPath;
+		this.hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
 		this.compToClass = new HashMap<>();
 		this.roleToClass = new HashMap<>();
 		this.compIntToType = new HashMap<>();
@@ -607,7 +612,7 @@ public class DedalArchitectureBuilder {
 				Metrics.addNbFailedClass();
 				c = Object.class;
 			}
-			ComponentClassExtractor ci = new ComponentClassExtractor(c, dedalDiagram, config, repo);
+			ComponentClassExtractor ci = new ComponentClassExtractor(c, config, repo);
 			ci.mapComponentClass(tempCompClass);
 			this.compToClass.put(tempCompClass, c);
 			this.compIntToType.put(tempCompClass, ci.getInterfaceToClassMap());

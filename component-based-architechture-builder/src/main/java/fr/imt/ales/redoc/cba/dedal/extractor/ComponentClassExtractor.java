@@ -18,15 +18,17 @@ import dedal.CompType;
 import dedal.Configuration;
 import dedal.DIRECTION;
 import dedal.DedalDiagram;
+import dedal.DedalFactory;
 import dedal.Interface;
 import dedal.Repository;
 import dedal.impl.DedalFactoryImpl;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 /**
  * @author Alexandre Le Borgne
  *
  */
-public class ComponentClassExtractor extends ComponentInterfaceExtractor {
+public class ComponentClassExtractor extends ComponentTypeExtractor {
 
 	static final Logger logger = LogManager.getLogger(ComponentClassExtractor.class);
 
@@ -36,8 +38,8 @@ public class ComponentClassExtractor extends ComponentInterfaceExtractor {
 	 * @param config 
 	 * @param repo 
 	 */
-	public ComponentClassExtractor(Class<?> object, DedalDiagram dd, Configuration config, Repository repo) {
-		super(object, dd, config, repo);
+	public ComponentClassExtractor(JavaType jType, DedalFactory dedalFactory) {
+		super(jType, dedalFactory);
 	}
 
 	/**
@@ -45,23 +47,21 @@ public class ComponentClassExtractor extends ComponentInterfaceExtractor {
 	 * @param compClass 
 	 * @return true if no problem occurred 
 	 */
-	public Boolean mapComponentClass(CompClass compClass) {
+	public Boolean mapComponentClass() {
 		if(logger.isInfoEnabled())
-			logger.info("\t" + this.getObjectToInspect().getName() + " -- " + this.getObjectToInspect().getTypeName());
+			logger.info("\t" + this.getObjectToInspect().getSimpleName() + " -- " + this.getObjectToInspect().getFullName());
 
-			CompType tempCompType = new DedalFactoryImpl().createCompType();
+//			CompType tempCompType = new DedalFactoryImpl().createCompType();
 //			tempCompType.setName(this.getObjectToInspect().getTypeName().replace('.', '_')+"_Type");
-			tempCompType.setName(this.getObjectToInspect().getCanonicalName().replace('.', '_')+"_Type");
-			this.getConfiguration().getComptypes().add(tempCompType);
+//			tempCompType.setName(this.getObjectToInspect().getSimpleName().replace('.', '_')+"_Type");
 
 			try {
-				fillConfigComponent(tempCompType, compClass);
+				fillConfigComponent();
 			} 
 			catch (SecurityException | NoClassDefFoundError | TypeNotPresentException e) {
 				logger.error(e.getMessage(), e);
 				return Boolean.FALSE;
 			}
-			this.getRepository().getComponents().add((tempCompType));
 			return Boolean.TRUE;
 	}
 
@@ -70,16 +70,16 @@ public class ComponentClassExtractor extends ComponentInterfaceExtractor {
 	 * @param tempCompClass
 	 * @throws SecurityException
 	 */
-	private void fillConfigComponent(CompType tempCompType, CompClass tempCompClass) {
+	private void fillConfigComponent() {
 		mapAttributes(tempCompClass, this.getObjectToInspect());
 		List<Interface> providedInterfaces = this.calculateProvidedInterfaces();
 		
 		tempCompClass.getCompInterfaces().addAll(providedInterfaces);
-		List<Interface> requiredInterfaces = this.calculateRequiredInterfaces();
-		tempCompClass.getCompInterfaces().addAll(requiredInterfaces);
-		tempCompType.getCompInterfaces().addAll(EcoreUtil.copyAll(providedInterfaces));
-		tempCompType.getCompInterfaces().addAll(EcoreUtil.copyAll(requiredInterfaces));
-		tempCompType.getCompInterfaces().forEach(ci -> ci.setName(ci.getName()+"_"+tempCompType.getName()));
+//		List<Interface> requiredInterfaces = this.calculateRequiredInterfaces();
+//		tempCompClass.getCompInterfaces().addAll(requiredInterfaces);
+//		tempCompType.getCompInterfaces().addAll(EcoreUtil.copyAll(providedInterfaces));
+//		tempCompType.getCompInterfaces().addAll(EcoreUtil.copyAll(requiredInterfaces));
+//		tempCompType.getCompInterfaces().forEach(ci -> ci.setName(ci.getName()+"_"+tempCompType.getName()));
 		tempCompClass.setImplements(tempCompType);
 	}
 
@@ -133,66 +133,6 @@ public class ComponentClassExtractor extends ComponentInterfaceExtractor {
 			String adId = (objName.equals(piName))?"":"_"+this.getObjectToInspect().getSimpleName();
 			pi.setName(piName+adId);
 		});
-		return result;
-	}
-
-	/**
-	 * This method intends to calculate provided interfaces with a satisfying granularity.
-	 * @param tempCompClass
-	 */
-	public List<Interface> calculateProvidedInterfaces(Class<?> objectToInspect) {
-		List<Interface> result = new ArrayList<>();
-		result.addAll(calculateInterfaces(objectToInspect));
-		if(!result.isEmpty())
-			result.forEach(i -> i.setDirection(DIRECTION.PROVIDED));
-		return result;
-	}
-
-	/**
-	 * This method intends to calculate required interfaces with a satisfying granularity.
-	 */
-	public List<Interface> calculateRequiredInterfaces() {
-		List<Interface> result = calculateRequiredInterfaces(this.getObjectToInspect());
-		result.forEach(ri -> {
-			String riName = ri.getName();
-			String objName = this.getObjectToInspect().getSimpleName();
-			String adId = (("I" + objName).equals(riName))?"":"_"+this.getObjectToInspect().getSimpleName();
-			ri.setName(ri.getName()+adId);
-		});
-		return result;
-	}
-	
-	/**
-	 * 
-	 * @param objectToInspect
-	 * @return
-	 */
-	public List<Interface> calculateRequiredInterfaces(Class<?> objectToInspect) {
-		List<Interface> result = new ArrayList<>();
-
-		if(objectToInspect.getDeclaredFields().length>0)
-		{
-			for(int i = 0; i<objectToInspect.getDeclaredFields().length; i++)
-			{
-				Field f = objectToInspect.getDeclaredFields()[i];
-				List<Interface> interfaces;
-				Class<?> type = f.getType();
-				if(!(type.isEnum() || type.isPrimitive()))
-				{
-					if(type.isArray())
-						interfaces = calculateInterfaces(type.getComponentType());
-					else
-						interfaces = calculateInterfaces(type);
-					result.addAll(interfaces);
-				}
-			}
-		}
-		if(!(Object.class).equals(objectToInspect.getSuperclass()) && 
-				objectToInspect.getSuperclass()!=null)
-		{
-			result.addAll(calculateRequiredInterfaces(objectToInspect.getSuperclass()));
-		}
-		result.forEach(i -> i.setDirection(DIRECTION.REQUIRED));
 		return result;
 	}
 }

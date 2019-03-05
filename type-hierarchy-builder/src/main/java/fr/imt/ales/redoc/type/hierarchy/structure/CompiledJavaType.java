@@ -30,6 +30,17 @@ public class CompiledJavaType extends JavaType {
 		super(simpleName, jPackage, typeDeclaration, compilationUnit);
 		this.clazz = clazz;
 	}
+	
+	/**
+	 * Parameterized constructor
+	 * @param simpleName the simple name of the Java type
+	 * @param jPackage the {@link JavaPackage} that is the parent of the current {@link JavaType}
+	 * @param clazz the {@link Class} object
+	 */
+	public CompiledJavaType(String simpleName, JavaPackage jPackage, Class<?> clazz) {
+		super(simpleName, jPackage, null, null);
+		this.clazz = clazz;
+	}
 
 	/**
 	 * @return the clazz

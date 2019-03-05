@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderImpl;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
 
 /**
@@ -84,10 +86,11 @@ public class Main {
 			logger.info("out = " + out);
 			if("".contentEquals(out))
 				out = in+"/uml.txt";
+			HierarchyBuilderManager hbManager = HierarchyBuilderManager.getInstance();
 			HierarchyBuilder hierarchyBuilder = null;
 
 			try {
-				hierarchyBuilder = new HierarchyBuilder(in);
+				hierarchyBuilder = hbManager.getHierarchyBuilder(in);
 				hierarchyBuilder.build();
 			} catch (IOException e) {
 				logger.error("An error occured during hierarchy reconstruction.");
