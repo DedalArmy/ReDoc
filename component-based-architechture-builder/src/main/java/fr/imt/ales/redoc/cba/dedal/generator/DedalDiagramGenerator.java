@@ -51,7 +51,8 @@ public class DedalDiagramGenerator {
 		List<DedalDiagram> result = Collections.emptyList();
 		
 		// Generates the type hierarchy
-		HierarchyBuilder hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
+		HierarchyBuilderManager hbmanager = HierarchyBuilderManager.getInstance();
+		HierarchyBuilder hierarchyBuilder = hbmanager.getHierarchyBuilder(projectPath);
 		hierarchyBuilder.build();
 		
 		// Write the extracted UML diagram for comparison purpose
@@ -97,5 +98,15 @@ public class DedalDiagramGenerator {
 		 */
 		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(projectPath);
 		return dBuilder.build(springXMLFile);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			DedalDiagramGenerator.generateAll(args[0]);
+		} catch (ParserConfigurationException | SAXException | IOException | TransformerException
+				| URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

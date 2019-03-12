@@ -1,9 +1,13 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.ast.body.TypeDeclaration;
+
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 
 /**
  * A class to represent Java package structure
@@ -26,6 +30,7 @@ public class JavaPackage {
 	 * The {@link List} of {@link Relation}s of the package
 	 */
 	private List<Relation> relations;
+	private String projectPath;
 
 	/*
 	 * CONSTRUCTOR
@@ -34,9 +39,10 @@ public class JavaPackage {
 	 * Parameterized constructor
 	 * @param name the name of the package
 	 */
-	public JavaPackage(String name) {
+	public JavaPackage(String name, String projectPath) {
 		super();
 		this.name = name;
+		this.projectPath = projectPath;
 		javaTypes = new ArrayList<>();
 		relations = new ArrayList<>();
 	}
@@ -158,5 +164,10 @@ public class JavaPackage {
 		}
 		str.append("\n}\n");
 		return str.toString();
+	}
+
+	public JavaType addNewCompiledJavaType(Class<Object> class1) throws IOException {
+		HierarchyBuilder currentHb = HierarchyBuilderManager.getInstance().getHierarchyBuilder(this.projectPath);
+		return currentHb.createNewCompiledJavaType(class1);
 	}
 }

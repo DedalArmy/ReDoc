@@ -114,9 +114,11 @@ public class ClassPath {
 			if(!(xmlURI.toString().contains("/TOPDESCRIPTIONS/")
 					|| xmlURI.toString().contains("/test/")
 					|| xmlURI.toString().contains("/target/")
+					|| xmlURI.toString().contains("/build/")
 					|| xmlURI.toString().contains("\\TOPDESCRIPTIONS\\")
 					|| xmlURI.toString().contains("\\test\\")
-					|| xmlURI.toString().contains("\\target\\"))) {
+					|| xmlURI.toString().contains("\\target\\")
+					|| xmlURI.toString().contains("\\build\\"))) {
 				XMLFile xmlFile = new XMLFile(xmlURI, this.builder, this);
 				xmlFile.parseXML(); // parse the XML file
 				if(xmlFile.isSpring())

@@ -1,16 +1,7 @@
 package fr.imt.ales.redoc.cba.dedal.extractor;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import dedal.CompType;
-import dedal.DIRECTION;
 import dedal.DedalFactory;
-import dedal.Interface;
-import fr.imt.ales.redoc.type.hierarchy.structure.JavaField;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class ComponentTypeExtractor extends ArtefactExtractor {
@@ -26,9 +17,6 @@ public class ComponentTypeExtractor extends ArtefactExtractor {
 		{
 			this.componentType = this.dedalFactory.createCompType();
 			this.componentType.setName(this.getSimpleName().replace('.', '_')+"_Type");
-//			this.componentType.getCompInterfaces().addAll(this.calculateProvidedInterfaces(this.objectToInspect));
-//			this.componentType.getCompInterfaces().addAll(this.calculateRequiredInterfaces(this.objectToInspect));
-			this.componentType.getCompInterfaces().forEach(ci -> ci.setName(ci.getName()+"_"+this.componentType.getName()));
 		}
 		return this.componentType;
 	}

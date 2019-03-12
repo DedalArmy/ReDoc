@@ -62,7 +62,8 @@ public class SdslTransformer {
 		logger.debug("URI : " + uri);
 		String path = uri.getRawPath();
 		logger.debug("PATH : " + path);
-		executor = new TransformationExecutor(URI.createFileURI(path));
+		URI uuri = URI.createFileURI(path);
+		executor = new TransformationExecutor(uuri);
 
 		Injector injector = new SpringConfigDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 		ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);

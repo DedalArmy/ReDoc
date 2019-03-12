@@ -1,15 +1,66 @@
 package fr.imt.ales.redoc.cba.dedal.structure;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import dedal.DedalFactory;
-import dedal.Interface;
+import dedal.InterfaceType;
+import fr.imt.ales.redoc.cba.dedal.extractor.ComponentInterfaceExtractor;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class DedalInterfaceType extends DedalType {
 
-	Interface dedalInterface;
-	
-	public DedalInterfaceType(JavaType jType, DedalFactory dedalFactory) {
-		super(jType, dedalFactory);
+	InterfaceType interfaceType;
+	List<DedalInterfaceType> candidateInterfaceTypes;
+	private ComponentInterfaceExtractor cie;
+
+	public DedalInterfaceType(String projectPath, DedalFactory dedalFactory, JavaType jType, ComponentInterfaceExtractor cie) throws IOException {
+		super(projectPath, dedalFactory);
+		this.setjType(jType);
+		this.candidateInterfaceTypes = new ArrayList<>();
+		this.cie = cie;
+		this.mapInterfaceType();
+	}
+
+	public void mapInterfaceType() throws IOException {
+		if(this.cie == null) {
+			this.cie = new ComponentInterfaceExtractor(this.getjType(), this.getDedalFactory());
+		}
+		this.interfaceType = this.cie.mapInterfaceType(this.getjType());
+		List<JavaType> jTypes = this.recursivelyGetSuperTypes(this.getjType());
+		for(JavaType jt : jTypes) {
+			this.candidateInterfaceTypes.add(new DedalInterfaceType(this.getProjectPath(), this.getDedalFactory(), jt, this.cie));
+		}
+	}
+
+	private List<JavaType> recursivelyGetSuperTypes(JavaType jType) {
+		List<JavaType> result = new ArrayList<>();
+		if(!jType.getjExtends().isEmpty()) {
+			result.addAll(jType.getjExtends());
+			for(JavaType jt : jType.getjExtends()) {
+				result.addAll(this.recursivelyGetSuperTypes(jt));
+			}
+		}
+		if(!jType.getjImplements().isEmpty()) {
+			result.addAll(jType.getjImplements());
+			for(JavaType jt : jType.getjImplements()) {
+				result.addAll(this.recursivelyGetSuperTypes(jt));
+			}
+		}
+		return result ;
+	}
+
+	/**
+	 * @return the interfaceType
+	 */
+	public InterfaceType getInterfaceType() {
+		return interfaceType;
+	}
+
+	@Override
+	public String toString() {
+		return this.interfaceType.getName();
 	}
 
 }

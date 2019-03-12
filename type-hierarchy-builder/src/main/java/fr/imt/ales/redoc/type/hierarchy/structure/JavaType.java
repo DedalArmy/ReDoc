@@ -1,7 +1,9 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -237,7 +239,7 @@ public class JavaType {
 		}
 		return str.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @return {@code typeDeclaration} as a {@link String}
@@ -274,7 +276,7 @@ public class JavaType {
 			str.append("class " + this.getFullName() + " {");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return {@code typeDeclaration} as a {@link String} if it is an {@link EnumDeclaration}
@@ -328,9 +330,16 @@ public class JavaType {
 		return str.toString();
 	}
 
-	
-	public JavaType getSuperclass() {
-		
+
+	public JavaType getSuperclass() throws IOException {
+		if(!this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface())
+		{
+			if(!this.jExtends.isEmpty())
+				return this.jExtends.get(0);
+			else {
+				return this.jPackage.addNewCompiledJavaType(Object.class);
+			}
+		}
 		return null;
 	}
 
@@ -348,20 +357,49 @@ public class JavaType {
 	}
 
 
-	public Object getDeclaredMethods() {
-		this.typeDeclaration.getMethods().forEach(m -> {System.out.println(m.toMethodDeclaration().get().getMetaModel().getType().getCanonicalName());});
-		// TODO Auto-generated method stub
-		return null;
+	public List<JavaMethod> getDeclaredMethods() {
+		List<MethodDeclaration> methods = this.typeDeclaration.getMethods();
+		List<JavaMethod> result = new ArrayList<>();
+		for(MethodDeclaration m : methods) {
+			result.add(new JavaMethod(m.getTypeAsString(), m.getNameAsString(), m.getParameters()));
+		}
+		return result;
 	}
 
 
 	public List<JavaField> getDeclaredFields() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 
 	public Boolean isEnum() {
 		return this.typeDeclaration.isEnumDeclaration();
+	}
+
+
+	public boolean isArray() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+
+	public String getTypeName() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+
+	/**
+	 * @param refID
+	 * @return
+	 */
+	public JavaField getFieldByName(String refID) {
+		Optional<FieldDeclaration> field = this.typeDeclaration.getFieldByName(refID);
+		if(field.isPresent()) {
+			String type = field.get().getElementType().asString();
+			return new JavaField(refID, type);
+		}
+		return null;
 	}
 }

@@ -336,7 +336,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		}
 		
 		// creating and returning a new package
-		JavaPackage pack = new JavaPackage(packageName);
+		JavaPackage pack = new JavaPackage(packageName, this.path);
 		this.packages.add(pack);
 		return pack;
 	}
@@ -628,5 +628,24 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 */
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	@Override
+	public JavaType findJavaType(String name) {
+		for(JavaPackage pack : this.packages) {
+			JavaType jt = pack.findTypeByName(name);
+			if(jt != null) {
+				return jt;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public JavaType createNewCompiledJavaType(Class<Object> clazz) {
+		String simpleName = clazz.getSimpleName();
+		String packageName = clazz.getPackageName();
+		return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+		
 	}
 }

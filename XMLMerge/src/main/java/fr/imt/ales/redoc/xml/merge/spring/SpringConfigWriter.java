@@ -2,6 +2,7 @@ package fr.imt.ales.redoc.xml.merge.spring;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -55,7 +56,9 @@ public class SpringConfigWriter {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		
-		Transformer transformer = transformerFactory.newTransformer(new StreamSource("src/main/resources/strip-space.xsl"));
+		ClassLoader cl = SpringConfigWriter.class.getClassLoader();
+		URL resource = cl.getResource("strip-space.xsl");
+		Transformer transformer = transformerFactory.newTransformer(new StreamSource(resource.getFile()));
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		
 		DOMSource source = new DOMSource(doc);

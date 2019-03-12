@@ -41,6 +41,8 @@ public class HierarchyBuilderManager {
 			if(path.equals(hb.getPath()))
 				return hb;
 		}
-		return new HierarchyBuilderImpl(path, dependencyPaths);
+		HierarchyBuilderImpl hb = new HierarchyBuilderImpl(path, dependencyPaths);
+		hierarchyBuilders.add(hb);
+		return hb;
 	}
 }

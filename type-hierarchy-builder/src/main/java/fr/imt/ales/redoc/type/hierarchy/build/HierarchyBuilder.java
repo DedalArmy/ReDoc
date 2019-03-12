@@ -8,6 +8,7 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import fr.imt.ales.redoc.jarloader.JarLoader;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaPackage;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public interface HierarchyBuilder {
 
@@ -32,5 +33,10 @@ public interface HierarchyBuilder {
 	void setJavaFiles(List<File> javaFiles);
 
 	void setPackages(List<JavaPackage> packages);
+
+	JavaType findJavaType(String name);
+
+	JavaType createNewCompiledJavaType(Class<Object> class1);
+
 	
 }
