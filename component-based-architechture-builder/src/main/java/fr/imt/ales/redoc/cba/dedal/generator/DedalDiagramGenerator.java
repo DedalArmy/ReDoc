@@ -48,7 +48,7 @@ public class DedalDiagramGenerator {
 	 */
 	public static List<DedalDiagram> generateAll(String projectPath) throws ParserConfigurationException, SAXException, IOException, TransformerException, URISyntaxException {
 		
-		List<DedalDiagram> result = Collections.emptyList();
+		List<DedalDiagram> result = new ArrayList<>();
 		
 		// Generates the type hierarchy
 		HierarchyBuilderManager hbmanager = HierarchyBuilderManager.getInstance();

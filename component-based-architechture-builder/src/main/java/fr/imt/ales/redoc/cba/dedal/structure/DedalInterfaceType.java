@@ -15,12 +15,13 @@ public class DedalInterfaceType extends DedalType {
 	List<DedalInterfaceType> candidateInterfaceTypes;
 	private ComponentInterfaceExtractor cie;
 
-	public DedalInterfaceType(String projectPath, DedalFactory dedalFactory, JavaType jType, ComponentInterfaceExtractor cie) throws IOException {
-		super(projectPath, dedalFactory);
+	public DedalInterfaceType(String projectPath, DedalFactory dedalFactory, JavaType jType, ComponentInterfaceExtractor cie, DedalArchitecture architecture) throws IOException {
+		super(projectPath, dedalFactory, architecture);
 		this.setjType(jType);
 		this.candidateInterfaceTypes = new ArrayList<>();
 		this.cie = cie;
 		this.mapInterfaceType();
+		this.architecture.getInterfaceTypes().add(this);
 	}
 
 	public void mapInterfaceType() throws IOException {
@@ -30,7 +31,12 @@ public class DedalInterfaceType extends DedalType {
 		this.interfaceType = this.cie.mapInterfaceType(this.getjType());
 		List<JavaType> jTypes = this.recursivelyGetSuperTypes(this.getjType());
 		for(JavaType jt : jTypes) {
-			this.candidateInterfaceTypes.add(new DedalInterfaceType(this.getProjectPath(), this.getDedalFactory(), jt, this.cie));
+			DedalInterfaceType inter = this.architecture.getInterfaceTypeByJavaType(jt);
+			if(inter == null) {
+				this.candidateInterfaceTypes.add(new DedalInterfaceType(this.getProjectPath(), this.getDedalFactory(), jt, this.cie, this.architecture));
+			}
+			else 
+				this.candidateInterfaceTypes.add(inter);
 		}
 	}
 

@@ -11,8 +11,8 @@ public class DedalComponentRole extends DedalComponentType {
 
 	CompRole componentRole;
 	
-	public DedalComponentRole(String projectPath, Component component, DedalFactory dedalFactory) throws IOException {
-		super(projectPath, component, dedalFactory);
+	public DedalComponentRole(String projectPath, Component component, DedalFactory dedalFactory, DedalArchitecture architecture) throws IOException {
+		super(projectPath, component, dedalFactory, architecture);
 	}
 
 	@Override
@@ -21,10 +21,10 @@ public class DedalComponentRole extends DedalComponentType {
 		
 	}
 
-	@Override
-	protected void mapInterfaces() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	protected void mapInterfaces() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

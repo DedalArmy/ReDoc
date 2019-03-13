@@ -12,7 +12,6 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
 /**
  * A class for representing Java types
@@ -399,6 +398,14 @@ public class JavaType {
 		if(field.isPresent()) {
 			String type = field.get().getElementType().asString();
 			return new JavaField(refID, type);
+		} else {
+			if(!this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface()) {
+				for(JavaType jt : this.jExtends) {
+					JavaField fieldByName = jt.getFieldByName(refID);
+					if(fieldByName != null)
+						return fieldByName;
+				}
+			}
 		}
 		return null;
 	}

@@ -111,14 +111,17 @@ public class ClassPath {
 		List<URI> xmlURIs;
 		xmlURIs = FolderLoader.recursivelyLoadFolder(this.path, ".xml");
 		for(URI xmlURI : xmlURIs) {
+			String truc = xmlURI.toString();
 			if(!(xmlURI.toString().contains("/TOPDESCRIPTIONS/")
 					|| xmlURI.toString().contains("/test/")
 					|| xmlURI.toString().contains("/target/")
 					|| xmlURI.toString().contains("/build/")
+					|| xmlURI.toString().contains("/bin/")
 					|| xmlURI.toString().contains("\\TOPDESCRIPTIONS\\")
 					|| xmlURI.toString().contains("\\test\\")
 					|| xmlURI.toString().contains("\\target\\")
-					|| xmlURI.toString().contains("\\build\\"))) {
+					|| xmlURI.toString().contains("\\build\\")
+					|| xmlURI.toString().contains("\\bin\\"))) {
 				XMLFile xmlFile = new XMLFile(xmlURI, this.builder, this);
 				xmlFile.parseXML(); // parse the XML file
 				if(xmlFile.isSpring())

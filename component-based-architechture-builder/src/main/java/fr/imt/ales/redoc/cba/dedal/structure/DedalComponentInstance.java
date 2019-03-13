@@ -5,19 +5,26 @@ import java.util.List;
 
 import dedal.CompInstance;
 import dedal.Component;
+import dedal.DIRECTION;
 import dedal.DedalFactory;
 import dedal.InstConnection;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaField;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class DedalComponentInstance extends DedalComponentType {
 
 	private CompInstance componentInstance;
 	
-	public DedalComponentInstance(String projectPath, CompInstance compInstance, DedalFactory factory, List<InstConnection> connections) throws IOException {
-		super(projectPath, compInstance, factory);
+	public DedalComponentInstance(String projectPath, CompInstance compInstance, DedalFactory factory, List<InstConnection> connections, DedalArchitecture architecture) throws IOException {
+		super(projectPath, compInstance, factory, architecture);
 		for( DedalInterface inter : this.interfaces) {
 			this.componentInstance.getCompInterfaces().add(inter.getCompInterface());
 		}
+		this.mapInterfaces();
 		this.mapRequiredInterfaces(connections);
+		for(DedalInterface inter : this.interfaces) {
+			this.componentInstance.getCompInterfaces().add(inter.getCompInterface());
+		}
 	}
 
 	@Override
@@ -33,5 +40,38 @@ public class DedalComponentInstance extends DedalComponentType {
 		return this.componentInstance.getName();
 	}
 	
-	
+	/**
+	 * @throws IOException
+	 */
+	protected void mapInterfaces() throws IOException {
+		this.interfaces.add(new DedalInterface(this.getProjectPath(), this.getDedalFactory(), this.getjType(), this.architecture));
+	}
+
+	/**
+	 * Caution, this method has side effects on connections
+	 * @param connections
+	 * @throws IOException
+	 */
+	protected void mapRequiredInterfaces(List<InstConnection> connections) throws IOException {
+		for(InstConnection connection : connections) {
+			String name = connection.getProperty().substring(connection.getProperty().lastIndexOf('.') + 1);
+			JavaField jField = this.getjType().getFieldByName(name);
+			if(jField != null && this.componentInstance.equals(connection.getClientInstElem())) {
+				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
+				DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
+				inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
+				this.interfaces.add(inter);
+				connection.setClientIntElem(inter.getCompInterface());
+			} else if(this.componentInstance.equals(connection.getServerInstElem())) {
+				connection.setServerIntElem(this.interfaces.get(0).getCompInterface());
+			}
+		}
+	}
+
+	/**
+	 * @return the componentInstance
+	 */
+	public CompInstance getComponentInstance() {
+		return componentInstance;
+	}
 }

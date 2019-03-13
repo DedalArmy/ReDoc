@@ -12,16 +12,18 @@ public abstract class DedalType {
 	protected HierarchyBuilder hierarchyBuilder;
 	protected DedalFactory dedalFactory;
 	private JavaType jType;
+	protected DedalArchitecture architecture;
 
 	/**
 	 * @param projectPath
 	 * @param dedalFactory
 	 * @throws IOException 
 	 */
-	public DedalType(String projectPath, DedalFactory dedalFactory) throws IOException {
+	public DedalType(String projectPath, DedalFactory dedalFactory, DedalArchitecture architecture) throws IOException {
 		this.projectPath = projectPath;
 		this.dedalFactory = dedalFactory;
-		hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
+		this.hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
+		this.architecture = architecture;
 	}
 
 	public String getProjectPath() {
