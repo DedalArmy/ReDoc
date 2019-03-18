@@ -166,8 +166,12 @@ public class JavaPackage {
 		return str.toString();
 	}
 
-	public JavaType addNewCompiledJavaType(Class<Object> class1) throws IOException {
-		HierarchyBuilder currentHb = HierarchyBuilderManager.getInstance().getHierarchyBuilder(this.projectPath);
-		return currentHb.createNewCompiledJavaType(class1);
+	public JavaType addNewCompiledJavaType(Class<?> class1) throws IOException {
+		JavaType jtype = this.getCurrentHierarchyBuilder().findJavaType(class1.getName());
+		return jtype!=null?jtype:this.getCurrentHierarchyBuilder().createNewCompiledJavaType(class1);
+	}
+	
+	public HierarchyBuilder getCurrentHierarchyBuilder() throws IOException {
+		return HierarchyBuilderManager.getInstance().getHierarchyBuilder(this.projectPath);
 	}
 }

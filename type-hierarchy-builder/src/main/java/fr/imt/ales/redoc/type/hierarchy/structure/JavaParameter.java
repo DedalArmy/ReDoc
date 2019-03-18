@@ -12,6 +12,11 @@ public class JavaParameter {
 		this.type = param.getTypeAsString();
 	}
 
+	public JavaParameter(java.lang.reflect.Parameter param) {
+		this.name = param.getName();
+		this.type = param.getType().getName();
+	}
+
 	public String getName() {
 		return this.name;
 	}

@@ -32,10 +32,7 @@ import org.xml.sax.SAXException;
 import com.google.inject.Injector;
 
 import dedal.ArchitectureDescription;
-import dedal.Assembly;
-import dedal.Configuration;
 import dedal.DedalDiagram;
-import dedal.Specification;
 import fr.ema.dedal.xtext.DedalADLStandaloneSetup;
 import fr.imt.ales.redoc.cba.dedal.generator.DedalDiagramGenerator;
 import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
@@ -83,6 +80,7 @@ public class Main {
 		Date date = new Date();
 		
 		String out = projectPath + "/generated_metrics_results/metrics"+date.toString().replaceAll(":", "_").replaceAll(" ", "")+".csv";
+		new java.io.File(out).getParentFile().mkdirs();
 		
 		switch (args.length) {
 		case 0:
@@ -205,11 +203,17 @@ public class Main {
 //		});
 		dedalDiagram.getArchitectureDescriptions().removeAll(toRemoveFromDiagram);
 		
-		URI uri = URI.createURI(/*"file:///"  + */projectPath + "/generated/"+ dedalDiagram.getName() +".dedaladl");
+		URI uri = URI.createURI(/*"file:///"  + */projectPath + "/generated/"
+				+ dedalDiagram.getName().substring(0, dedalDiagram.getName().indexOf('_')) + "/"
+				+ dedalDiagram.getName().substring(dedalDiagram.getName().indexOf('_')+1) + ".dedaladl");
+		new java.io.File(uri.toFileString()).getParentFile().mkdirs();
 		Resource resource = resourceSet.createResource(uri);
 		
 
-		URI uri2 = URI.createURI(/*"file:///" + */projectPath + "/generated/"+ dedalDiagram.getName() +".dedal");
+		URI uri2 = URI.createURI(/*"file:///" + */projectPath + "/generated/"
+				+ dedalDiagram.getName().substring(0, dedalDiagram.getName().indexOf('_')) + "/"
+				+ dedalDiagram.getName().substring(dedalDiagram.getName().indexOf('_')+1) + ".dedal");
+		new java.io.File(uri.toFileString()).getParentFile().mkdirs();
 		Resource resource2 = new XMIResourceImpl(uri2);
 
 		// Get the first model element and cast it to the right type, in my

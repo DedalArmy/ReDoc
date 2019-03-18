@@ -1,12 +1,19 @@
 package fr.imt.ales.redoc.cba.dedal.structure;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
+
+import dedal.ClassConnection;
 import dedal.CompClass;
+import dedal.CompRole;
 import dedal.Component;
 import dedal.Configuration;
 import dedal.DIRECTION;
 import dedal.DedalFactory;
+import fr.imt.ales.redoc.cba.dedal.extractor.ComponentRoleExtractor;
 
 public class DedalComponentClass extends DedalComponentType {
 
@@ -68,5 +75,13 @@ public class DedalComponentClass extends DedalComponentType {
 				}
 			}
 		}
+	}
+
+	public List<DedalComponentRole> computeComponentRoles(EList<ClassConnection> configConnections) throws IOException {
+		List<DedalComponentRole> result = new ArrayList<>();
+		ComponentRoleExtractor cre = new ComponentRoleExtractor(this.getjType(), this.getDedalFactory());
+		CompRole compRole = cre.mapComponentRole();
+		result.add(new DedalComponentRole(this.getProjectPath(), compRole, this.getDedalFactory(), this.architecture));
+		return result ;
 	}
 }

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
 import dedal.ClassConnection;
+import dedal.CompClass;
 import dedal.CompInstance;
 import dedal.Configuration;
 import dedal.DedalDiagram;
@@ -43,9 +44,8 @@ public class DedalArchitectureBuilder {
 	private String projectPath;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////// Constructor, init, accessors
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////// Constructor, init, accessors	////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 	public DedalArchitectureBuilder(String projectPath) throws IOException {
 		this.projectPath = projectPath;
@@ -59,7 +59,7 @@ public class DedalArchitectureBuilder {
 		DedalDiagram dedalDiagram = (DedalDiagram) SdslTransformer.extractDedalArtifacts(springXMLFile).get(0); // extracting
 																												// from
 																												// Spring
-		dedalDiagram.setName(springXMLFile.getName() + "_genDedalDiag");
+		dedalDiagram.setName(springXMLFile.getParentFile().getParentFile().getName() + "_" + springXMLFile.getName() + "_genDedalDiag");
 
 		// Setting the Repository up
 		Repository repo;
@@ -112,19 +112,27 @@ public class DedalArchitectureBuilder {
 			throws IOException {
 		for (CompInstance ci : asm.getAssmComponents()) {
 			DedalComponentInstance compInstance = this.dedalArchitecture.createCompInstIfNotExists(ci, this.factory,
-					asm.getAssemblyConnections());
-			this.dedalArchitecture.createCompClassIfNotExists(ci.getInstantiates(), this.factory, compInstance);
+					asm.getAssemblyConnections()); // complete the description of the component instances and instance connections
+			this.dedalArchitecture.createCompClassIfNotExists(ci.getInstantiates(), this.factory, compInstance); // complete the description of component classes
 		}
-		for (ClassConnection ccon : config.getConfigConnections()) {
+		for (ClassConnection ccon : config.getConfigConnections()) { 
 			for (InstConnection acon : asm.getAssemblyConnections()) {
 				String property = ccon.getProperty().replaceAll("\"", "");
 				String substring = acon.getProperty().substring(acon.getProperty().lastIndexOf('.') + 1);
 				if (property.equals(substring)) {
-					this.dedalArchitecture.setConfigConnectionFromAsmConnection(ccon, acon);
+					this.dedalArchitecture.setConfigConnectionFromAsmConnection(ccon, acon); // complete the description of class connections
 					break;
 				}
 			}
 		}
+		this.dedalArchitecture.getConfiguration().forEach(dcc -> {
+			try {
+				this.dedalArchitecture.getSpecification().addAll(dcc.computeComponentRoles(config.getConfigConnections()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
 		}

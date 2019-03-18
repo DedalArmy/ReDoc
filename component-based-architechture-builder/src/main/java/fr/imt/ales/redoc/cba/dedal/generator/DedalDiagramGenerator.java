@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -54,12 +53,15 @@ public class DedalDiagramGenerator {
 		HierarchyBuilderManager hbmanager = HierarchyBuilderManager.getInstance();
 		HierarchyBuilder hierarchyBuilder = hbmanager.getHierarchyBuilder(projectPath);
 		hierarchyBuilder.build();
+		logger.info("Hierarchy built");
 		
 		// Write the extracted UML diagram for comparison purpose
 		try {
 			String out = projectPath + PLANT_UML_REPRESENTATION_UML_TXT;
 			PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
+			logger.info("Hierarchy has been written in PlantUML format.");
 			PlantUMLWritter.generateSVG(out);
+			logger.info("The UML diagram of the project " + projectPath + " has been generated");
 		} catch (IOException e) {
 			logger.warn("The UML diagram of project " + projectPath + " could not be generated due to I/O Exception.");
 			logger.debug(e);

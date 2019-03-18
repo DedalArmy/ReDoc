@@ -3,6 +3,7 @@ package fr.imt.ales.redoc.type.hierarchy.graph;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -89,13 +90,20 @@ public class PlantUMLWritter {
 	 */
 	public static void generateSVG(String out) throws IOException {
 		String source;
+		logger.info("generateSVG : " + out);
 		source = Files.readString(Paths.get(out));
 		SourceStringReader reader = new SourceStringReader(source);
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
+		logger.info("Set reader");
 		reader.outputImage(os, new FileFormatOption(FileFormat.SVG));
+		logger.info("reader OK");
 		File output = new File(out.substring(0, out.lastIndexOf('.'))+SVG_EXTENSION);
-		Files.write(output.toPath(), os.toByteArray());
+		FileOutputStream fop = new FileOutputStream(output);
+		logger.info("write SVG file");
+		fop.write(os.toByteArray());
+//		Files.write(output.toPath(), os.toByteArray());
 		os.close();
+		fop.close();
 		logger.info(out.substring(0, out.lastIndexOf('.'))+SVG_EXTENSION + " has successfully been generated.");
 	}
 

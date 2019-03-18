@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dedal:DedalDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dedal="http://www.dedal.fr/metamodel" name="spring-quartz-cluster-sample_applicationContext.sdsl_genDedalDiag">
+  <architectureDescriptions xsi:type="dedal:Configuration" name="Configuration" implements="//@architectureDescriptions[name='Specification']">
+    <configComponents name="&quot;org.apache.commons.dbcp.BasicDataSource&quot;" id="__JNY4EcOEem2CuEcvO9MXw" implements="__LXVAEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__LURsEcOEem2CuEcvO9MXw" type="IBasicDataSource"/>
+    </configComponents>
+    <configComponents name="&quot;org.springframework.jdbc.core.JdbcTemplate&quot;" id="__JSRYEcOEem2CuEcvO9MXw" implements="__MJYIkcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MJYIEcOEem2CuEcvO9MXw" type="IJdbcTemplate"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MJYIUcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource"/>
+    </configComponents>
+    <configComponents name="&quot;com.dexcoder.dal.spring.JdbcDaoImpl&quot;" id="__JUGkEcOEem2CuEcvO9MXw" implements="__MOQokcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MOQoEcOEem2CuEcvO9MXw" type="IJdbcDaoImpl"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MOQoUcOEem2CuEcvO9MXw" direction="REQUIRED" type="IJdbcOperations"/>
+    </configComponents>
+    <configComponents name="&quot;org.springframework.scheduling.quartz.SchedulerFactoryBean&quot;" id="__JV7wEcOEem2CuEcvO9MXw" implements="__Mgkg0cOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MgkgUcOEem2CuEcvO9MXw" type="ISchedulerFactoryBean"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MgkgkcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource"/>
+    </configComponents>
+    <configConnections serverIntElem="__LURsEcOEem2CuEcvO9MXw" clientIntElem="__MJYIUcOEem2CuEcvO9MXw" refID="__KE7kEcOEem2CuEcvO9MXw" property="&quot;dataSource&quot;" clientClassElem="__JSRYEcOEem2CuEcvO9MXw" serverClassElem="__JNY4EcOEem2CuEcvO9MXw"/>
+    <configConnections serverIntElem="__MJYIEcOEem2CuEcvO9MXw" clientIntElem="__MOQoUcOEem2CuEcvO9MXw" refID="__KHX0EcOEem2CuEcvO9MXw" property="&quot;jdbcTemplate&quot;" clientClassElem="__JUGkEcOEem2CuEcvO9MXw" serverClassElem="__JSRYEcOEem2CuEcvO9MXw"/>
+    <configConnections serverIntElem="__LURsEcOEem2CuEcvO9MXw" clientIntElem="__MJYIUcOEem2CuEcvO9MXw" refID="__KJ0EEcOEem2CuEcvO9MXw" property="&quot;dataSource&quot;" clientClassElem="__JV7wEcOEem2CuEcvO9MXw" serverClassElem="__JNY4EcOEem2CuEcvO9MXw"/>
+    <comptypes name="BasicDataSource_Type" id="__LXVAEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__LXVAUcOEem2CuEcvO9MXw" type="IBasicDataSource"/>
+    </comptypes>
+    <comptypes name="JdbcTemplate_Type" id="__MJYIkcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MJYI0cOEem2CuEcvO9MXw" type="IJdbcTemplate"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MJYJEcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource"/>
+    </comptypes>
+    <comptypes name="JdbcDaoImpl_Type" id="__MOQokcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MOQo0cOEem2CuEcvO9MXw" type="IJdbcDaoImpl"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MOQpEcOEem2CuEcvO9MXw" direction="REQUIRED" type="IJdbcOperations"/>
+    </comptypes>
+    <comptypes name="SchedulerFactoryBean_Type" id="__Mgkg0cOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MhLkEcOEem2CuEcvO9MXw" type="ISchedulerFactoryBean"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MhLkUcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource"/>
+    </comptypes>
+  </architectureDescriptions>
+  <architectureDescriptions xsi:type="dedal:Assembly" name="Assembly" instantiates="//@architectureDescriptions[name='Configuration']">
+    <assmComponents name="&quot;dataSource&quot;" id="__KQhwEcOEem2CuEcvO9MXw" instantiates="__JNY4EcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__LPZMEcOEem2CuEcvO9MXw" type="IBasicDataSource" instantiates="__LURsEcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assmComponents name="&quot;jdbcTemplate&quot;" id="__KTlEEcOEem2CuEcvO9MXw" instantiates="__JSRYEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MG74EcOEem2CuEcvO9MXw" type="IJdbcTemplate" instantiates="__MJYIEcOEem2CuEcvO9MXw"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MIxHkcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource" instantiates="__MJYIUcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assmComponents name="&quot;jdbcDao&quot;" id="__KUzMEcOEem2CuEcvO9MXw" instantiates="__JUGkEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__MNpkEcOEem2CuEcvO9MXw" type="IJdbcDaoImpl" instantiates="__MOQoEcOEem2CuEcvO9MXw"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MNps0cOEem2CuEcvO9MXw" direction="REQUIRED" type="IJdbcOperations" instantiates="__MOQoUcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assmComponents name="&quot;scheduler&quot;" id="__KWoYEcOEem2CuEcvO9MXw" instantiates="__JV7wEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__Mf90kcOEem2CuEcvO9MXw" type="ISchedulerFactoryBean" instantiates="__MgkgUcOEem2CuEcvO9MXw"/>
+      <compInterfaces xsi:type="dedal:Interface" name="__MgkgEcOEem2CuEcvO9MXw" direction="REQUIRED" type="IDataSource" instantiates="__MgkgkcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assemblyConnections serverIntElem="__LPZMEcOEem2CuEcvO9MXw" clientIntElem="__MIxHkcOEem2CuEcvO9MXw" refID="__Ka50EcOEem2CuEcvO9MXw" property="jdbcTemplate.dataSource" clientInstElem="__KTlEEcOEem2CuEcvO9MXw" serverInstElem="__KQhwEcOEem2CuEcvO9MXw"/>
+    <assemblyConnections serverIntElem="__MG74EcOEem2CuEcvO9MXw" clientIntElem="__MNps0cOEem2CuEcvO9MXw" refID="__Kd9IEcOEem2CuEcvO9MXw" property="jdbcDao.jdbcTemplate" clientInstElem="__KUzMEcOEem2CuEcvO9MXw" serverInstElem="__KTlEEcOEem2CuEcvO9MXw"/>
+    <assemblyConnections serverIntElem="__LPZMEcOEem2CuEcvO9MXw" clientIntElem="__MgkgEcOEem2CuEcvO9MXw" refID="__KfLQEcOEem2CuEcvO9MXw" property="scheduler.dataSource" clientInstElem="__KWoYEcOEem2CuEcvO9MXw" serverInstElem="__KQhwEcOEem2CuEcvO9MXw"/>
+  </architectureDescriptions>
+  <architectureDescriptions xsi:type="dedal:Specification" name="Specification"/>
+  <repositories name="genRepo">
+    <interfaceTypes name="IBasicDataSource">
+      <signatures name="setLoginTimeout" type="void" id="__LIrgEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LJ5oEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getLogWriter" type="java.io.PrintWriter" id="__LKgsEcOEem2CuEcvO9MXw"/>
+      <signatures name="getLoginTimeout" type="int" id="__LKgsUcOEem2CuEcvO9MXw"/>
+      <signatures name="setLogWriter" type="void" id="__LKgskcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.io.PrintWriter" id="__LKgs0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getParentLogger" type="java.util.logging.Logger" id="__LKgtEcOEem2CuEcvO9MXw"/>
+      <signatures name="createShardingKeyBuilder" type="java.sql.ShardingKeyBuilder" id="__LKgtUcOEem2CuEcvO9MXw"/>
+      <signatures name="unwrap" type="java.lang.Object" id="__LKgtkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__LKgt0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isWrapperFor" type="boolean" id="__LKguEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__LKguUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getConnection" type="java.sql.Connection" id="__LKgukcOEem2CuEcvO9MXw"/>
+      <signatures name="createConnectionBuilder" type="java.sql.ConnectionBuilder" id="__LKgu0cOEem2CuEcvO9MXw"/>
+      <signatures name="log" type="void" id="__LKgvEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKgvUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="close" type="void" id="__LKgvkcOEem2CuEcvO9MXw"/>
+      <signatures name="getUrl" type="java.lang.String" id="__LKgv0cOEem2CuEcvO9MXw"/>
+      <signatures name="createDataSource" type="javax.sql.DataSource" id="__LKgwEcOEem2CuEcvO9MXw"/>
+      <signatures name="getLogAbandoned" type="boolean" id="__LKgwUcOEem2CuEcvO9MXw"/>
+      <signatures name="restart" type="void" id="__LKgwkcOEem2CuEcvO9MXw"/>
+      <signatures name="isRestartNeeded" type="boolean" id="__LKgw0cOEem2CuEcvO9MXw"/>
+      <signatures name="setLogAbandoned" type="void" id="__LKgxEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKgxUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getRemoveAbandoned" type="boolean" id="__LKgxkcOEem2CuEcvO9MXw"/>
+      <signatures name="setRemoveAbandoned" type="void" id="__LKgx0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKgyEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setMaxWait" type="void" id="__LKgyUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="long" id="__LKgykcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDefaultCatalog" type="java.lang.String" id="__LKgy0cOEem2CuEcvO9MXw"/>
+      <signatures name="getDefaultReadOnly" type="boolean" id="__LKgzEcOEem2CuEcvO9MXw"/>
+      <signatures name="setMaxIdle" type="void" id="__LKgzUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKgzkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMaxActive" type="int" id="__LKgz0cOEem2CuEcvO9MXw"/>
+      <signatures name="setMaxActive" type="void" id="__LKg0EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKg0UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getTestOnBorrow" type="boolean" id="__LKg0kcOEem2CuEcvO9MXw"/>
+      <signatures name="setTestOnBorrow" type="void" id="__LKg00cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKg1EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getTestOnReturn" type="boolean" id="__LKg1UcOEem2CuEcvO9MXw"/>
+      <signatures name="setTestOnReturn" type="void" id="__LKg1kcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKg10cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getTestWhileIdle" type="boolean" id="__LKg2EcOEem2CuEcvO9MXw"/>
+      <signatures name="setDriverClassName" type="void" id="__LKg2UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg2kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setMinIdle" type="void" id="__LKg20cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKg3EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getInitialSize" type="int" id="__LKg3UcOEem2CuEcvO9MXw"/>
+      <signatures name="setInitialSize" type="void" id="__LKg3kcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKg30cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMaxIdle" type="int" id="__LKg4EcOEem2CuEcvO9MXw"/>
+      <signatures name="getMinIdle" type="int" id="__LKg4UcOEem2CuEcvO9MXw"/>
+      <signatures name="getMaxWait" type="long" id="__LKg4kcOEem2CuEcvO9MXw"/>
+      <signatures name="setDefaultReadOnly" type="void" id="__LKg40cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKg5EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDefaultCatalog" type="void" id="__LKg5UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg5kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getNumActive" type="int" id="__LKg50cOEem2CuEcvO9MXw"/>
+      <signatures name="setTestWhileIdle" type="void" id="__LKg6EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKg6UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getNumIdle" type="int" id="__LKg6kcOEem2CuEcvO9MXw"/>
+      <signatures name="getUsername" type="java.lang.String" id="__LKg60cOEem2CuEcvO9MXw"/>
+      <signatures name="setUsername" type="void" id="__LKg7EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg7UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getValidationQuery" type="java.lang.String" id="__LKg7kcOEem2CuEcvO9MXw"/>
+      <signatures name="setValidationQuery" type="void" id="__LKg70cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg8EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setUrl" type="void" id="__LKg8UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg8kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setPassword" type="void" id="__LKg80cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKg9EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getPassword" type="java.lang.String" id="__LKg9UcOEem2CuEcvO9MXw"/>
+      <signatures name="isClosed" type="boolean" id="__LKg9kcOEem2CuEcvO9MXw"/>
+      <signatures name="getMaxOpenPreparedStatements" type="int" id="__LKg90cOEem2CuEcvO9MXw"/>
+      <signatures name="setMaxOpenPreparedStatements" type="void" id="__LKg-EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKg-UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDefaultAutoCommit" type="boolean" id="__LKg-kcOEem2CuEcvO9MXw"/>
+      <signatures name="setDefaultAutoCommit" type="void" id="__LKg-0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKg_EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDriverClassLoader" type="void" id="__LKg_UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.ClassLoader" id="__LKg_kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isPoolPreparedStatements" type="boolean" id="__LKg_0cOEem2CuEcvO9MXw"/>
+      <signatures name="getTimeBetweenEvictionRunsMillis" type="long" id="__LKhAEcOEem2CuEcvO9MXw"/>
+      <signatures name="setTimeBetweenEvictionRunsMillis" type="void" id="__LKhAUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="long" id="__LKhAkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getNumTestsPerEvictionRun" type="int" id="__LKhA0cOEem2CuEcvO9MXw"/>
+      <signatures name="getDefaultTransactionIsolation" type="int" id="__LKhBEcOEem2CuEcvO9MXw"/>
+      <signatures name="setDefaultTransactionIsolation" type="void" id="__LKhBUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKhBkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDriverClassLoader" type="java.lang.ClassLoader" id="__LKhB0cOEem2CuEcvO9MXw"/>
+      <signatures name="setPoolPreparedStatements" type="void" id="__LKhCEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKhCUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setNumTestsPerEvictionRun" type="void" id="__LKhCkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKhC0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createConnectionFactory" type="org.apache.commons.dbcp.ConnectionFactory" id="__LKhDEcOEem2CuEcvO9MXw"/>
+      <signatures name="setValidationQueryTimeout" type="void" id="__LKhDUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKhDkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMinEvictableIdleTimeMillis" type="long" id="__LKhD0cOEem2CuEcvO9MXw"/>
+      <signatures name="getRemoveAbandonedTimeout" type="int" id="__LKhEEcOEem2CuEcvO9MXw"/>
+      <signatures name="addConnectionProperty" type="void" id="__LKhEUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKhEkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.String" id="__LKhE0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getValidationQueryTimeout" type="int" id="__LKhFEcOEem2CuEcvO9MXw"/>
+      <signatures name="createPoolableConnectionFactory" type="void" id="__LKhFUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.commons.dbcp.ConnectionFactory" id="__LKhFkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.apache.commons.pool.KeyedObjectPoolFactory" id="__LKhF0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="org.apache.commons.dbcp.AbandonedConfig" id="__LKhGEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setMinEvictableIdleTimeMillis" type="void" id="__LKhGUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="long" id="__LKhGkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setRemoveAbandonedTimeout" type="void" id="__LKhG0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__LKhHEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setConnectionProperties" type="void" id="__LKhHUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKhHkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getConnectionInitSqls" type="java.util.Collection" id="__LKhH0cOEem2CuEcvO9MXw"/>
+      <signatures name="createConnectionPool" type="void" id="__LKhIEcOEem2CuEcvO9MXw"/>
+      <signatures name="setConnectionInitSqls" type="void" id="__LKhIUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Collection" id="__LKhIkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createDataSourceInstance" type="void" id="__LKhI0cOEem2CuEcvO9MXw"/>
+      <signatures name="removeConnectionProperty" type="void" id="__LKhJEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__LKhJUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="validateConnectionFactory" type="void" id="__LKhJkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.commons.dbcp.PoolableConnectionFactory" id="__LKhJ0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDriverClassName" type="java.lang.String" id="__LKhKEcOEem2CuEcvO9MXw"/>
+      <signatures name="isAccessToUnderlyingConnectionAllowed" type="boolean" id="__LKhKUcOEem2CuEcvO9MXw"/>
+      <signatures name="setAccessToUnderlyingConnectionAllowed" type="void" id="__LKhKkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__LKhK0cOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+    <interfaceTypes name="IJdbcTemplate">
+      <signatures name="afterPropertiesSet" type="void" id="__MGU0EcOEem2CuEcvO9MXw"/>
+      <signatures name="setLazyInit" type="void" id="__MGU0UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__MGU0kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getExceptionTranslator" type="org.springframework.jdbc.support.SQLExceptionTranslator" id="__MGU00cOEem2CuEcvO9MXw"/>
+      <signatures name="setDataSource" type="void" id="__MGU1EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.sql.DataSource" id="__MGU1UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDataSource" type="javax.sql.DataSource" id="__MGU1kcOEem2CuEcvO9MXw"/>
+      <signatures name="isLazyInit" type="boolean" id="__MGU10cOEem2CuEcvO9MXw"/>
+      <signatures name="setExceptionTranslator" type="void" id="__MGU2EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.support.SQLExceptionTranslator" id="__MGU2UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDatabaseProductName" type="void" id="__MGU2kcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU20cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="update" type="int" id="__MGU3EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.PreparedStatementCreator" id="__MGU3UcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.jdbc.support.KeyHolder" id="__MGU3kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="execute" type="java.lang.Object" id="__MGU30cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.ConnectionCallback" id="__MGU4EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="query" type="void" id="__MGU4UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU4kcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MGU40cOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="org.springframework.jdbc.core.RowCallbackHandler" id="__MGU5EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="call" type="java.util.Map" id="__MGU5UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.CallableStatementCreator" id="__MGU5kcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.List" id="__MGU50cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="batchUpdate" type="[I" id="__MGU6EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU6UcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.jdbc.core.BatchPreparedStatementSetter" id="__MGU6kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForObject" type="java.lang.Object" id="__MGU60cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU7EcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MGU7UcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="org.springframework.jdbc.core.RowMapper" id="__MGU7kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForList" type="java.util.List" id="__MGU70cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU8EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForMap" type="java.util.Map" id="__MGU8UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU8kcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MGU80cOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="[I" id="__MGU9EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForLong" type="long" id="__MGU9UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU9kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForInt" type="int" id="__MGU90cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU-EcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MGU-UcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="[I" id="__MGU-kcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForRowSet" type="org.springframework.jdbc.support.rowset.SqlRowSet" id="__MGU-0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MGU_EcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MGU_UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isSkipResultsProcessing" type="boolean" id="__MGU_kcOEem2CuEcvO9MXw"/>
+      <signatures name="setNativeJdbcExtractor" type="void" id="__MGU_0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor" id="__MGVAEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="applyStatementSettings" type="void" id="__MGVAUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.Statement" id="__MGVAkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getColumnMapRowMapper" type="org.springframework.jdbc.core.RowMapper" id="__MGVA0cOEem2CuEcvO9MXw"/>
+      <signatures name="setSkipUndeclaredResults" type="void" id="__MGVBEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__MGVBUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setResultsMapCaseInsensitive" type="void" id="__MGVBkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__MGVB0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isSkipUndeclaredResults" type="boolean" id="__MGVCEcOEem2CuEcvO9MXw"/>
+      <signatures name="createConnectionProxy" type="java.sql.Connection" id="__MGVCUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.Connection" id="__MGVCkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getSingleColumnRowMapper" type="org.springframework.jdbc.core.RowMapper" id="__MGVC0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__MGVDEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getNativeJdbcExtractor" type="org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor" id="__MGVDUcOEem2CuEcvO9MXw"/>
+      <signatures name="isResultsMapCaseInsensitive" type="boolean" id="__MGVDkcOEem2CuEcvO9MXw"/>
+      <signatures name="setSkipResultsProcessing" type="void" id="__MGVD0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__MGVEEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="newArgTypePreparedStatementSetter" type="org.springframework.jdbc.core.PreparedStatementSetter" id="__MGVEUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Ljava.lang.Object;" id="__MGVEkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[I" id="__MGVE0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setQueryTimeout" type="void" id="__MGVFEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__MGVFUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setFetchSize" type="void" id="__MGVFkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__MGVF0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMaxRows" type="int" id="__MGVGEcOEem2CuEcvO9MXw"/>
+      <signatures name="handleWarnings" type="void" id="__MGVGUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.SQLWarning" id="__MGVGkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isIgnoreWarnings" type="boolean" id="__MGVG0cOEem2CuEcvO9MXw"/>
+      <signatures name="getFetchSize" type="int" id="__MGVHEcOEem2CuEcvO9MXw"/>
+      <signatures name="setMaxRows" type="void" id="__MGVHUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__MGVHkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getQueryTimeout" type="int" id="__MGVH0cOEem2CuEcvO9MXw"/>
+      <signatures name="getSql" type="java.lang.String" id="__MGVIEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Object" id="__MGVIUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setIgnoreWarnings" type="void" id="__MGVIkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__MGVI0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createResultsMap" type="java.util.Map" id="__MGVJEcOEem2CuEcvO9MXw"/>
+      <signatures name="processResultSet" type="java.util.Map" id="__MGVJUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.ResultSet" id="__MGVJkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.jdbc.core.ResultSetSupportingSqlParameter" id="__MGVJ0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="newArgPreparedStatementSetter" type="org.springframework.jdbc.core.PreparedStatementSetter" id="__MGVKEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Ljava.lang.Object;" id="__MGVKUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="access$1" type="org.apache.commons.logging.Log" id="__MGVKkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.JdbcTemplate" id="__MGVK0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="access$0" type="org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor" id="__MGVLEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.JdbcTemplate" id="__MGVLUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="extractReturnedResults" type="java.util.Map" id="__MGVLkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.CallableStatement" id="__MGVL0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.List" id="__MGVMEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="java.util.List" id="__MGVMUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg3" type="int" id="__MGVMkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="extractOutputParameters" type="java.util.Map" id="__MGVM0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.sql.CallableStatement" id="__MGVNEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.List" id="__MGVNUcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+    <interfaceTypes name="IDataSource">
+      <signatures name="setLoginTimeout" type="void" id="__MIxEEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__MIxEUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getLogWriter" type="java.io.PrintWriter" id="__MIxEkcOEem2CuEcvO9MXw"/>
+      <signatures name="getLoginTimeout" type="int" id="__MIxE0cOEem2CuEcvO9MXw"/>
+      <signatures name="setLogWriter" type="void" id="__MIxFEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.io.PrintWriter" id="__MIxFUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getParentLogger" type="java.util.logging.Logger" id="__MIxFkcOEem2CuEcvO9MXw"/>
+      <signatures name="createShardingKeyBuilder" type="java.sql.ShardingKeyBuilder" id="__MIxF0cOEem2CuEcvO9MXw"/>
+      <signatures name="unwrap" type="java.lang.Object" id="__MIxGEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__MIxGUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isWrapperFor" type="boolean" id="__MIxGkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__MIxG0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getConnection" type="java.sql.Connection" id="__MIxHEcOEem2CuEcvO9MXw"/>
+      <signatures name="createConnectionBuilder" type="java.sql.ConnectionBuilder" id="__MIxHUcOEem2CuEcvO9MXw"/>
+    </interfaceTypes>
+    <interfaceTypes name="IJdbcDaoImpl">
+      <signatures name="insert" type="java.lang.Long" id="__MNCgEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.BoundSql" id="__MNCgUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Class" id="__MNCgkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getRowMapper" type="org.springframework.jdbc.core.RowMapper" id="__MNCg0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__MNChEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDialect" type="void" id="__MNChUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNChkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getDialect" type="java.lang.String" id="__MNCh0cOEem2CuEcvO9MXw"/>
+      <signatures name="setMappingHandler" type="void" id="__MNCiEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.handler.MappingHandler" id="__MNCiUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setRowMapperClass" type="void" id="__MNCikcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNCi0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMappingHandler" type="com.dexcoder.dal.handler.MappingHandler" id="__MNCjEcOEem2CuEcvO9MXw"/>
+      <signatures name="mapToBean" type="java.lang.Object" id="__MNCjUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__MNCjkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Class" id="__MNCj0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setJdbcTemplate" type="void" id="__MNCkEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.JdbcOperations" id="__MNCkUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSqlFactory" type="void" id="__MNCkkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.SqlFactory" id="__MNCk0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="convertMapKeyToCamel" type="java.util.Map" id="__MNClEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__MNClUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="get" type="java.lang.Object" id="__MNClkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCl0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Long" id="__MNCmEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="update" type="int" id="__MNCmUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCmkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="delete" type="int" id="__MNCm0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCnEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="save" type="void" id="__MNCnUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCnkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="insert" type="java.lang.Long" id="__MNCn0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Object" id="__MNCoEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryCount" type="int" id="__MNCoUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__MNCokcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryList" type="java.util.List" id="__MNCo0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCpEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryRowMap" type="java.util.Map" id="__MNCpUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCpkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryRowMapList" type="java.util.List" id="__MNCp0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCqEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="querySingleResult" type="java.lang.Object" id="__MNCqUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCqkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryObject" type="java.lang.Object" id="__MNCq0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCrEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryObjectList" type="java.util.List" id="__MNCrUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="com.dexcoder.dal.build.Criteria" id="__MNCrkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Class" id="__MNCr0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryObjectForSql" type="java.lang.Object" id="__MNCsEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNCsUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNCskcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="updateForSql" type="int" id="__MNCs0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNCtEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.String" id="__MNCtUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="[Ljava.lang.Object;" id="__MNCtkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryListForSql" type="java.util.List" id="__MNCt0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNCuEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Class" id="__MNCuUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="querySingleResultForSql" type="java.lang.Object" id="__MNCukcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNCu0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.Class" id="__MNCvEcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+    <interfaceTypes name="IJdbcOperations">
+      <signatures name="update" type="int" id="__MNpkUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.PreparedStatementCreator" id="__MNpkkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.jdbc.support.KeyHolder" id="__MNpk0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="execute" type="java.lang.Object" id="__MNplEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.ConnectionCallback" id="__MNplUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="query" type="void" id="__MNplkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpl0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNpmEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="org.springframework.jdbc.core.RowCallbackHandler" id="__MNpmUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="call" type="java.util.Map" id="__MNpmkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.jdbc.core.CallableStatementCreator" id="__MNpm0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.List" id="__MNpnEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="batchUpdate" type="[I" id="__MNpnUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpnkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.jdbc.core.BatchPreparedStatementSetter" id="__MNpn0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForObject" type="java.lang.Object" id="__MNpoEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpoUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNpokcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="org.springframework.jdbc.core.RowMapper" id="__MNpo0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForList" type="java.util.List" id="__MNppEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNppUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForMap" type="java.util.Map" id="__MNppkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpp0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNpqEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="[I" id="__MNpqUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForLong" type="long" id="__MNpqkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpq0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForInt" type="int" id="__MNprEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNprUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNprkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="[I" id="__MNpr0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="queryForRowSet" type="org.springframework.jdbc.support.rowset.SqlRowSet" id="__MNpsEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__MNpsUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="[Ljava.lang.Object;" id="__MNpskcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+    <interfaceTypes name="ISchedulerFactoryBean">
+      <signatures name="setResourceLoader" type="void" id="__Mf9cEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.core.io.ResourceLoader" id="__Mf9cUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setTransactionManager" type="void" id="__Mf9ckcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.transaction.PlatformTransactionManager" id="__Mf9c0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="rescheduleJob" type="void" id="__Mf9dEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.Trigger" id="__Mf9dUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getScheduler" type="org.quartz.Scheduler" id="__Mf9dkcOEem2CuEcvO9MXw"/>
+      <signatures name="setTriggers" type="void" id="__Mf9d0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.Trigger;" id="__Mf9eEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="addJobToScheduler" type="boolean" id="__Mf9eUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.JobDetail" id="__Mf9ekcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setJobDetails" type="void" id="__Mf9e0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.JobDetail;" id="__Mf9fEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setCalendars" type="void" id="__Mf9fUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__Mf9fkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setJobListeners" type="void" id="__Mf9f0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.JobListener;" id="__Mf9gEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="registerListeners" type="void" id="__Mf9gUcOEem2CuEcvO9MXw"/>
+      <signatures name="jobDetailExists" type="boolean" id="__Mf9gkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.JobDetail" id="__Mf9g0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="findJobDetail" type="org.quartz.JobDetail" id="__Mf9hEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.Trigger" id="__Mf9hUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="triggerExists" type="boolean" id="__Mf9hkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.Trigger" id="__Mf9h0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="registerJobsAndTriggers" type="void" id="__Mf9iEcOEem2CuEcvO9MXw"/>
+      <signatures name="setTriggerListeners" type="void" id="__Mf9iUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.TriggerListener;" id="__Mf9ikcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setGlobalJobListeners" type="void" id="__Mf9i0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.JobListener;" id="__Mf9jEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setJobSchedulingDataLocations" type="void" id="__Mf9jUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Ljava.lang.String;" id="__Mf9jkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setJobSchedulingDataLocation" type="void" id="__Mf9j0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__Mf9kEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="addTriggerToScheduler" type="boolean" id="__Mf9kUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.Trigger" id="__Mf9kkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setOverwriteExistingJobs" type="void" id="__Mf9k0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__Mf9lEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSchedulerListeners" type="void" id="__Mf9lUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.SchedulerListener;" id="__Mf9lkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setGlobalTriggerListeners" type="void" id="__Mf9l0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Lorg.quartz.TriggerListener;" id="__Mf9mEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getObject" type="java.lang.Object" id="__Mf9mUcOEem2CuEcvO9MXw"/>
+      <signatures name="getObjectType" type="java.lang.Class" id="__Mf9mkcOEem2CuEcvO9MXw"/>
+      <signatures name="isSingleton" type="boolean" id="__Mf9m0cOEem2CuEcvO9MXw"/>
+      <signatures name="setBeanName" type="void" id="__Mf9nEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__Mf9nUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setApplicationContext" type="void" id="__Mf9nkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.context.ApplicationContext" id="__Mf9n0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="afterPropertiesSet" type="void" id="__Mf9oEcOEem2CuEcvO9MXw"/>
+      <signatures name="destroy" type="void" id="__Mf9oUcOEem2CuEcvO9MXw"/>
+      <signatures name="start" type="void" id="__Mf9okcOEem2CuEcvO9MXw"/>
+      <signatures name="stop" type="void" id="__Mf9o0cOEem2CuEcvO9MXw"/>
+      <signatures name="isRunning" type="boolean" id="__Mf9pEcOEem2CuEcvO9MXw"/>
+      <signatures name="getPhase" type="int" id="__Mf9pUcOEem2CuEcvO9MXw"/>
+      <signatures name="isAutoStartup" type="boolean" id="__Mf9pkcOEem2CuEcvO9MXw"/>
+      <signatures name="setJobFactory" type="void" id="__Mf9p0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.spi.JobFactory" id="__Mf9qEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setConfigLocation" type="void" id="__Mf9qUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.core.io.Resource" id="__Mf9qkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDataSource" type="void" id="__Mf9q0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.sql.DataSource" id="__Mf9rEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setPhase" type="void" id="__Mf9rUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__Mf9rkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setAutoStartup" type="void" id="__Mf9r0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__Mf9sEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setStartupDelay" type="void" id="__Mf9sUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__Mf9skcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="startScheduler" type="void" id="__Mf9s0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.Scheduler" id="__Mf9tEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="int" id="__Mf9tUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createScheduler" type="org.quartz.Scheduler" id="__Mf9tkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.SchedulerFactory" id="__Mf9t0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.String" id="__Mf9uEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setTaskExecutor" type="void" id="__Mf9uUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.concurrent.Executor" id="__Mf9ukcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSchedulerName" type="void" id="__Mf9u0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__Mf9vEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setApplicationContextSchedulerContextKey" type="void" id="__Mf9vUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__Mf9vkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getConfigTimeNonTransactionalDataSource" type="javax.sql.DataSource" id="__Mf9v0cOEem2CuEcvO9MXw"/>
+      <signatures name="setNonTransactionalDataSource" type="void" id="__Mf9wEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.sql.DataSource" id="__Mf9wUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getConfigTimeTaskExecutor" type="java.util.concurrent.Executor" id="__Mf9wkcOEem2CuEcvO9MXw"/>
+      <signatures name="getConfigTimeDataSource" type="javax.sql.DataSource" id="__Mf9w0cOEem2CuEcvO9MXw"/>
+      <signatures name="getConfigTimeResourceLoader" type="org.springframework.core.io.ResourceLoader" id="__Mf9xEcOEem2CuEcvO9MXw"/>
+      <signatures name="initSchedulerFactory" type="void" id="__Mf9xUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.quartz.SchedulerFactory" id="__Mf9xkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setQuartzProperties" type="void" id="__Mf9x0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Properties" id="__Mf9yEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSchedulerFactoryClass" type="void" id="__Mf9yUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__Mf9ykcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSchedulerContextAsMap" type="void" id="__Mf9y0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__Mf9zEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setWaitForJobsToCompleteOnShutdown" type="void" id="__Mf9zUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__Mf9zkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="populateSchedulerContext" type="void" id="__Mf9z0cOEem2CuEcvO9MXw"/>
+      <signatures name="setExposeSchedulerInRepository" type="void" id="__Mf90EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__Mf90UcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+  </repositories>
+</dedal:DedalDiagram>

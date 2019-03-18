@@ -36,7 +36,9 @@ public interface HierarchyBuilder {
 
 	JavaType findJavaType(String name);
 
-	JavaType createNewCompiledJavaType(Class<Object> class1);
+	JavaType createNewCompiledJavaType(Class<?> class1);
+
+	JavaType findJavaType(Class<?> inter);
 
 	
 }

@@ -2,6 +2,7 @@ package fr.imt.ales.redoc.type.hierarchy.structure;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -345,14 +346,15 @@ public class JavaType {
 
 	/**
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<JavaType> getInterfaces() {
+	public List<JavaType> getInterfaces() throws IOException {
 		if(this.typeDeclaration.isClassOrInterfaceDeclaration()) {
 			if(this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface())
 				return jExtends;
 			else return jImplements;
 		}
-		return null;
+		return Collections.emptyList();
 	}
 
 
@@ -393,7 +395,7 @@ public class JavaType {
 	 * @param refID
 	 * @return
 	 */
-	public JavaField getFieldByName(String refID) {
+	public JavaField getRequiredType(String refID) {
 		Optional<FieldDeclaration> field = this.typeDeclaration.getFieldByName(refID);
 		if(field.isPresent()) {
 			String type = field.get().getElementType().asString();
@@ -401,7 +403,7 @@ public class JavaType {
 		} else {
 			if(!this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface()) {
 				for(JavaType jt : this.jExtends) {
-					JavaField fieldByName = jt.getFieldByName(refID);
+					JavaField fieldByName = jt.getRequiredType(refID);
 					if(fieldByName != null)
 						return fieldByName;
 				}

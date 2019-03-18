@@ -55,7 +55,8 @@ public class DedalComponentInstance extends DedalComponentType {
 	protected void mapRequiredInterfaces(List<InstConnection> connections) throws IOException {
 		for(InstConnection connection : connections) {
 			String name = connection.getProperty().substring(connection.getProperty().lastIndexOf('.') + 1);
-			JavaField jField = this.getjType().getFieldByName(name);
+			JavaField jField = this.getjType().getRequiredType(name);
+			
 			if(jField != null && this.componentInstance.equals(connection.getClientInstElem())) {
 				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
 				DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);

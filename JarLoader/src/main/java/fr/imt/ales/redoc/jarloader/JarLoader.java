@@ -175,7 +175,7 @@ public class JarLoader extends URLClassLoader {
 			try (InputStream in = new FileInputStream(url.getFile()); JarInputStream jar = new JarInputStream(in);)
 			{
 				entry = jar.getNextJarEntry();
-				logger.info(url.toString());
+				logger.debug(url.toString());
 				while(entry != null)
 				{
 					/*

@@ -225,9 +225,13 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			// building type hierarchy
 			if(!this.compilationUnits.isEmpty())
 			{
+				logger.info("Explore Hierarchy");
 				this.exploreHierarchy();
+				logger.info("Hierarchy explored");
 				this.packages.forEach(logger::trace);
+				logger.info("Explore Relations");
 				this.exploreRelations();
+				logger.info("Relations explored");
 			}
 			else logger.warn("The list of Java compilation units is empty and then the hierarchy construction cannot go further.");
 		}
@@ -238,6 +242,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 * This methods explores and extracts the type hierarchy from the project
 	 */
 	private void exploreHierarchy() {
+		logger.trace("exploreHierarchy()");
 		this.loadNecessaryData();
 		int length = getPackages().size();
 		for(int i = 0; i < length; i++)
@@ -245,9 +250,11 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			JavaPackage pack = getPackages().get(i);
 			for(JavaType type : pack.getJavaTypes())
 			{
-				type.setjImports(this.getImportedJavaTypes(type));
-				type.setjExtends(this.getExtendedJavaTypes(type));
-				type.setjImplements(this.getImplementedJavaTypes(type));
+				if(!(type instanceof CompiledJavaType)) {
+					type.setjImports(this.getImportedJavaTypes(type));
+					type.setjExtends(this.getExtendedJavaTypes(type));
+					type.setjImplements(this.getImplementedJavaTypes(type));
+				}
 			}
 		}
 	}
@@ -257,6 +264,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 * @return a {@link List} of {@link JavaType}s that are imported by <code>type</code>
 	 */
 	private List<JavaType> getImportedJavaTypes(JavaType type) {
+		logger.trace("getImportedJavaTypes(" + type.getFullName() + ")");
 		List<JavaType> result = new ArrayList<>();
 		for(ImportDeclaration imp : type.getCompilationUnit().getImports() ) {
 			if(imp.isAsterisk()) // import a.b.*
@@ -347,6 +355,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 * @return the list of {@link JavaType} that correspond to extended types of {@code type}.
 	 */
 	private List<JavaType> getExtendedJavaTypes(JavaType type) {
+		logger.trace("getExtendedJavaTypes(" + type.getFullName() + ")");
 		List<JavaType> result = new ArrayList<>();
 
 		TypeDeclaration<?> typeDeclaration = type.getTypeDeclaration();
@@ -371,6 +380,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 * @return the list of {@link JavaType} that correspond to implemented types of {@code type}.
 	 */
 	private List<JavaType> getImplementedJavaTypes(JavaType type) {
+		logger.trace("getImplementedJavaTypes(" + type.getFullName() + ")");
 		List<JavaType> result = new ArrayList<>();
 
 		TypeDeclaration<?> typeDeclaration = type.getTypeDeclaration();
@@ -632,6 +642,20 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 
 	@Override
 	public JavaType findJavaType(String name) {
+		JavaType jt = findExistingJavaType(name);
+		if(jt!=null)
+			return jt;
+		// if still there then it means that it is an external dependency which is not loaded yet
+		try {
+			Class<?> clazz = this.jarLoader.loadClass(name);
+			return this.createNewCompiledJavaType(clazz);
+		} catch (ClassNotFoundException e) {
+			logger.error("Something bad happened while finding a JavaType", e);
+			return null;
+		}
+	}
+
+	private JavaType findExistingJavaType(String name) {
 		for(JavaPackage pack : this.packages) {
 			JavaType jt = pack.findTypeByName(name);
 			if(jt != null) {
@@ -642,10 +666,19 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	}
 
 	@Override
-	public JavaType createNewCompiledJavaType(Class<Object> clazz) {
+	public JavaType createNewCompiledJavaType(Class<?> clazz) {
 		String simpleName = clazz.getSimpleName();
 		String packageName = clazz.getPackageName();
 		return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
 		
+	}
+
+	@Override
+	public JavaType findJavaType(Class<?> clazz) {
+		JavaType jt = findExistingJavaType(clazz.getName());
+		if(jt!=null)
+			return jt;
+		// if still there then it means that it is an external dependency which is not loaded yet
+		return this.createNewCompiledJavaType(clazz);
 	}
 }

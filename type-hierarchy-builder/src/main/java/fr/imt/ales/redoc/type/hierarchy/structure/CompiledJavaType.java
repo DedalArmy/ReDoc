@@ -1,8 +1,12 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.google.common.reflect.Parameter;
@@ -167,6 +171,67 @@ public class CompiledJavaType extends JavaType {
 		}
 		str.append("\n\t}");
 		return str.toString();
+	}
+	
+	@Override
+	public JavaType getSuperclass() throws IOException {
+		Class<?> clazz1 = this.clazz.getSuperclass();
+		return clazz1!=null?this.getjPackage().addNewCompiledJavaType(clazz1):null;
+	}
+	
+	@Override
+	public List<JavaType> getInterfaces() throws IOException {
+		List<JavaType> lInterfaces = new ArrayList<>();
+		Class<?>[] lInter = this.clazz.getInterfaces();
+		for(Class<?> inter : lInter) {
+			lInterfaces.add(this.getjPackage().getCurrentHierarchyBuilder().findJavaType(inter));
+		}
+		return lInterfaces;
+	}
+	
+	@Override
+	public List<JavaMethod> getDeclaredMethods() {
+		List<JavaMethod> declaredMethods = new ArrayList<>();
+		Method[] methods = this.clazz.getDeclaredMethods();
+		for(Method method : methods) {
+			declaredMethods.add(new JavaMethod(method));
+		}
+		return declaredMethods;
+	}
+	
+	@Override
+	public JavaField getRequiredType(String refID){
+		JavaField jField;
+		Field cField;
+		Method cMethod = null;
+		try {
+			cField = this.clazz.getField(refID);
+			jField = new JavaField(cField.getName(), cField.getType().getName());
+			return jField;
+		} catch (NoSuchFieldException | SecurityException e) {
+			// It could be set through a setter
+			try {
+				String methodName = "set" + refID.substring(0, 1).toUpperCase() + refID.substring(1);
+				Method[] cMethods = this.clazz.getMethods();
+				for(Method m : cMethods) {
+					String name = m.getName();
+					if(name.equals(methodName)) {
+						cMethod = m;
+						break;
+					}
+				}
+				// The method has only one parameter which is the property to set
+				if(cMethod != null && cMethod.getParameterCount() == 1) {
+					jField = new JavaField(cMethod.getParameters()[0].getName(), cMethod.getParameters()[0].getType().getCanonicalName());
+					return jField;
+				}
+				return null;
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }

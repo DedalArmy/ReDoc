@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dedal:DedalDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dedal="http://www.dedal.fr/metamodel" name="spring-quartz-cluster-sample_spring-mvc.sdsl_genDedalDiag">
+  <architectureDescriptions xsi:type="dedal:Configuration" name="Configuration" implements="//@architectureDescriptions[name='Specification']">
+    <configComponents name="&quot;org.springframework.web.servlet.view.ContentNegotiatingViewResolver&quot;" id="__OyccEcOEem2CuEcvO9MXw" implements="__PHz3UcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PHz3EcOEem2CuEcvO9MXw" type="IContentNegotiatingViewResolver"/>
+    </configComponents>
+    <configComponents name="&quot;org.springframework.web.servlet.view.velocity.VelocityConfigurer&quot;" id="__OzDgEcOEem2CuEcvO9MXw" implements="__PNTMUcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PNTMEcOEem2CuEcvO9MXw" type="IVelocityConfigurer"/>
+    </configComponents>
+    <configComponents name="&quot;org.springframework.web.servlet.view.velocity.VelocityViewResolver&quot;" id="__OzqkEcOEem2CuEcvO9MXw" implements="__PVPAkcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PVPAUcOEem2CuEcvO9MXw" type="IVelocityViewResolver"/>
+    </configComponents>
+    <comptypes name="ContentNegotiatingViewResolver_Type" id="__PHz3UcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PIasEcOEem2CuEcvO9MXw" type="IContentNegotiatingViewResolver"/>
+    </comptypes>
+    <comptypes name="VelocityConfigurer_Type" id="__PNTMUcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PNTMkcOEem2CuEcvO9MXw" type="IVelocityConfigurer"/>
+    </comptypes>
+    <comptypes name="VelocityViewResolver_Type" id="__PVPAkcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PVPA0cOEem2CuEcvO9MXw" type="IVelocityViewResolver"/>
+    </comptypes>
+  </architectureDescriptions>
+  <architectureDescriptions xsi:type="dedal:Assembly" name="Assembly" instantiates="//@architectureDescriptions[name='Configuration']">
+    <assmComponents name="&quot;org.springframework.web.servlet.view.ContentNegotiatingViewResolver&quot;1" id="__O2G0EcOEem2CuEcvO9MXw" instantiates="__OyccEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PHz20cOEem2CuEcvO9MXw" type="IContentNegotiatingViewResolver" instantiates="__PHz3EcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assmComponents name="&quot;velocityConfig&quot;" id="__O3U8EcOEem2CuEcvO9MXw" instantiates="__OzDgEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PMsQkcOEem2CuEcvO9MXw" type="IVelocityConfigurer" instantiates="__PNTMEcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+    <assmComponents name="&quot;viewResolver&quot;" id="__O38AEcOEem2CuEcvO9MXw" instantiates="__OzqkEcOEem2CuEcvO9MXw">
+      <compInterfaces xsi:type="dedal:Interface" name="__PVPAEcOEem2CuEcvO9MXw" type="IVelocityViewResolver" instantiates="__PVPAUcOEem2CuEcvO9MXw"/>
+    </assmComponents>
+  </architectureDescriptions>
+  <architectureDescriptions xsi:type="dedal:Specification" name="Specification"/>
+  <repositories name="genRepo">
+    <interfaceTypes name="IContentNegotiatingViewResolver">
+      <signatures name="setApplicationContext" type="void" id="__PHMkEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.context.ApplicationContext" id="__PHMkUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isContextRequired" type="boolean" id="__PHzoEcOEem2CuEcvO9MXw"/>
+      <signatures name="getApplicationContext" type="org.springframework.context.ApplicationContext" id="__PHzoUcOEem2CuEcvO9MXw"/>
+      <signatures name="requiredContextClass" type="java.lang.Class" id="__PHzokcOEem2CuEcvO9MXw"/>
+      <signatures name="getMessageSourceAccessor" type="org.springframework.context.support.MessageSourceAccessor" id="__PHzo0cOEem2CuEcvO9MXw"/>
+      <signatures name="initApplicationContext" type="void" id="__PHzpEcOEem2CuEcvO9MXw"/>
+      <signatures name="setServletContext" type="void" id="__PHzpUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.ServletContext" id="__PHzpkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getServletContext" type="javax.servlet.ServletContext" id="__PHzp0cOEem2CuEcvO9MXw"/>
+      <signatures name="getTempDir" type="java.io.File" id="__PHzqEcOEem2CuEcvO9MXw"/>
+      <signatures name="initServletContext" type="void" id="__PHzqUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.ServletContext" id="__PHzqkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getWebApplicationContext" type="org.springframework.web.context.WebApplicationContext" id="__PHzq0cOEem2CuEcvO9MXw"/>
+      <signatures name="resolveViewName" type="org.springframework.web.servlet.View" id="__PHzrEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PHzrUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PHzrkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getOrder" type="int" id="__PHzr0cOEem2CuEcvO9MXw"/>
+      <signatures name="setOrder" type="void" id="__PHzsEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__PHzsUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getCandidateViews" type="java.util.List" id="__PHzskcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PHzs0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PHztEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg2" type="java.util.List" id="__PHztUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMediaTypes" type="java.util.List" id="__PHztkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.http.HttpServletRequest" id="__PHzt0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getBestView" type="org.springframework.web.servlet.View" id="__PHzuEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.List" id="__PHzuUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.List" id="__PHzukcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setMediaTypes" type="void" id="__PHzu0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__PHzvEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setFavorParameter" type="void" id="__PHzvUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PHzvkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setUseJaf" type="void" id="__PHzv0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PHzwEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setParameterName" type="void" id="__PHzwUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PHzwkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDefaultViews" type="void" id="__PHzw0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.List" id="__PHzxEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setViewResolvers" type="void" id="__PHzxUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.List" id="__PHzxkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setIgnoreAcceptHeader" type="void" id="__PHzx0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PHzyEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setUseNotAcceptableStatusCode" type="void" id="__PHzyUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PHzykcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setFavorPathExtension" type="void" id="__PHzy0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PHzzEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMediaTypeFromFilename" type="org.springframework.http.MediaType" id="__PHzzUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PHzzkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getExtensionsForMediaType" type="java.util.List" id="__PHzz0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.http.MediaType" id="__PHz0EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMostSpecificMediaType" type="org.springframework.http.MediaType" id="__PHz0UcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.http.MediaType" id="__PHz0kcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.http.MediaType" id="__PHz00cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getMediaTypeFromParameter" type="org.springframework.http.MediaType" id="__PHz1EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PHz1UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getProducibleMediaTypes" type="java.util.List" id="__PHz1kcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.http.HttpServletRequest" id="__PHz10cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDefaultContentType" type="void" id="__PHz2EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.http.MediaType" id="__PHz2UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="access$0" type="org.apache.commons.logging.Log" id="__PHz2kcOEem2CuEcvO9MXw"/>
+    </interfaceTypes>
+    <interfaceTypes name="IVelocityConfigurer">
+      <signatures name="setConfigLocation" type="void" id="__PMsIEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.core.io.Resource" id="__PMsIUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setResourceLoader" type="void" id="__PMsIkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.core.io.ResourceLoader" id="__PMsI0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="newVelocityEngine" type="org.apache.velocity.app.VelocityEngine" id="__PMsJEcOEem2CuEcvO9MXw"/>
+      <signatures name="setOverrideLogging" type="void" id="__PMsJUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PMsJkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getResourceLoader" type="org.springframework.core.io.ResourceLoader" id="__PMsJ0cOEem2CuEcvO9MXw"/>
+      <signatures name="postProcessVelocityEngine" type="void" id="__PMsKEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.velocity.app.VelocityEngine" id="__PMsKUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createVelocityEngine" type="org.apache.velocity.app.VelocityEngine" id="__PMsKkcOEem2CuEcvO9MXw"/>
+      <signatures name="setVelocityProperties" type="void" id="__PMsK0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Properties" id="__PMsLEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setVelocityPropertiesMap" type="void" id="__PMsLUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__PMsLkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="initSpringResourceLoader" type="void" id="__PMsL0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.velocity.app.VelocityEngine" id="__PMsMEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.String" id="__PMsMUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setPreferFileSystemAccess" type="void" id="__PMsMkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PMsM0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="initVelocityResourceLoader" type="void" id="__PMsNEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.velocity.app.VelocityEngine" id="__PMsNUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.lang.String" id="__PMsNkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setResourceLoaderPath" type="void" id="__PMsN0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PMsOEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isPreferFileSystemAccess" type="boolean" id="__PMsOUcOEem2CuEcvO9MXw"/>
+      <signatures name="getVelocityEngine" type="org.apache.velocity.app.VelocityEngine" id="__PMsOkcOEem2CuEcvO9MXw"/>
+      <signatures name="afterPropertiesSet" type="void" id="__PMsO0cOEem2CuEcvO9MXw"/>
+      <signatures name="setResourceLoader" type="void" id="__PMsPEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.core.io.ResourceLoader" id="__PMsPUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setServletContext" type="void" id="__PMsPkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.ServletContext" id="__PMsP0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setVelocityEngine" type="void" id="__PMsQEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.apache.velocity.app.VelocityEngine" id="__PMsQUcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+    <interfaceTypes name="IVelocityViewResolver">
+      <signatures name="setApplicationContext" type="void" id="__PUn8EcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="org.springframework.context.ApplicationContext" id="__PUn8UcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isContextRequired" type="boolean" id="__PUn8kcOEem2CuEcvO9MXw"/>
+      <signatures name="getApplicationContext" type="org.springframework.context.ApplicationContext" id="__PUn80cOEem2CuEcvO9MXw"/>
+      <signatures name="requiredContextClass" type="java.lang.Class" id="__PUn9EcOEem2CuEcvO9MXw"/>
+      <signatures name="getMessageSourceAccessor" type="org.springframework.context.support.MessageSourceAccessor" id="__PUn9UcOEem2CuEcvO9MXw"/>
+      <signatures name="initApplicationContext" type="void" id="__PUn9kcOEem2CuEcvO9MXw"/>
+      <signatures name="setServletContext" type="void" id="__PUn90cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.ServletContext" id="__PUn-EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getServletContext" type="javax.servlet.ServletContext" id="__PUn-UcOEem2CuEcvO9MXw"/>
+      <signatures name="getTempDir" type="java.io.File" id="__PUn-kcOEem2CuEcvO9MXw"/>
+      <signatures name="initServletContext" type="void" id="__PUn-0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="javax.servlet.ServletContext" id="__PUn_EcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getWebApplicationContext" type="org.springframework.web.context.WebApplicationContext" id="__PUn_UcOEem2CuEcvO9MXw"/>
+      <signatures name="resolveViewName" type="org.springframework.web.servlet.View" id="__PUn_kcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUn_0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoAEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getCacheKey" type="java.lang.Object" id="__PUoAUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoAkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoA0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setCache" type="void" id="__PUoBEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoBUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="clearCache" type="void" id="__PUoBkcOEem2CuEcvO9MXw"/>
+      <signatures name="removeFromCache" type="void" id="__PUoB0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoCEcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoCUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="createView" type="org.springframework.web.servlet.View" id="__PUoCkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoC0cOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoDEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="isCacheUnresolved" type="boolean" id="__PUoDUcOEem2CuEcvO9MXw"/>
+      <signatures name="isCache" type="boolean" id="__PUoDkcOEem2CuEcvO9MXw"/>
+      <signatures name="setCacheUnresolved" type="void" id="__PUoD0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoEEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="loadView" type="org.springframework.web.servlet.View" id="__PUoEUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoEkcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoE0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getOrder" type="int" id="__PUoFEcOEem2CuEcvO9MXw"/>
+      <signatures name="getContentType" type="java.lang.String" id="__PUoFUcOEem2CuEcvO9MXw"/>
+      <signatures name="setContentType" type="void" id="__PUoFkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoF0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getPrefix" type="java.lang.String" id="__PUoGEcOEem2CuEcvO9MXw"/>
+      <signatures name="getSuffix" type="java.lang.String" id="__PUoGUcOEem2CuEcvO9MXw"/>
+      <signatures name="setAttributes" type="void" id="__PUoGkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Properties" id="__PUoG0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setOrder" type="void" id="__PUoHEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="int" id="__PUoHUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setPrefix" type="void" id="__PUoHkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoH0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="canHandle" type="boolean" id="__PUoIEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoIUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="java.util.Locale" id="__PUoIkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getViewClass" type="java.lang.Class" id="__PUoI0cOEem2CuEcvO9MXw"/>
+      <signatures name="setViewClass" type="void" id="__PUoJEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Class" id="__PUoJUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="requiredViewClass" type="java.lang.Class" id="__PUoJkcOEem2CuEcvO9MXw"/>
+      <signatures name="setAttributesMap" type="void" id="__PUoJ0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.util.Map" id="__PUoKEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setViewNames" type="void" id="__PUoKUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="[Ljava.lang.String;" id="__PUoKkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="buildView" type="org.springframework.web.servlet.view.AbstractUrlBasedView" id="__PUoK0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoLEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setSuffix" type="void" id="__PUoLUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoLkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getAttributesMap" type="java.util.Map" id="__PUoL0cOEem2CuEcvO9MXw"/>
+      <signatures name="getViewNames" type="[Ljava.lang.String;" id="__PUoMEcOEem2CuEcvO9MXw"/>
+      <signatures name="isRedirectHttp10Compatible" type="boolean" id="__PUoMUcOEem2CuEcvO9MXw"/>
+      <signatures name="setRequestContextAttribute" type="void" id="__PUoMkcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoM0cOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setRedirectHttp10Compatible" type="void" id="__PUoNEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoNUcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="getRequestContextAttribute" type="java.lang.String" id="__PUoNkcOEem2CuEcvO9MXw"/>
+      <signatures name="isRedirectContextRelative" type="boolean" id="__PUoN0cOEem2CuEcvO9MXw"/>
+      <signatures name="applyLifecycleMethods" type="org.springframework.web.servlet.View" id="__PUoOEcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoOUcOEem2CuEcvO9MXw"/>
+        <parameters name="arg1" type="org.springframework.web.servlet.view.AbstractView" id="__PUoOkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setExposePathVariables" type="void" id="__PUoO0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.Boolean" id="__PUoPEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setRedirectContextRelative" type="void" id="__PUoPUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoPkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setAllowRequestOverride" type="void" id="__PUoP0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoQEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setExposeRequestAttributes" type="void" id="__PUoQUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoQkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setAllowSessionOverride" type="void" id="__PUoQ0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoREcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setExposeSpringMacroHelpers" type="void" id="__PUoRUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoRkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setExposeSessionAttributes" type="void" id="__PUoR0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="boolean" id="__PUoSEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setDateToolAttribute" type="void" id="__PUoSUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoSkcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setToolboxConfigLocation" type="void" id="__PUoS0cOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoTEcOEem2CuEcvO9MXw"/>
+      </signatures>
+      <signatures name="setNumberToolAttribute" type="void" id="__PUoTUcOEem2CuEcvO9MXw">
+        <parameters name="arg0" type="java.lang.String" id="__PUoTkcOEem2CuEcvO9MXw"/>
+      </signatures>
+    </interfaceTypes>
+  </repositories>
+</dedal:DedalDiagram>

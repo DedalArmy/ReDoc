@@ -1,0 +1,752 @@
+dedal_diagram "spring-quartz-cluster-sample_spring-mvc.sdsl_genDedalDiag"
+
+	architecture_descriptions (
+
+		configuration Configuration
+			implements Specification component_classes
+
+		primitive_component_class
+		"org.springframework.web.servlet.view.ContentNegotiatingViewResolver"
+			id "__OyccEcOEem2CuEcvO9MXw"
+			implements ContentNegotiatingViewResolver_Type
+			interfaces
+				interface __PHz3EcOEem2CuEcvO9MXw
+					interface_direction provided
+					implementation IContentNegotiatingViewResolver;
+
+		primitive_component_class
+		"org.springframework.web.servlet.view.velocity.VelocityConfigurer"
+			id "__OzDgEcOEem2CuEcvO9MXw"
+			implements VelocityConfigurer_Type
+			interfaces
+				interface __PNTMEcOEem2CuEcvO9MXw
+					interface_direction provided
+					implementation IVelocityConfigurer;
+
+		primitive_component_class
+		"org.springframework.web.servlet.view.velocity.VelocityViewResolver"
+			id "__OzqkEcOEem2CuEcvO9MXw"
+			implements VelocityViewResolver_Type
+			interfaces
+				interface __PVPAUcOEem2CuEcvO9MXw
+					interface_direction provided
+					implementation IVelocityViewResolver component_types (
+
+			component_type ContentNegotiatingViewResolver_Type
+				id "__PHz3UcOEem2CuEcvO9MXw" required_interfaces
+					interface __PIasEcOEem2CuEcvO9MXw
+						interface_direction provided
+						implementation IContentNegotiatingViewResolver;
+
+			component_type VelocityConfigurer_Type
+				id "__PNTMUcOEem2CuEcvO9MXw" required_interfaces
+					interface __PNTMkcOEem2CuEcvO9MXw
+						interface_direction provided
+						implementation IVelocityConfigurer;
+
+			component_type VelocityViewResolver_Type
+				id "__PVPAkcOEem2CuEcvO9MXw" required_interfaces
+					interface __PVPA0cOEem2CuEcvO9MXw
+						interface_direction provided
+						implementation IVelocityViewResolver
+		);
+
+		assembly Assembly
+			instance_of Configuration
+
+			component_instances (
+
+				component_instance
+				"org.springframework.web.servlet.view.ContentNegotiatingViewResolver"1
+					id "__O2G0EcOEem2CuEcvO9MXw"
+					instance_of
+				"\"org.springframework.web.servlet.view.ContentNegotiatingViewResolver\""
+					component_interfaces
+						interface __PHz20cOEem2CuEcvO9MXw
+							interface_direction provided
+							implementation IContentNegotiatingViewResolver
+							instantiates "__PHz3EcOEem2CuEcvO9MXw";
+
+				component_instance "velocityConfig"
+					id "__O3U8EcOEem2CuEcvO9MXw"
+					instance_of
+				"\"org.springframework.web.servlet.view.velocity.VelocityConfigurer\""
+					component_interfaces
+						interface __PMsQkcOEem2CuEcvO9MXw
+							interface_direction provided
+							implementation IVelocityConfigurer
+							instantiates "__PNTMEcOEem2CuEcvO9MXw";
+
+				component_instance "viewResolver"
+					id "__O38AEcOEem2CuEcvO9MXw"
+					instance_of
+				"\"org.springframework.web.servlet.view.velocity.VelocityViewResolver\""
+					component_interfaces
+						interface __PVPAEcOEem2CuEcvO9MXw
+							interface_direction provided
+							implementation IVelocityViewResolver
+							instantiates "__PVPAUcOEem2CuEcvO9MXw"
+			);
+
+		specification Specification
+	)
+
+	repositories (
+
+		repository genRepo
+
+		interface_types (
+
+			type IContentNegotiatingViewResolver
+				signatures (
+					signature "__PHMkEcOEem2CuEcvO9MXw" name setApplicationContext
+
+					type void parameters (
+						parameter "__PHMkUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.context.ApplicationContext"
+					);
+					signature "__PHzoEcOEem2CuEcvO9MXw" name isContextRequired
+
+					type ^boolean;
+					signature "__PHzoUcOEem2CuEcvO9MXw" name getApplicationContext
+
+					type "org.springframework.context.ApplicationContext";
+					signature "__PHzokcOEem2CuEcvO9MXw" name requiredContextClass
+
+					type "java.lang.Class";
+					signature "__PHzo0cOEem2CuEcvO9MXw" name getMessageSourceAccessor
+
+					type "org.springframework.context.support.MessageSourceAccessor";
+					signature "__PHzpEcOEem2CuEcvO9MXw" name initApplicationContext
+
+					type void;
+					signature "__PHzpUcOEem2CuEcvO9MXw" name setServletContext
+
+					type void parameters (
+						parameter "__PHzpkcOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.ServletContext"
+					);
+					signature "__PHzp0cOEem2CuEcvO9MXw" name getServletContext
+
+					type "javax.servlet.ServletContext";
+					signature "__PHzqEcOEem2CuEcvO9MXw" name getTempDir
+
+					type "java.io.File";
+					signature "__PHzqUcOEem2CuEcvO9MXw" name initServletContext
+
+					type void parameters (
+						parameter "__PHzqkcOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.ServletContext"
+					);
+					signature "__PHzq0cOEem2CuEcvO9MXw" name getWebApplicationContext
+
+					type "org.springframework.web.context.WebApplicationContext";
+					signature "__PHzrEcOEem2CuEcvO9MXw" name resolveViewName
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PHzrUcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PHzrkcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PHzr0cOEem2CuEcvO9MXw" name getOrder
+
+					type ^int;
+					signature "__PHzsEcOEem2CuEcvO9MXw" name setOrder
+
+					type void parameters (
+						parameter "__PHzsUcOEem2CuEcvO9MXw" name arg0
+
+						type ^int
+					);
+					signature "__PHzskcOEem2CuEcvO9MXw" name getCandidateViews
+
+					type "java.util.List" parameters (
+						parameter "__PHzs0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PHztEcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale";
+						parameter "__PHztUcOEem2CuEcvO9MXw" name arg2
+
+						type "java.util.List"
+					);
+					signature "__PHztkcOEem2CuEcvO9MXw" name getMediaTypes
+
+					type "java.util.List" parameters (
+						parameter "__PHzt0cOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.http.HttpServletRequest"
+					);
+					signature "__PHzuEcOEem2CuEcvO9MXw" name getBestView
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PHzuUcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.List";
+						parameter "__PHzukcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.List"
+					);
+					signature "__PHzu0cOEem2CuEcvO9MXw" name setMediaTypes
+
+					type void parameters (
+						parameter "__PHzvEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.Map"
+					);
+					signature "__PHzvUcOEem2CuEcvO9MXw" name setFavorParameter
+
+					type void parameters (
+						parameter "__PHzvkcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PHzv0cOEem2CuEcvO9MXw" name setUseJaf
+
+					type void parameters (
+						parameter "__PHzwEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PHzwUcOEem2CuEcvO9MXw" name setParameterName
+
+					type void parameters (
+						parameter "__PHzwkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PHzw0cOEem2CuEcvO9MXw" name setDefaultViews
+
+					type void parameters (
+						parameter "__PHzxEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.List"
+					);
+					signature "__PHzxUcOEem2CuEcvO9MXw" name setViewResolvers
+
+					type void parameters (
+						parameter "__PHzxkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.List"
+					);
+					signature "__PHzx0cOEem2CuEcvO9MXw" name setIgnoreAcceptHeader
+
+					type void parameters (
+						parameter "__PHzyEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PHzyUcOEem2CuEcvO9MXw" name setUseNotAcceptableStatusCode
+
+					type void parameters (
+						parameter "__PHzykcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PHzy0cOEem2CuEcvO9MXw" name setFavorPathExtension
+
+					type void parameters (
+						parameter "__PHzzEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PHzzUcOEem2CuEcvO9MXw" name getMediaTypeFromFilename
+
+					type "org.springframework.http.MediaType" parameters (
+						parameter "__PHzzkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PHzz0cOEem2CuEcvO9MXw" name getExtensionsForMediaType
+
+					type "java.util.List" parameters (
+						parameter "__PHz0EcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.http.MediaType"
+					);
+					signature "__PHz0UcOEem2CuEcvO9MXw" name getMostSpecificMediaType
+
+					type "org.springframework.http.MediaType" parameters (
+						parameter "__PHz0kcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.http.MediaType";
+						parameter "__PHz00cOEem2CuEcvO9MXw" name arg1
+
+						type "org.springframework.http.MediaType"
+					);
+					signature "__PHz1EcOEem2CuEcvO9MXw" name getMediaTypeFromParameter
+
+					type "org.springframework.http.MediaType" parameters (
+						parameter "__PHz1UcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PHz1kcOEem2CuEcvO9MXw" name getProducibleMediaTypes
+
+					type "java.util.List" parameters (
+						parameter "__PHz10cOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.http.HttpServletRequest"
+					);
+					signature "__PHz2EcOEem2CuEcvO9MXw" name setDefaultContentType
+
+					type void parameters (
+						parameter "__PHz2UcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.http.MediaType"
+					);
+					signature "__PHz2kcOEem2CuEcvO9MXw" name "access$0"
+
+					type "org.apache.commons.logging.Log"
+				);
+
+			type IVelocityConfigurer
+				signatures (
+					signature "__PMsIEcOEem2CuEcvO9MXw" name setConfigLocation
+
+					type void parameters (
+						parameter "__PMsIUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.core.io.Resource"
+					);
+					signature "__PMsIkcOEem2CuEcvO9MXw" name setResourceLoader
+
+					type void parameters (
+						parameter "__PMsI0cOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.core.io.ResourceLoader"
+					);
+					signature "__PMsJEcOEem2CuEcvO9MXw" name newVelocityEngine
+
+					type "org.apache.velocity.app.VelocityEngine";
+					signature "__PMsJUcOEem2CuEcvO9MXw" name setOverrideLogging
+
+					type void parameters (
+						parameter "__PMsJkcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PMsJ0cOEem2CuEcvO9MXw" name getResourceLoader
+
+					type "org.springframework.core.io.ResourceLoader";
+					signature "__PMsKEcOEem2CuEcvO9MXw" name postProcessVelocityEngine
+
+					type void parameters (
+						parameter "__PMsKUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.apache.velocity.app.VelocityEngine"
+					);
+					signature "__PMsKkcOEem2CuEcvO9MXw" name createVelocityEngine
+
+					type "org.apache.velocity.app.VelocityEngine";
+					signature "__PMsK0cOEem2CuEcvO9MXw" name setVelocityProperties
+
+					type void parameters (
+						parameter "__PMsLEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.Properties"
+					);
+					signature "__PMsLUcOEem2CuEcvO9MXw" name setVelocityPropertiesMap
+
+					type void parameters (
+						parameter "__PMsLkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.Map"
+					);
+					signature "__PMsL0cOEem2CuEcvO9MXw" name initSpringResourceLoader
+
+					type void parameters (
+						parameter "__PMsMEcOEem2CuEcvO9MXw" name arg0
+
+						type "org.apache.velocity.app.VelocityEngine";
+						parameter "__PMsMUcOEem2CuEcvO9MXw" name arg1
+
+						type "java.lang.String"
+					);
+					signature "__PMsMkcOEem2CuEcvO9MXw" name setPreferFileSystemAccess
+
+					type void parameters (
+						parameter "__PMsM0cOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PMsNEcOEem2CuEcvO9MXw" name initVelocityResourceLoader
+
+					type void parameters (
+						parameter "__PMsNUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.apache.velocity.app.VelocityEngine";
+						parameter "__PMsNkcOEem2CuEcvO9MXw" name arg1
+
+						type "java.lang.String"
+					);
+					signature "__PMsN0cOEem2CuEcvO9MXw" name setResourceLoaderPath
+
+					type void parameters (
+						parameter "__PMsOEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PMsOUcOEem2CuEcvO9MXw" name isPreferFileSystemAccess
+
+					type ^boolean;
+					signature "__PMsOkcOEem2CuEcvO9MXw" name getVelocityEngine
+
+					type "org.apache.velocity.app.VelocityEngine";
+					signature "__PMsO0cOEem2CuEcvO9MXw" name afterPropertiesSet
+
+					type void;
+					signature "__PMsPEcOEem2CuEcvO9MXw" name setResourceLoader
+
+					type void parameters (
+						parameter "__PMsPUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.core.io.ResourceLoader"
+					);
+					signature "__PMsPkcOEem2CuEcvO9MXw" name setServletContext
+
+					type void parameters (
+						parameter "__PMsP0cOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.ServletContext"
+					);
+					signature "__PMsQEcOEem2CuEcvO9MXw" name setVelocityEngine
+
+					type void parameters (
+						parameter "__PMsQUcOEem2CuEcvO9MXw" name arg0
+
+						type "org.apache.velocity.app.VelocityEngine"
+					)
+				);
+
+			type IVelocityViewResolver
+				signatures (
+					signature "__PUn8EcOEem2CuEcvO9MXw" name setApplicationContext
+
+					type void parameters (
+						parameter "__PUn8UcOEem2CuEcvO9MXw" name arg0
+
+						type "org.springframework.context.ApplicationContext"
+					);
+					signature "__PUn8kcOEem2CuEcvO9MXw" name isContextRequired
+
+					type ^boolean;
+					signature "__PUn80cOEem2CuEcvO9MXw" name getApplicationContext
+
+					type "org.springframework.context.ApplicationContext";
+					signature "__PUn9EcOEem2CuEcvO9MXw" name requiredContextClass
+
+					type "java.lang.Class";
+					signature "__PUn9UcOEem2CuEcvO9MXw" name getMessageSourceAccessor
+
+					type "org.springframework.context.support.MessageSourceAccessor";
+					signature "__PUn9kcOEem2CuEcvO9MXw" name initApplicationContext
+
+					type void;
+					signature "__PUn90cOEem2CuEcvO9MXw" name setServletContext
+
+					type void parameters (
+						parameter "__PUn-EcOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.ServletContext"
+					);
+					signature "__PUn-UcOEem2CuEcvO9MXw" name getServletContext
+
+					type "javax.servlet.ServletContext";
+					signature "__PUn-kcOEem2CuEcvO9MXw" name getTempDir
+
+					type "java.io.File";
+					signature "__PUn-0cOEem2CuEcvO9MXw" name initServletContext
+
+					type void parameters (
+						parameter "__PUn_EcOEem2CuEcvO9MXw" name arg0
+
+						type "javax.servlet.ServletContext"
+					);
+					signature "__PUn_UcOEem2CuEcvO9MXw" name getWebApplicationContext
+
+					type "org.springframework.web.context.WebApplicationContext";
+					signature "__PUn_kcOEem2CuEcvO9MXw" name resolveViewName
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PUn_0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoAEcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoAUcOEem2CuEcvO9MXw" name getCacheKey
+
+					type "java.lang.Object" parameters (
+						parameter "__PUoAkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoA0cOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoBEcOEem2CuEcvO9MXw" name setCache
+
+					type void parameters (
+						parameter "__PUoBUcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoBkcOEem2CuEcvO9MXw" name clearCache
+
+					type void;
+					signature "__PUoB0cOEem2CuEcvO9MXw" name removeFromCache
+
+					type void parameters (
+						parameter "__PUoCEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoCUcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoCkcOEem2CuEcvO9MXw" name createView
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PUoC0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoDEcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoDUcOEem2CuEcvO9MXw" name isCacheUnresolved
+
+					type ^boolean;
+					signature "__PUoDkcOEem2CuEcvO9MXw" name isCache
+
+					type ^boolean;
+					signature "__PUoD0cOEem2CuEcvO9MXw" name setCacheUnresolved
+
+					type void parameters (
+						parameter "__PUoEEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoEUcOEem2CuEcvO9MXw" name loadView
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PUoEkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoE0cOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoFEcOEem2CuEcvO9MXw" name getOrder
+
+					type ^int;
+					signature "__PUoFUcOEem2CuEcvO9MXw" name getContentType
+
+					type "java.lang.String";
+					signature "__PUoFkcOEem2CuEcvO9MXw" name setContentType
+
+					type void parameters (
+						parameter "__PUoF0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoGEcOEem2CuEcvO9MXw" name getPrefix
+
+					type "java.lang.String";
+					signature "__PUoGUcOEem2CuEcvO9MXw" name getSuffix
+
+					type "java.lang.String";
+					signature "__PUoGkcOEem2CuEcvO9MXw" name setAttributes
+
+					type void parameters (
+						parameter "__PUoG0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.Properties"
+					);
+					signature "__PUoHEcOEem2CuEcvO9MXw" name setOrder
+
+					type void parameters (
+						parameter "__PUoHUcOEem2CuEcvO9MXw" name arg0
+
+						type ^int
+					);
+					signature "__PUoHkcOEem2CuEcvO9MXw" name setPrefix
+
+					type void parameters (
+						parameter "__PUoH0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoIEcOEem2CuEcvO9MXw" name canHandle
+
+					type ^boolean parameters (
+						parameter "__PUoIUcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoIkcOEem2CuEcvO9MXw" name arg1
+
+						type "java.util.Locale"
+					);
+					signature "__PUoI0cOEem2CuEcvO9MXw" name getViewClass
+
+					type "java.lang.Class";
+					signature "__PUoJEcOEem2CuEcvO9MXw" name setViewClass
+
+					type void parameters (
+						parameter "__PUoJUcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.Class"
+					);
+					signature "__PUoJkcOEem2CuEcvO9MXw" name requiredViewClass
+
+					type "java.lang.Class";
+					signature "__PUoJ0cOEem2CuEcvO9MXw" name setAttributesMap
+
+					type void parameters (
+						parameter "__PUoKEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.util.Map"
+					);
+					signature "__PUoKUcOEem2CuEcvO9MXw" name setViewNames
+
+					type void parameters (
+						parameter "__PUoKkcOEem2CuEcvO9MXw" name arg0
+
+						type "[Ljava.lang.String;"
+					);
+					signature "__PUoK0cOEem2CuEcvO9MXw" name buildView
+
+					type "org.springframework.web.servlet.view.AbstractUrlBasedView"
+					parameters (
+						parameter "__PUoLEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoLUcOEem2CuEcvO9MXw" name setSuffix
+
+					type void parameters (
+						parameter "__PUoLkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoL0cOEem2CuEcvO9MXw" name getAttributesMap
+
+					type "java.util.Map";
+					signature "__PUoMEcOEem2CuEcvO9MXw" name getViewNames
+
+					type "[Ljava.lang.String;";
+					signature "__PUoMUcOEem2CuEcvO9MXw" name isRedirectHttp10Compatible
+
+					type ^boolean;
+					signature "__PUoMkcOEem2CuEcvO9MXw" name setRequestContextAttribute
+
+					type void parameters (
+						parameter "__PUoM0cOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoNEcOEem2CuEcvO9MXw" name setRedirectHttp10Compatible
+
+					type void parameters (
+						parameter "__PUoNUcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoNkcOEem2CuEcvO9MXw" name getRequestContextAttribute
+
+					type "java.lang.String";
+					signature "__PUoN0cOEem2CuEcvO9MXw" name isRedirectContextRelative
+
+					type ^boolean;
+					signature "__PUoOEcOEem2CuEcvO9MXw" name applyLifecycleMethods
+
+					type "org.springframework.web.servlet.View" parameters (
+						parameter "__PUoOUcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String";
+						parameter "__PUoOkcOEem2CuEcvO9MXw" name arg1
+
+						type "org.springframework.web.servlet.view.AbstractView"
+					);
+					signature "__PUoO0cOEem2CuEcvO9MXw" name setExposePathVariables
+
+					type void parameters (
+						parameter "__PUoPEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.Boolean"
+					);
+					signature "__PUoPUcOEem2CuEcvO9MXw" name setRedirectContextRelative
+
+					type void parameters (
+						parameter "__PUoPkcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoP0cOEem2CuEcvO9MXw" name setAllowRequestOverride
+
+					type void parameters (
+						parameter "__PUoQEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoQUcOEem2CuEcvO9MXw" name setExposeRequestAttributes
+
+					type void parameters (
+						parameter "__PUoQkcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoQ0cOEem2CuEcvO9MXw" name setAllowSessionOverride
+
+					type void parameters (
+						parameter "__PUoREcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoRUcOEem2CuEcvO9MXw" name setExposeSpringMacroHelpers
+
+					type void parameters (
+						parameter "__PUoRkcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoR0cOEem2CuEcvO9MXw" name setExposeSessionAttributes
+
+					type void parameters (
+						parameter "__PUoSEcOEem2CuEcvO9MXw" name arg0
+
+						type ^boolean
+					);
+					signature "__PUoSUcOEem2CuEcvO9MXw" name setDateToolAttribute
+
+					type void parameters (
+						parameter "__PUoSkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoS0cOEem2CuEcvO9MXw" name setToolboxConfigLocation
+
+					type void parameters (
+						parameter "__PUoTEcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					);
+					signature "__PUoTUcOEem2CuEcvO9MXw" name setNumberToolAttribute
+
+					type void parameters (
+						parameter "__PUoTkcOEem2CuEcvO9MXw" name arg0
+
+						type "java.lang.String"
+					)
+				)
+		)
+	)
