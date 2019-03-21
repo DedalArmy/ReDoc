@@ -54,7 +54,7 @@ public class DedalInterfaceType extends DedalType {
 				result.addAll(this.recursivelyGetSuperTypes(jt));
 			}
 		}
-		return result ;
+		return result;
 	}
 
 	/**

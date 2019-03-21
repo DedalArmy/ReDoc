@@ -20,9 +20,10 @@ Export-Package: fr.imt.ales.redoc.cba,
  fr.imt.ales.redoc.cba.dedal.transformation
 Require-Bundle: fr.ema.dedal.metamodel;bundle-version="0.1.0",
  org.xtext.spring.springConfig;bundle-version="1.0.0",
- org.eclipse.m2m.qvt.oml;bundle-version="3.9.2",
- org.eclipse.xtext.ecore;bundle-version="2.17.0",
+ org.eclipse.m2m.qvt.oml,
+ org.eclipse.xtext.ecore,
  fr.ema.dedal.xtext.ui;bundle-version="1.0.0",
  org.xtext.spring.springConfig.edit;bundle-version="1.0.0",
  org.eclipse.core.runtime;bundle-version="3.15.100"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Import-Package: org.eclipse.m2m.qvt.oml

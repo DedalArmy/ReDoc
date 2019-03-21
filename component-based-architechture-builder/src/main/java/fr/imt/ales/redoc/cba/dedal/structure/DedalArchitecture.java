@@ -134,9 +134,7 @@ public class DedalArchitecture {
 	public DedalComponentInstance createCompInstIfNotExists(CompInstance ci, DedalFactory factory,
 			EList<InstConnection> assemblyConnections) throws IOException {
 		if(!this.compInstExists(ci)) {
-			DedalComponentInstance compinst = new DedalComponentInstance(this.projectPath, ci, factory, assemblyConnections, this);
-			this.assembly.add(compinst);
-			return compinst;
+			return new DedalComponentInstance(this.projectPath, ci, factory, assemblyConnections, this);
 
 		} else {
 			return this.findCompInstance(ci);
@@ -155,9 +153,7 @@ public class DedalArchitecture {
 	public DedalComponentClass createCompClassIfNotExists(CompClass cc, DedalFactory factory,
 			DedalComponentInstance compInstance) throws IOException {
 		if(!this.compClassExists(cc)) {
-			DedalComponentClass compClass = new DedalComponentClass(this.projectPath, cc, factory, this, compInstance);
-			this.configuration.add(compClass);
-			return compClass;
+			return new DedalComponentClass(this.projectPath, cc, factory, this, compInstance);
 		} else {
 			DedalComponentClass compClass = this.findCompClass(cc);
 			compClass.setInstantiatedBy(compInstance);
@@ -181,6 +177,24 @@ public class DedalArchitecture {
 		if(acon.getServerIntElem() instanceof Interface) {
 			ccon.setServerIntElem(((Interface)acon.getServerIntElem()).getInstantiates());
 		}
+	}
+
+	public DedalComponentRole getComponentRoleByJavaType(JavaType jt) {
+		for(DedalComponentRole cr : this.specification) {
+			if(cr.getjType().equals(jt)) {
+				return cr;
+			}
+		}
+		return null;
+	}
+
+	public DedalComponentClass getConfigComponent(CompClass sourceComponent) {
+		for(DedalComponentClass dcc : this.configuration) {
+			if(dcc.getComponentClass().equals(sourceComponent)) {
+				return dcc;
+			}
+		}
+		return null;
 	}
 
 

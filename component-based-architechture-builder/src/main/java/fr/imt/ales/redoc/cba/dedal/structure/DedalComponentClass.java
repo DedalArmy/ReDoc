@@ -81,7 +81,7 @@ public class DedalComponentClass extends DedalComponentType {
 		List<DedalComponentRole> result = new ArrayList<>();
 		ComponentRoleExtractor cre = new ComponentRoleExtractor(this.getjType(), this.getDedalFactory());
 		CompRole compRole = cre.mapComponentRole();
-		result.add(new DedalComponentRole(this.getProjectPath(), compRole, this.getDedalFactory(), this.architecture));
+		result.add(new DedalComponentRole(this.getProjectPath(), compRole, this.getDedalFactory(), this.architecture, this.componentClass, configConnections, this.componentClass));
 		return result ;
 	}
 }

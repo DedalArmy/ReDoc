@@ -2,6 +2,7 @@ package fr.imt.ales.redoc.cba.dedal.builder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +20,9 @@ import dedal.Repository;
 import dedal.Specification;
 import dedal.impl.DedalFactoryImpl;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalArchitecture;
+import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentClass;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentInstance;
+import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentRole;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalInterfaceType;
 import fr.imt.ales.redoc.cba.dedal.transformation.SdslTransformer;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
@@ -104,8 +107,6 @@ public class DedalArchitectureBuilder {
 	 * @param spec
 	 * @param config
 	 * @param asm
-	 * @param config
-	 * @param asm
 	 * @throws IOException
 	 */
 	private void buildFromSpring(Assembly asm, Configuration config, Specification spec, Repository repo)
@@ -125,14 +126,14 @@ public class DedalArchitectureBuilder {
 				}
 			}
 		}
-		this.dedalArchitecture.getConfiguration().forEach(dcc -> {
-			try {
-				this.dedalArchitecture.getSpecification().addAll(dcc.computeComponentRoles(config.getConfigConnections()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		for(DedalComponentClass dcc : this.dedalArchitecture.getConfiguration()) {
+			List<DedalComponentRole> componentRoles = dcc.computeComponentRoles(config.getConfigConnections());
+			for(DedalComponentRole cr : componentRoles) {
+				dcc.getComponentClass().getRealizes().add(cr.getComponentRole());
+				spec.getSpecComponents().add(cr.getComponentRole());
 			}
-		});
+			this.dedalArchitecture.getSpecification().addAll(componentRoles);
+		}
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
 		}
