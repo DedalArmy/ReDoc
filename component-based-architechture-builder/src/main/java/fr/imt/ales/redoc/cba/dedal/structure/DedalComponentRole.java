@@ -43,7 +43,6 @@ public class DedalComponentRole extends DedalComponentType {
 			for(DedalInterface inter : this.interfaces) {
 				this.componentRole.getCompInterfaces().add(inter.getCompInterface());
 			}
-			System.out.println();
 		}
 	}
 
