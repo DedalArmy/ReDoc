@@ -12,7 +12,10 @@ import dedal.CompInstance;
 import dedal.DedalDiagram;
 import dedal.DedalFactory;
 import dedal.InstConnection;
+import dedal.Interaction;
 import dedal.Interface;
+import dedal.InterfaceType;
+import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class DedalArchitecture {
@@ -192,6 +195,15 @@ public class DedalArchitecture {
 		for(DedalComponentClass dcc : this.configuration) {
 			if(dcc.getComponentClass().equals(sourceComponent)) {
 				return dcc;
+			}
+		}
+		return null;
+	}
+
+	public DedalInterfaceType findInterfaceType(InterfaceType interType) {
+		for(DedalInterfaceType inter : this.interfaceTypes) {
+			if(inter.getInterfaceType().equals(interType)) {
+				return inter;
 			}
 		}
 		return null;

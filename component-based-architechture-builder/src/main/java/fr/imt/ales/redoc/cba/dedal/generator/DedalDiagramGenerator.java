@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 
 import dedal.DedalDiagram;
 import fr.imt.ales.redoc.cba.dedal.builder.DedalArchitectureBuilder;
+import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
@@ -98,7 +99,7 @@ public class DedalDiagramGenerator {
 		/**
 		 * we instantiate a new Dedal diagram that we will return as the result of this method
 		 */
-		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(projectPath);
+		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(projectPath, InterfaceOption.SMALLINTERFACES);
 		return dBuilder.build(springXMLFile);
 	}
 	

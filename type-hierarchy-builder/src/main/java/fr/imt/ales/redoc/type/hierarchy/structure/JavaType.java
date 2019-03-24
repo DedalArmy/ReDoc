@@ -411,4 +411,23 @@ public class JavaType {
 		}
 		return null;
 	}
+
+
+	public Boolean isSubtypeOf(JavaType jType) {
+		List<JavaType> superTypes = new ArrayList<>();
+		superTypes.addAll(this.jExtends);
+		superTypes.addAll(jImplements);
+		if(this.equals(jType)) {
+			return Boolean.TRUE;
+		}
+		for(JavaType st : superTypes) {
+			if(st.equals(jType)) {
+				return Boolean.TRUE;
+			}
+			if(st.isSubtypeOf(jType))	{
+				return Boolean.TRUE;
+			}
+		}
+		return Boolean.FALSE;
+	}
 }

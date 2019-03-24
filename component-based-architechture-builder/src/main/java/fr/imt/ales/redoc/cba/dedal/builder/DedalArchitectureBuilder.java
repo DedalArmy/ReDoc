@@ -2,10 +2,13 @@ package fr.imt.ales.redoc.cba.dedal.builder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.http.HttpClient.Redirect;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.ecore.EObject;
 
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
@@ -31,6 +34,7 @@ import fr.imt.ales.redoc.cba.dedal.transformation.SdslTransformer;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
+import gen.lib.pack.ccomps__c;
 
 /**
  * This class is designed for inspecting jar/war files and generate the Dedal
@@ -49,6 +53,9 @@ public class DedalArchitectureBuilder {
 	private DedalArchitecture dedalArchitecture;
 	private String projectPath;
 
+	private InterfaceOption interfaceOption = InterfaceOption.BIGINTERFACES;
+	private AbstractionOption abstractOption = AbstractionOption.MIXED;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////// Constructor, init, accessors	////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -59,12 +66,28 @@ public class DedalArchitectureBuilder {
 		this.factory = DedalFactoryImpl.init();
 	}
 
+	public DedalArchitectureBuilder(String projectPath, InterfaceOption intOpt, AbstractionOption absOpt) throws IOException {
+		this(projectPath);
+		this.interfaceOption = intOpt;
+		this.abstractOption = absOpt;
+	}
+
+	public DedalArchitectureBuilder(String projectPath, InterfaceOption intOpt) throws IOException {
+		this(projectPath);
+		this.interfaceOption = intOpt;
+	}
+
+	public DedalArchitectureBuilder(String projectPath, AbstractionOption absOpt) throws IOException {
+		this(projectPath);
+		this.abstractOption = absOpt;
+	}
+
 	public DedalDiagram build(XMLFile springXMLFile) throws URISyntaxException, IOException {
 
 		// Setting the DedalDiagram up
 		DedalDiagram dedalDiagram = (DedalDiagram) SdslTransformer.extractDedalArtifacts(springXMLFile).get(0); // extracting
-																												// from
-																												// Spring
+		// from
+		// Spring
 		dedalDiagram.setName(springXMLFile.getParentFile().getParentFile().getName() + "_" + springXMLFile.getName() + "_genDedalDiag");
 
 		// Setting the Repository up
@@ -115,9 +138,11 @@ public class DedalArchitectureBuilder {
 	private void buildFromSpring(Assembly asm, Configuration config, Specification spec, Repository repo)
 			throws IOException {
 		for (CompInstance ci : asm.getAssmComponents()) {
-			DedalComponentInstance compInstance = this.dedalArchitecture.createCompInstIfNotExists(ci, this.factory,
-					asm.getAssemblyConnections()); // complete the description of the component instances and instance connections
-			this.dedalArchitecture.createCompClassIfNotExists(ci.getInstantiates(), this.factory, compInstance); // complete the description of component classes
+			this.dedalArchitecture.createCompInstIfNotExists(ci, this.factory, asm.getAssemblyConnections()); // complete the description of the component instances and instance connections
+		}
+		this.applyOptionsToAssembly();
+		for (DedalComponentInstance compInstance : this.dedalArchitecture.getAssembly()) {
+			this.dedalArchitecture.createCompClassIfNotExists(compInstance.getComponentInstance().getInstantiates(), this.factory, compInstance); // complete the description of component classes
 		}
 		for (ClassConnection ccon : config.getConfigConnections()) { 
 			for (InstConnection acon : asm.getAssemblyConnections()) {
@@ -149,9 +174,23 @@ public class DedalArchitectureBuilder {
 			specConn.setServerIntElem(serverInter);
 			spec.getSpecConnections().add(specConn);
 		}
-		System.out.println();
+		this.applyOptionsToSpecification(asm, spec);
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
+		}
+	}
+
+	private void applyOptionsToSpecification(Assembly asm, Specification spec) {
+		List<DedalComponentRole> initialRoles = new ArrayList<>();
+		initialRoles .addAll(this.dedalArchitecture.getSpecification());
+		for(DedalComponentRole comp : initialRoles) {
+			comp.refineRole(asm, spec, abstractOption);
+		}
+	}
+
+	private void applyOptionsToAssembly() throws IOException {
+		for(DedalComponentInstance comp : this.dedalArchitecture.getAssembly()) {
+			comp.refine(this.interfaceOption);
 		}
 	}
 

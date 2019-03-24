@@ -1,22 +1,30 @@
 package fr.imt.ales.redoc.cba.dedal.structure;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
 
 import dedal.CompInstance;
 import dedal.Component;
 import dedal.DIRECTION;
 import dedal.DedalFactory;
 import dedal.InstConnection;
+import dedal.Interaction;
+import dedal.Interface;
+import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaField;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class DedalComponentInstance extends DedalComponentType {
 
 	private CompInstance componentInstance;
+	private List<InstConnection> connections;
 	
 	public DedalComponentInstance(String projectPath, CompInstance compInstance, DedalFactory factory, List<InstConnection> connections, DedalArchitecture architecture) throws IOException {
 		super(projectPath, compInstance, factory, architecture);
+		this.connections = connections;
 		this.architecture.getAssembly().add(this);
 		for( DedalInterface inter : this.interfaces) {
 			this.componentInstance.getCompInterfaces().add(inter.getCompInterface());
@@ -74,5 +82,59 @@ public class DedalComponentInstance extends DedalComponentType {
 	 */
 	public CompInstance getComponentInstance() {
 		return componentInstance;
+	}
+
+	public void refine(InterfaceOption interfaceOption) throws IOException {
+		List<DedalInterfaceType> superTypes = new ArrayList<>();
+		if(interfaceOption.equals(InterfaceOption.SMALLINTERFACES)) {
+			superTypes.addAll(this.gatherSuperInterfaces());
+			for(DedalInterfaceType candidate : superTypes) { // Add all interfaces to the compInstance
+				DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), candidate.getjType(), this.architecture);
+				this.interfaces.add(inter);
+				this.componentInstance.getCompInterfaces().add(inter.getCompInterface());
+			}
+			for(InstConnection conn : this.connections) {
+				this.setSmallestInterface(conn);
+			}
+		}
+	}
+
+	private void setSmallestInterface(InstConnection conn) {
+		if(conn.getServerInstElem().equals(this.componentInstance)) {
+			DedalInterfaceType minInterfaceType = this.architecture.findInterfaceType(((Interface)conn.getClientIntElem()).getType());
+			DedalInterfaceType min = this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType());
+			if(!min.getjType().equals(minInterfaceType.getjType())) { //else it means that the smallest interface type is already set
+				for(DedalInterface inter : this.interfaces) {
+					if(!inter.getInterfaceType().getjType().equals(min.getjType()) && min.getjType().isSubtypeOf(inter.getInterfaceType().getjType()) 
+							&& inter.getInterfaceType().getjType().isSubtypeOf(minInterfaceType.getjType())) {
+						min = inter.getInterfaceType();
+						conn.setServerIntElem(inter.getCompInterface());
+					}
+				}
+			}
+		}
+	}
+
+	private List<DedalInterfaceType> gatherSuperInterfaces() {
+		List<DedalInterfaceType> result = new ArrayList<>();
+		for(DedalInterface inter : this.interfaces) {
+			if(inter.getCompInterface().getDirection().equals(DIRECTION.PROVIDED)) {
+				result.addAll(this.gatherSuperInterfaces(inter.getInterfaceType()));
+			}
+		}
+		return result;
+	}
+	
+
+
+	private List<DedalInterfaceType> gatherSuperInterfaces(DedalInterfaceType interfaceType) {
+		List<DedalInterfaceType> result = new ArrayList<>();
+		if(!interfaceType.getCandidateInterfaceTypes().isEmpty()) {
+			result.addAll(interfaceType.getCandidateInterfaceTypes());
+			for(DedalInterfaceType cand : interfaceType.getCandidateInterfaceTypes()) {
+				result.addAll(this.gatherSuperInterfaces(cand));
+			}
+		}
+		return result;
 	}
 }
