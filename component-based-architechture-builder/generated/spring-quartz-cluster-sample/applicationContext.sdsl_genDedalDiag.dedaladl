@@ -6,101 +6,105 @@ dedal_diagram
 		configuration Configuration
 			implements Specification component_classes
 
-		primitive_component_class "org.apache.commons.dbcp.BasicDataSource"
-			id "__JNY4EcOEem2CuEcvO9MXw"
+		primitive_component_class "org.apache.commons.dbcp.BasicDataSource" as
+		BasicDataSource_role
+			id "_BrXPUE7gEempoLR4Pt5lOg"
 			implements BasicDataSource_Type
 			interfaces
-				interface __LURsEcOEem2CuEcvO9MXw
+				interface _BstTIE7gEempoLR4Pt5lOg
 					interface_direction provided
 					implementation IBasicDataSource;
 
-		primitive_component_class "org.springframework.jdbc.core.JdbcTemplate"
-			id "__JSRYEcOEem2CuEcvO9MXw"
+		primitive_component_class "org.springframework.jdbc.core.JdbcTemplate" as
+		JdbcTemplate_role
+			id "_BrZEgE7gEempoLR4Pt5lOg"
 			implements JdbcTemplate_Type
 			interfaces
-				interface __MJYIEcOEem2CuEcvO9MXw
+				interface _BsuhQE7gEempoLR4Pt5lOg
 					interface_direction provided
 					implementation IJdbcTemplate;
-				interface __MJYIUcOEem2CuEcvO9MXw
+				interface _BsuhQU7gEempoLR4Pt5lOg
 					interface_direction required
 					implementation IDataSource;
 
-		primitive_component_class "com.dexcoder.dal.spring.JdbcDaoImpl"
-			id "__JUGkEcOEem2CuEcvO9MXw"
+		primitive_component_class "com.dexcoder.dal.spring.JdbcDaoImpl" as
+		JdbcDaoImpl_role
+			id "_BrZrkE7gEempoLR4Pt5lOg"
 			implements JdbcDaoImpl_Type
 			interfaces
-				interface __MOQoEcOEem2CuEcvO9MXw
+				interface _BsuhRU7gEempoLR4Pt5lOg
 					interface_direction provided
 					implementation IJdbcDaoImpl;
-				interface __MOQoUcOEem2CuEcvO9MXw
+				interface _BsuhRk7gEempoLR4Pt5lOg
 					interface_direction required
 					implementation IJdbcOperations;
 
 		primitive_component_class
-		"org.springframework.scheduling.quartz.SchedulerFactoryBean"
-			id "__JV7wEcOEem2CuEcvO9MXw"
+		"org.springframework.scheduling.quartz.SchedulerFactoryBean" as
+		SchedulerFactoryBean_role
+			id "_BraSoE7gEempoLR4Pt5lOg"
 			implements SchedulerFactoryBean_Type
 			interfaces
-				interface __MgkgUcOEem2CuEcvO9MXw
+				interface _BsvIUE7gEempoLR4Pt5lOg
 					interface_direction provided
 					implementation ISchedulerFactoryBean;
-				interface __MgkgkcOEem2CuEcvO9MXw
+				interface _BsvIUU7gEempoLR4Pt5lOg
 					interface_direction required
 					implementation IDataSource component_types (
 
 			component_type BasicDataSource_Type
-				id "__LXVAEcOEem2CuEcvO9MXw" required_interfaces
-					interface __LXVAUcOEem2CuEcvO9MXw
+				id "_Bst6ME7gEempoLR4Pt5lOg" required_interfaces
+					interface _Bst6MU7gEempoLR4Pt5lOg
 						interface_direction provided
 						implementation IBasicDataSource;
 
 			component_type JdbcTemplate_Type
-				id "__MJYIkcOEem2CuEcvO9MXw" required_interfaces
-					interface __MJYI0cOEem2CuEcvO9MXw
+				id "_BsuhQk7gEempoLR4Pt5lOg" required_interfaces
+					interface _BsuhQ07gEempoLR4Pt5lOg
 						interface_direction provided
 						implementation IJdbcTemplate;
-					interface __MJYJEcOEem2CuEcvO9MXw
+					interface _BsuhRE7gEempoLR4Pt5lOg
 						interface_direction required
 						implementation IDataSource;
 
 			component_type JdbcDaoImpl_Type
-				id "__MOQokcOEem2CuEcvO9MXw" required_interfaces
-					interface __MOQo0cOEem2CuEcvO9MXw
+				id "_BsuhR07gEempoLR4Pt5lOg" required_interfaces
+					interface _BsuhSE7gEempoLR4Pt5lOg
 						interface_direction provided
 						implementation IJdbcDaoImpl;
-					interface __MOQpEcOEem2CuEcvO9MXw
+					interface _BsuhSU7gEempoLR4Pt5lOg
 						interface_direction required
 						implementation IJdbcOperations;
 
 			component_type SchedulerFactoryBean_Type
-				id "__Mgkg0cOEem2CuEcvO9MXw" required_interfaces
-					interface __MhLkEcOEem2CuEcvO9MXw
+				id "_BsvIUk7gEempoLR4Pt5lOg" required_interfaces
+					interface _BsvIU07gEempoLR4Pt5lOg
 						interface_direction provided
 						implementation ISchedulerFactoryBean;
-					interface __MhLkUcOEem2CuEcvO9MXw
+					interface _BsvIVE7gEempoLR4Pt5lOg
 						interface_direction required
 						implementation IDataSource
 		)
 
 			configConnections (
 
-				class_connection "__KE7kEcOEem2CuEcvO9MXw" property "\"dataSource\""
+				class_connection "_BrubsE7gEempoLR4Pt5lOg" property "\"dataSource\""
 					client
-					"\"org.springframework.jdbc.core.JdbcTemplate\""."__MJYIUcOEem2CuEcvO9MXw"
+					"\"org.springframework.jdbc.core.JdbcTemplate\""."_BsuhQU7gEempoLR4Pt5lOg"
 					server
-				"\"org.apache.commons.dbcp.BasicDataSource\""."__LURsEcOEem2CuEcvO9MXw";
+				"\"org.apache.commons.dbcp.BasicDataSource\""."_BstTIE7gEempoLR4Pt5lOg";
 
-				class_connection "__KHX0EcOEem2CuEcvO9MXw" property "\"jdbcTemplate\""
+				class_connection "_BrwQ4E7gEempoLR4Pt5lOg" property "\"jdbcTemplate\""
 					client
-					"\"com.dexcoder.dal.spring.JdbcDaoImpl\""."__MOQoUcOEem2CuEcvO9MXw"
+					"\"com.dexcoder.dal.spring.JdbcDaoImpl\""."_BsuhRk7gEempoLR4Pt5lOg"
 					server
-				"\"org.springframework.jdbc.core.JdbcTemplate\""."__MJYIEcOEem2CuEcvO9MXw";
+				"\"org.springframework.jdbc.core.JdbcTemplate\""."_BsuhQE7gEempoLR4Pt5lOg";
 
-				class_connection "__KJ0EEcOEem2CuEcvO9MXw" property "\"dataSource\""
+				class_connection "_Brw38E7gEempoLR4Pt5lOg" property "\"dataSource\""
 					client
-					"\"org.springframework.scheduling.quartz.SchedulerFactoryBean\""."__MJYIUcOEem2CuEcvO9MXw"
+					"\"org.springframework.scheduling.quartz.SchedulerFactoryBean\""."_BsuhQU7gEempoLR4Pt5lOg"
 					server
-				"\"org.apache.commons.dbcp.BasicDataSource\""."__LURsEcOEem2CuEcvO9MXw"
+				"\"org.apache.commons.dbcp.BasicDataSource\""."_BstTIE7gEempoLR4Pt5lOg"
 			);
 
 		assembly Assembly
@@ -109,71 +113,118 @@ dedal_diagram
 			component_instances (
 
 				component_instance "dataSource"
-					id "__KQhwEcOEem2CuEcvO9MXw"
+					id "_BrytIE7gEempoLR4Pt5lOg"
 					instance_of "\"org.apache.commons.dbcp.BasicDataSource\""
 					component_interfaces
-						interface __LPZMEcOEem2CuEcvO9MXw
+						interface _BsIEUE7gEempoLR4Pt5lOg
 							interface_direction provided
 							implementation IBasicDataSource
-							instantiates "__LURsEcOEem2CuEcvO9MXw";
+							instantiates "_BstTIE7gEempoLR4Pt5lOg";
 
 				component_instance "jdbcTemplate"
-					id "__KTlEEcOEem2CuEcvO9MXw"
+					id "_Brz7QE7gEempoLR4Pt5lOg"
 					instance_of "\"org.springframework.jdbc.core.JdbcTemplate\""
 					component_interfaces
-						interface __MG74EcOEem2CuEcvO9MXw
+						interface _Bsa_QE7gEempoLR4Pt5lOg
 							interface_direction provided
 							implementation IJdbcTemplate
-							instantiates "__MJYIEcOEem2CuEcvO9MXw";
-						interface __MIxHkcOEem2CuEcvO9MXw
+							instantiates "_BsuhQE7gEempoLR4Pt5lOg";
+						interface _BsbmXk7gEempoLR4Pt5lOg
 							interface_direction required
 							implementation IDataSource
-							instantiates "__MJYIUcOEem2CuEcvO9MXw";
+							instantiates "_BsuhQU7gEempoLR4Pt5lOg";
 
 				component_instance "jdbcDao"
-					id "__KUzMEcOEem2CuEcvO9MXw"
+					id "_Br0iUE7gEempoLR4Pt5lOg"
 					instance_of "\"com.dexcoder.dal.spring.JdbcDaoImpl\""
 					component_interfaces
-						interface __MNpkEcOEem2CuEcvO9MXw
+						interface _Bsep207gEempoLR4Pt5lOg
 							interface_direction provided
 							implementation IJdbcDaoImpl
-							instantiates "__MOQoEcOEem2CuEcvO9MXw";
-						interface __MNps0cOEem2CuEcvO9MXw
+							instantiates "_BsuhRU7gEempoLR4Pt5lOg";
+						interface _BsfQ0U7gEempoLR4Pt5lOg
 							interface_direction required
 							implementation IJdbcOperations
-							instantiates "__MOQoUcOEem2CuEcvO9MXw";
+							instantiates "_BsuhRk7gEempoLR4Pt5lOg";
 
 				component_instance "scheduler"
-					id "__KWoYEcOEem2CuEcvO9MXw"
+					id "_Br2-kE7gEempoLR4Pt5lOg"
 					instance_of
 				"\"org.springframework.scheduling.quartz.SchedulerFactoryBean\""
 					component_interfaces
-						interface __Mf90kcOEem2CuEcvO9MXw
+						interface _BssFAE7gEempoLR4Pt5lOg
 							interface_direction provided
 							implementation ISchedulerFactoryBean
-							instantiates "__MgkgUcOEem2CuEcvO9MXw";
-						interface __MgkgEcOEem2CuEcvO9MXw
+							instantiates "_BsvIUE7gEempoLR4Pt5lOg";
+						interface _BssFAU7gEempoLR4Pt5lOg
 							interface_direction required
 							implementation IDataSource
-							instantiates "__MgkgkcOEem2CuEcvO9MXw"
+							instantiates "_BsvIUU7gEempoLR4Pt5lOg"
 			)
 
 			assembly_connections (
 
-				instance_connection "__Ka50EcOEem2CuEcvO9MXw"
-					client "\"jdbcTemplate\""."__MIxHkcOEem2CuEcvO9MXw"
-					server "\"dataSource\""."__LPZMEcOEem2CuEcvO9MXw";
+				instance_connection "_Br4MsE7gEempoLR4Pt5lOg"
+					client "\"jdbcTemplate\""."_BsbmXk7gEempoLR4Pt5lOg"
+					server "\"dataSource\""."_BsIEUE7gEempoLR4Pt5lOg";
 
-				instance_connection "__Kd9IEcOEem2CuEcvO9MXw"
-					client "\"jdbcDao\""."__MNps0cOEem2CuEcvO9MXw"
-					server "\"jdbcTemplate\""."__MG74EcOEem2CuEcvO9MXw";
+				instance_connection "_Br5a0E7gEempoLR4Pt5lOg"
+					client "\"jdbcDao\""."_BsfQ0U7gEempoLR4Pt5lOg"
+					server "\"jdbcTemplate\""."_Bsa_QE7gEempoLR4Pt5lOg";
 
-				instance_connection "__KfLQEcOEem2CuEcvO9MXw"
-					client "\"scheduler\""."__MgkgEcOEem2CuEcvO9MXw"
-					server "\"dataSource\""."__LPZMEcOEem2CuEcvO9MXw"
+				instance_connection "_Br5a0U7gEempoLR4Pt5lOg"
+					client "\"scheduler\""."_BssFAU7gEempoLR4Pt5lOg"
+					server "\"dataSource\""."_BsIEUE7gEempoLR4Pt5lOg"
 			);
 
-		specification Specification
+		specification Specification component_roles
+
+		component_role BasicDataSource_role
+			id "_BsvvYE7gEempoLR4Pt5lOg" required_interfaces
+				interface _Bs4SQE7gEempoLR4Pt5lOg
+					interface_direction provided
+					implementation IBasicDataSource;
+
+		component_role JdbcTemplate_role
+			id "_Bs45UE7gEempoLR4Pt5lOg" required_interfaces
+				interface _Bs45UU7gEempoLR4Pt5lOg
+					interface_direction provided
+					implementation IJdbcTemplate;
+				interface _Bs5gYE7gEempoLR4Pt5lOg
+					interface_direction required
+					implementation IDataSource;
+
+		component_role JdbcDaoImpl_role
+			id "_Bs5gYU7gEempoLR4Pt5lOg" required_interfaces
+				interface _Bs5gYk7gEempoLR4Pt5lOg
+					interface_direction provided
+					implementation IJdbcDaoImpl;
+				interface _Bs5gY07gEempoLR4Pt5lOg
+					interface_direction required
+					implementation IJdbcOperations;
+
+		component_role SchedulerFactoryBean_role
+			id "_Bs5gZE7gEempoLR4Pt5lOg" required_interfaces
+				interface _Bs6HcE7gEempoLR4Pt5lOg
+					interface_direction provided
+					implementation ISchedulerFactoryBean;
+				interface _Bs6HcU7gEempoLR4Pt5lOg
+					interface_direction required
+					implementation IDataSource
+
+		connections
+
+		connection "_Bs6Hck7gEempoLR4Pt5lOg"
+			client JdbcTemplate_role."_Bs5gYE7gEempoLR4Pt5lOg"
+			server BasicDataSource_role."_Bs4SQE7gEempoLR4Pt5lOg"
+
+		connection "_Bs6Hc07gEempoLR4Pt5lOg"
+			client JdbcDaoImpl_role."_Bs5gY07gEempoLR4Pt5lOg"
+			server JdbcTemplate_role."_Bs45UU7gEempoLR4Pt5lOg"
+
+		connection "_Bs6HdE7gEempoLR4Pt5lOg"
+			client SchedulerFactoryBean_role."_Bs6HcU7gEempoLR4Pt5lOg"
+			server BasicDataSource_role."_Bs4SQE7gEempoLR4Pt5lOg"
 	)
 
 	repositories (
@@ -184,422 +235,422 @@ dedal_diagram
 
 			type IBasicDataSource
 				signatures (
-					signature "__LIrgEcOEem2CuEcvO9MXw" name setLoginTimeout
+					signature "_BsGPIE7gEempoLR4Pt5lOg" name createShardingKeyBuilder
+
+					type "java.sql.ShardingKeyBuilder";
+					signature "_BsGPIU7gEempoLR4Pt5lOg" name getLoginTimeout
+
+					type ^int;
+					signature "_BsGPIk7gEempoLR4Pt5lOg" name getLogWriter
+
+					type "java.io.PrintWriter";
+					signature "_BsGPI07gEempoLR4Pt5lOg" name setLoginTimeout
 
 					type void parameters (
-						parameter "__LJ5oEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2ME7gEempoLR4Pt5lOg" name arg0
 
 						type ^int
 					);
-					signature "__LKgsEcOEem2CuEcvO9MXw" name getLogWriter
-
-					type "java.io.PrintWriter";
-					signature "__LKgsUcOEem2CuEcvO9MXw" name getLoginTimeout
-
-					type ^int;
-					signature "__LKgskcOEem2CuEcvO9MXw" name setLogWriter
+					signature "_BsG2MU7gEempoLR4Pt5lOg" name setLogWriter
 
 					type void parameters (
-						parameter "__LKgs0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Mk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.io.PrintWriter"
 					);
-					signature "__LKgtEcOEem2CuEcvO9MXw" name getParentLogger
+					signature "_BsG2M07gEempoLR4Pt5lOg" name getParentLogger
 
 					type "java.util.logging.Logger";
-					signature "__LKgtUcOEem2CuEcvO9MXw" name createShardingKeyBuilder
-
-					type "java.sql.ShardingKeyBuilder";
-					signature "__LKgtkcOEem2CuEcvO9MXw" name unwrap
+					signature "_BsG2NE7gEempoLR4Pt5lOg" name unwrap
 
 					type "java.lang.Object" parameters (
-						parameter "__LKgt0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2NU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__LKguEcOEem2CuEcvO9MXw" name isWrapperFor
+					signature "_BsG2Nk7gEempoLR4Pt5lOg" name isWrapperFor
 
 					type ^boolean parameters (
-						parameter "__LKguUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2N07gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__LKgukcOEem2CuEcvO9MXw" name getConnection
+					signature "_BsG2OE7gEempoLR4Pt5lOg" name getConnection
 
 					type "java.sql.Connection";
-					signature "__LKgu0cOEem2CuEcvO9MXw" name createConnectionBuilder
+					signature "_BsG2OU7gEempoLR4Pt5lOg" name createConnectionBuilder
 
 					type "java.sql.ConnectionBuilder";
-					signature "__LKgvEcOEem2CuEcvO9MXw" name log
+					signature "_BsG2Ok7gEempoLR4Pt5lOg" name log
 
 					type void parameters (
-						parameter "__LKgvUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2O07gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String"
 					);
-					signature "__LKgvkcOEem2CuEcvO9MXw" name close
+					signature "_BsG2PE7gEempoLR4Pt5lOg" name close
 
 					type void;
-					signature "__LKgv0cOEem2CuEcvO9MXw" name getUrl
+					signature "_BsG2PU7gEempoLR4Pt5lOg" name getUrl
 
 					type "java.lang.String";
-					signature "__LKgwEcOEem2CuEcvO9MXw" name createDataSource
-
-					type "javax.sql.DataSource";
-					signature "__LKgwUcOEem2CuEcvO9MXw" name getLogAbandoned
+					signature "_BsG2Pk7gEempoLR4Pt5lOg" name getDefaultAutoCommit
 
 					type ^boolean;
-					signature "__LKgwkcOEem2CuEcvO9MXw" name restart
-
-					type void;
-					signature "__LKgw0cOEem2CuEcvO9MXw" name isRestartNeeded
-
-					type ^boolean;
-					signature "__LKgxEcOEem2CuEcvO9MXw" name setLogAbandoned
+					signature "_BsG2P07gEempoLR4Pt5lOg" name setDefaultAutoCommit
 
 					type void parameters (
-						parameter "__LKgxUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2QE7gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
 					);
-					signature "__LKgxkcOEem2CuEcvO9MXw" name getRemoveAbandoned
+					signature "_BsG2QU7gEempoLR4Pt5lOg" name getDefaultTransactionIsolation
 
-					type ^boolean;
-					signature "__LKgx0cOEem2CuEcvO9MXw" name setRemoveAbandoned
-
-					type void parameters (
-						parameter "__LKgyEcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKgyUcOEem2CuEcvO9MXw" name setMaxWait
+					type ^int;
+					signature "_BsG2Qk7gEempoLR4Pt5lOg" name setDefaultTransactionIsolation
 
 					type void parameters (
-						parameter "__LKgykcOEem2CuEcvO9MXw" name arg0
-
-						type ^long
-					);
-					signature "__LKgy0cOEem2CuEcvO9MXw" name getDefaultCatalog
-
-					type "java.lang.String";
-					signature "__LKgzEcOEem2CuEcvO9MXw" name getDefaultReadOnly
-
-					type ^boolean;
-					signature "__LKgzUcOEem2CuEcvO9MXw" name setMaxIdle
-
-					type void parameters (
-						parameter "__LKgzkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Q07gEempoLR4Pt5lOg" name arg0
 
 						type ^int
 					);
-					signature "__LKgz0cOEem2CuEcvO9MXw" name getMaxActive
+					signature "_BsG2RE7gEempoLR4Pt5lOg" name getDriverClassLoader
 
-					type ^int;
-					signature "__LKg0EcOEem2CuEcvO9MXw" name setMaxActive
-
-					type void parameters (
-						parameter "__LKg0UcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKg0kcOEem2CuEcvO9MXw" name getTestOnBorrow
-
-					type ^boolean;
-					signature "__LKg00cOEem2CuEcvO9MXw" name setTestOnBorrow
+					type "java.lang.ClassLoader";
+					signature "_BsG2RU7gEempoLR4Pt5lOg" name setDriverClassLoader
 
 					type void parameters (
-						parameter "__LKg1EcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKg1UcOEem2CuEcvO9MXw" name getTestOnReturn
-
-					type ^boolean;
-					signature "__LKg1kcOEem2CuEcvO9MXw" name setTestOnReturn
-
-					type void parameters (
-						parameter "__LKg10cOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKg2EcOEem2CuEcvO9MXw" name getTestWhileIdle
-
-					type ^boolean;
-					signature "__LKg2UcOEem2CuEcvO9MXw" name setDriverClassName
-
-					type void parameters (
-						parameter "__LKg2kcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg20cOEem2CuEcvO9MXw" name setMinIdle
-
-					type void parameters (
-						parameter "__LKg3EcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKg3UcOEem2CuEcvO9MXw" name getInitialSize
-
-					type ^int;
-					signature "__LKg3kcOEem2CuEcvO9MXw" name setInitialSize
-
-					type void parameters (
-						parameter "__LKg30cOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKg4EcOEem2CuEcvO9MXw" name getMaxIdle
-
-					type ^int;
-					signature "__LKg4UcOEem2CuEcvO9MXw" name getMinIdle
-
-					type ^int;
-					signature "__LKg4kcOEem2CuEcvO9MXw" name getMaxWait
-
-					type ^long;
-					signature "__LKg40cOEem2CuEcvO9MXw" name setDefaultReadOnly
-
-					type void parameters (
-						parameter "__LKg5EcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKg5UcOEem2CuEcvO9MXw" name setDefaultCatalog
-
-					type void parameters (
-						parameter "__LKg5kcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg50cOEem2CuEcvO9MXw" name getNumActive
-
-					type ^int;
-					signature "__LKg6EcOEem2CuEcvO9MXw" name setTestWhileIdle
-
-					type void parameters (
-						parameter "__LKg6UcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKg6kcOEem2CuEcvO9MXw" name getNumIdle
-
-					type ^int;
-					signature "__LKg60cOEem2CuEcvO9MXw" name getUsername
-
-					type "java.lang.String";
-					signature "__LKg7EcOEem2CuEcvO9MXw" name setUsername
-
-					type void parameters (
-						parameter "__LKg7UcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg7kcOEem2CuEcvO9MXw" name getValidationQuery
-
-					type "java.lang.String";
-					signature "__LKg70cOEem2CuEcvO9MXw" name setValidationQuery
-
-					type void parameters (
-						parameter "__LKg8EcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg8UcOEem2CuEcvO9MXw" name setUrl
-
-					type void parameters (
-						parameter "__LKg8kcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg80cOEem2CuEcvO9MXw" name setPassword
-
-					type void parameters (
-						parameter "__LKg9EcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__LKg9UcOEem2CuEcvO9MXw" name getPassword
-
-					type "java.lang.String";
-					signature "__LKg9kcOEem2CuEcvO9MXw" name isClosed
-
-					type ^boolean;
-					signature "__LKg90cOEem2CuEcvO9MXw" name getMaxOpenPreparedStatements
-
-					type ^int;
-					signature "__LKg-EcOEem2CuEcvO9MXw" name setMaxOpenPreparedStatements
-
-					type void parameters (
-						parameter "__LKg-UcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKg-kcOEem2CuEcvO9MXw" name getDefaultAutoCommit
-
-					type ^boolean;
-					signature "__LKg-0cOEem2CuEcvO9MXw" name setDefaultAutoCommit
-
-					type void parameters (
-						parameter "__LKg_EcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__LKg_UcOEem2CuEcvO9MXw" name setDriverClassLoader
-
-					type void parameters (
-						parameter "__LKg_kcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Rk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.ClassLoader"
 					);
-					signature "__LKg_0cOEem2CuEcvO9MXw" name isPoolPreparedStatements
+					signature "_BsG2R07gEempoLR4Pt5lOg" name isPoolPreparedStatements
 
 					type ^boolean;
-					signature "__LKhAEcOEem2CuEcvO9MXw" name getTimeBetweenEvictionRunsMillis
-
-					type ^long;
-					signature "__LKhAUcOEem2CuEcvO9MXw" name setTimeBetweenEvictionRunsMillis
+					signature "_BsG2SE7gEempoLR4Pt5lOg" name setPoolPreparedStatements
 
 					type void parameters (
-						parameter "__LKhAkcOEem2CuEcvO9MXw" name arg0
-
-						type ^long
-					);
-					signature "__LKhA0cOEem2CuEcvO9MXw" name getNumTestsPerEvictionRun
-
-					type ^int;
-					signature "__LKhBEcOEem2CuEcvO9MXw" name getDefaultTransactionIsolation
-
-					type ^int;
-					signature "__LKhBUcOEem2CuEcvO9MXw" name setDefaultTransactionIsolation
-
-					type void parameters (
-						parameter "__LKhBkcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKhB0cOEem2CuEcvO9MXw" name getDriverClassLoader
-
-					type "java.lang.ClassLoader";
-					signature "__LKhCEcOEem2CuEcvO9MXw" name setPoolPreparedStatements
-
-					type void parameters (
-						parameter "__LKhCUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2SU7gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
 					);
-					signature "__LKhCkcOEem2CuEcvO9MXw" name setNumTestsPerEvictionRun
+					signature "_BsG2Sk7gEempoLR4Pt5lOg" name getMaxOpenPreparedStatements
+
+					type ^int;
+					signature "_BsG2S07gEempoLR4Pt5lOg" name setMaxOpenPreparedStatements
 
 					type void parameters (
-						parameter "__LKhC0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2TE7gEempoLR4Pt5lOg" name arg0
 
 						type ^int
 					);
-					signature "__LKhDEcOEem2CuEcvO9MXw" name createConnectionFactory
-
-					type "org.apache.commons.dbcp.ConnectionFactory";
-					signature "__LKhDUcOEem2CuEcvO9MXw" name setValidationQueryTimeout
-
-					type void parameters (
-						parameter "__LKhDkcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__LKhD0cOEem2CuEcvO9MXw" name getMinEvictableIdleTimeMillis
+					signature "_BsG2TU7gEempoLR4Pt5lOg" name getTimeBetweenEvictionRunsMillis
 
 					type ^long;
-					signature "__LKhEEcOEem2CuEcvO9MXw" name getRemoveAbandonedTimeout
-
-					type ^int;
-					signature "__LKhEUcOEem2CuEcvO9MXw" name addConnectionProperty
+					signature "_BsG2Tk7gEempoLR4Pt5lOg" name setTimeBetweenEvictionRunsMillis
 
 					type void parameters (
-						parameter "__LKhEkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String";
-						parameter "__LKhE0cOEem2CuEcvO9MXw" name arg1
-
-						type "java.lang.String"
-					);
-					signature "__LKhFEcOEem2CuEcvO9MXw" name getValidationQueryTimeout
-
-					type ^int;
-					signature "__LKhFUcOEem2CuEcvO9MXw" name createPoolableConnectionFactory
-
-					type void parameters (
-						parameter "__LKhFkcOEem2CuEcvO9MXw" name arg0
-
-						type "org.apache.commons.dbcp.ConnectionFactory";
-						parameter "__LKhF0cOEem2CuEcvO9MXw" name arg1
-
-						type "org.apache.commons.pool.KeyedObjectPoolFactory";
-						parameter "__LKhGEcOEem2CuEcvO9MXw" name arg2
-
-						type "org.apache.commons.dbcp.AbandonedConfig"
-					);
-					signature "__LKhGUcOEem2CuEcvO9MXw" name setMinEvictableIdleTimeMillis
-
-					type void parameters (
-						parameter "__LKhGkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2T07gEempoLR4Pt5lOg" name arg0
 
 						type ^long
 					);
-					signature "__LKhG0cOEem2CuEcvO9MXw" name setRemoveAbandonedTimeout
+					signature "_BsG2UE7gEempoLR4Pt5lOg" name getNumTestsPerEvictionRun
+
+					type ^int;
+					signature "_BsG2UU7gEempoLR4Pt5lOg" name setNumTestsPerEvictionRun
 
 					type void parameters (
-						parameter "__LKhHEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Uk7gEempoLR4Pt5lOg" name arg0
 
 						type ^int
 					);
-					signature "__LKhHUcOEem2CuEcvO9MXw" name setConnectionProperties
+					signature "_BsG2U07gEempoLR4Pt5lOg" name getMinEvictableIdleTimeMillis
+
+					type ^long;
+					signature "_BsG2VE7gEempoLR4Pt5lOg" name setMinEvictableIdleTimeMillis
 
 					type void parameters (
-						parameter "__LKhHkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2VU7gEempoLR4Pt5lOg" name arg0
 
-						type "java.lang.String"
+						type ^long
 					);
-					signature "__LKhH0cOEem2CuEcvO9MXw" name getConnectionInitSqls
+					signature "_BsG2Vk7gEempoLR4Pt5lOg" name getValidationQueryTimeout
+
+					type ^int;
+					signature "_BsG2V07gEempoLR4Pt5lOg" name setValidationQueryTimeout
+
+					type void parameters (
+						parameter "_BsG2WE7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2WU7gEempoLR4Pt5lOg" name getConnectionInitSqls
 
 					type "java.util.Collection";
-					signature "__LKhIEcOEem2CuEcvO9MXw" name createConnectionPool
-
-					type void;
-					signature "__LKhIUcOEem2CuEcvO9MXw" name setConnectionInitSqls
+					signature "_BsG2Wk7gEempoLR4Pt5lOg" name setConnectionInitSqls
 
 					type void parameters (
-						parameter "__LKhIkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2W07gEempoLR4Pt5lOg" name arg0
 
 						type "java.util.Collection"
 					);
-					signature "__LKhI0cOEem2CuEcvO9MXw" name createDataSourceInstance
+					signature "_BsG2XE7gEempoLR4Pt5lOg" name getRemoveAbandonedTimeout
 
-					type void;
-					signature "__LKhJEcOEem2CuEcvO9MXw" name removeConnectionProperty
+					type ^int;
+					signature "_BsG2XU7gEempoLR4Pt5lOg" name setRemoveAbandonedTimeout
 
 					type void parameters (
-						parameter "__LKhJUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Xk7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2X07gEempoLR4Pt5lOg" name addConnectionProperty
+
+					type void parameters (
+						parameter "_BsG2YE7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String";
+						parameter "_BsG2YU7gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.String"
 					);
-					signature "__LKhJkcOEem2CuEcvO9MXw" name validateConnectionFactory
+					signature "_BsG2Yk7gEempoLR4Pt5lOg" name removeConnectionProperty
 
 					type void parameters (
-						parameter "__LKhJ0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2Y07gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2ZE7gEempoLR4Pt5lOg" name setConnectionProperties
+
+					type void parameters (
+						parameter "_BsG2ZU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2Zk7gEempoLR4Pt5lOg" name createConnectionFactory
+
+					type "org.apache.commons.dbcp.ConnectionFactory";
+					signature "_BsG2Z07gEempoLR4Pt5lOg" name createConnectionPool
+
+					type void;
+					signature "_BsG2aE7gEempoLR4Pt5lOg" name createPoolableConnectionFactory
+
+					type void parameters (
+						parameter "_BsG2aU7gEempoLR4Pt5lOg" name arg0
+
+						type "org.apache.commons.dbcp.ConnectionFactory";
+						parameter "_BsG2ak7gEempoLR4Pt5lOg" name arg1
+
+						type "org.apache.commons.pool.KeyedObjectPoolFactory";
+						parameter "_BsG2a07gEempoLR4Pt5lOg" name arg2
+
+						type "org.apache.commons.dbcp.AbandonedConfig"
+					);
+					signature "_BsG2bE7gEempoLR4Pt5lOg" name createDataSourceInstance
+
+					type void;
+					signature "_BsG2bU7gEempoLR4Pt5lOg" name validateConnectionFactory
+
+					type void parameters (
+						parameter "_BsG2bk7gEempoLR4Pt5lOg" name arg0
 
 						type "org.apache.commons.dbcp.PoolableConnectionFactory"
 					);
-					signature "__LKhKEcOEem2CuEcvO9MXw" name getDriverClassName
+					signature "_BsG2b07gEempoLR4Pt5lOg" name getPassword
 
 					type "java.lang.String";
-					signature "__LKhKUcOEem2CuEcvO9MXw" name
+					signature "_BsG2cE7gEempoLR4Pt5lOg" name setPassword
+
+					type void parameters (
+						parameter "_BsG2cU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2ck7gEempoLR4Pt5lOg" name getDriverClassName
+
+					type "java.lang.String";
+					signature "_BsG2c07gEempoLR4Pt5lOg" name setUrl
+
+					type void parameters (
+						parameter "_BsG2dE7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2dU7gEempoLR4Pt5lOg" name isClosed
+
+					type ^boolean;
+					signature "_BsG2dk7gEempoLR4Pt5lOg" name getDefaultReadOnly
+
+					type ^boolean;
+					signature "_BsG2d07gEempoLR4Pt5lOg" name setDefaultReadOnly
+
+					type void parameters (
+						parameter "_BsG2eE7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2eU7gEempoLR4Pt5lOg" name getDefaultCatalog
+
+					type "java.lang.String";
+					signature "_BsG2ek7gEempoLR4Pt5lOg" name setDefaultCatalog
+
+					type void parameters (
+						parameter "_BsG2e07gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2fE7gEempoLR4Pt5lOg" name setDriverClassName
+
+					type void parameters (
+						parameter "_BsG2fU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2fk7gEempoLR4Pt5lOg" name getMaxActive
+
+					type ^int;
+					signature "_BsG2f07gEempoLR4Pt5lOg" name setMaxActive
+
+					type void parameters (
+						parameter "_BsG2gE7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2gU7gEempoLR4Pt5lOg" name getMaxIdle
+
+					type ^int;
+					signature "_BsG2gk7gEempoLR4Pt5lOg" name setMaxIdle
+
+					type void parameters (
+						parameter "_BsG2g07gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2hE7gEempoLR4Pt5lOg" name getMinIdle
+
+					type ^int;
+					signature "_BsG2hU7gEempoLR4Pt5lOg" name setMinIdle
+
+					type void parameters (
+						parameter "_BsG2hk7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2h07gEempoLR4Pt5lOg" name getInitialSize
+
+					type ^int;
+					signature "_BsG2iE7gEempoLR4Pt5lOg" name setInitialSize
+
+					type void parameters (
+						parameter "_BsG2iU7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsG2ik7gEempoLR4Pt5lOg" name getMaxWait
+
+					type ^long;
+					signature "_BsG2i07gEempoLR4Pt5lOg" name setMaxWait
+
+					type void parameters (
+						parameter "_BsG2jE7gEempoLR4Pt5lOg" name arg0
+
+						type ^long
+					);
+					signature "_BsG2jU7gEempoLR4Pt5lOg" name getTestOnBorrow
+
+					type ^boolean;
+					signature "_BsG2jk7gEempoLR4Pt5lOg" name setTestOnBorrow
+
+					type void parameters (
+						parameter "_BsG2j07gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2kE7gEempoLR4Pt5lOg" name getTestOnReturn
+
+					type ^boolean;
+					signature "_BsG2kU7gEempoLR4Pt5lOg" name setTestOnReturn
+
+					type void parameters (
+						parameter "_BsG2kk7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2k07gEempoLR4Pt5lOg" name getTestWhileIdle
+
+					type ^boolean;
+					signature "_BsG2lE7gEempoLR4Pt5lOg" name setTestWhileIdle
+
+					type void parameters (
+						parameter "_BsG2lU7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2lk7gEempoLR4Pt5lOg" name getNumActive
+
+					type ^int;
+					signature "_BsG2l07gEempoLR4Pt5lOg" name getNumIdle
+
+					type ^int;
+					signature "_BsG2mE7gEempoLR4Pt5lOg" name getUsername
+
+					type "java.lang.String";
+					signature "_BsG2mU7gEempoLR4Pt5lOg" name setUsername
+
+					type void parameters (
+						parameter "_BsG2mk7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2m07gEempoLR4Pt5lOg" name getValidationQuery
+
+					type "java.lang.String";
+					signature "_BsG2nE7gEempoLR4Pt5lOg" name setValidationQuery
+
+					type void parameters (
+						parameter "_BsG2nU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsG2nk7gEempoLR4Pt5lOg" name isRestartNeeded
+
+					type ^boolean;
+					signature "_BsG2n07gEempoLR4Pt5lOg" name createDataSource
+
+					type "javax.sql.DataSource";
+					signature "_BsG2oE7gEempoLR4Pt5lOg" name getRemoveAbandoned
+
+					type ^boolean;
+					signature "_BsG2oU7gEempoLR4Pt5lOg" name setRemoveAbandoned
+
+					type void parameters (
+						parameter "_BsG2ok7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2o07gEempoLR4Pt5lOg" name getLogAbandoned
+
+					type ^boolean;
+					signature "_BsG2pE7gEempoLR4Pt5lOg" name setLogAbandoned
+
+					type void parameters (
+						parameter "_BsG2pU7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsG2pk7gEempoLR4Pt5lOg" name restart
+
+					type void;
+					signature "_BsG2p07gEempoLR4Pt5lOg" name
 					isAccessToUnderlyingConnectionAllowed
 
 					type ^boolean;
-					signature "__LKhKkcOEem2CuEcvO9MXw" name
+					signature "_BsG2qE7gEempoLR4Pt5lOg" name
 					setAccessToUnderlyingConnectionAllowed
 
 					type void parameters (
-						parameter "__LKhK0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsG2qU7gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
 					)
@@ -607,1067 +658,1055 @@ dedal_diagram
 
 			type IJdbcTemplate
 				signatures (
-					signature "__MGU0EcOEem2CuEcvO9MXw" name afterPropertiesSet
+					signature "_BsaYME7gEempoLR4Pt5lOg" name afterPropertiesSet
 
 					type void;
-					signature "__MGU0UcOEem2CuEcvO9MXw" name setLazyInit
-
-					type void parameters (
-						parameter "__MGU0kcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__MGU00cOEem2CuEcvO9MXw" name getExceptionTranslator
-
-					type "org.springframework.jdbc.support.SQLExceptionTranslator";
-					signature "__MGU1EcOEem2CuEcvO9MXw" name setDataSource
-
-					type void parameters (
-						parameter "__MGU1UcOEem2CuEcvO9MXw" name arg0
-
-						type "javax.sql.DataSource"
-					);
-					signature "__MGU1kcOEem2CuEcvO9MXw" name getDataSource
+					signature "_BsaYMU7gEempoLR4Pt5lOg" name getDataSource
 
 					type "javax.sql.DataSource";
-					signature "__MGU10cOEem2CuEcvO9MXw" name isLazyInit
+					signature "_BsaYMk7gEempoLR4Pt5lOg" name isLazyInit
 
 					type ^boolean;
-					signature "__MGU2EcOEem2CuEcvO9MXw" name setExceptionTranslator
+					signature "_BsaYM07gEempoLR4Pt5lOg" name getExceptionTranslator
+
+					type "org.springframework.jdbc.support.SQLExceptionTranslator";
+					signature "_BsaYNE7gEempoLR4Pt5lOg" name setDatabaseProductName
 
 					type void parameters (
-						parameter "__MGU2UcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYNU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsaYNk7gEempoLR4Pt5lOg" name setExceptionTranslator
+
+					type void parameters (
+						parameter "_BsaYN07gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.support.SQLExceptionTranslator"
 					);
-					signature "__MGU2kcOEem2CuEcvO9MXw" name setDatabaseProductName
+					signature "_BsaYOE7gEempoLR4Pt5lOg" name setLazyInit
 
 					type void parameters (
-						parameter "__MGU20cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYOU7gEempoLR4Pt5lOg" name arg0
 
-						type "java.lang.String"
+						type ^boolean
 					);
-					signature "__MGU3EcOEem2CuEcvO9MXw" name update
+					signature "_BsaYOk7gEempoLR4Pt5lOg" name setDataSource
+
+					type void parameters (
+						parameter "_BsaYO07gEempoLR4Pt5lOg" name arg0
+
+						type "javax.sql.DataSource"
+					);
+					signature "_BsaYPE7gEempoLR4Pt5lOg" name update
 
 					type ^int parameters (
-						parameter "__MGU3UcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYPU7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.PreparedStatementCreator";
-						parameter "__MGU3kcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYPk7gEempoLR4Pt5lOg" name arg1
 
 						type "org.springframework.jdbc.support.KeyHolder"
 					);
-					signature "__MGU30cOEem2CuEcvO9MXw" name execute
+					signature "_BsaYP07gEempoLR4Pt5lOg" name execute
 
 					type "java.lang.Object" parameters (
-						parameter "__MGU4EcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYQE7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.ConnectionCallback"
 					);
-					signature "__MGU4UcOEem2CuEcvO9MXw" name query
+					signature "_BsaYQU7gEempoLR4Pt5lOg" name query
 
 					type void parameters (
-						parameter "__MGU4kcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYQk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MGU40cOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYQ07gEempoLR4Pt5lOg" name arg1
 
 						type "[Ljava.lang.Object;";
-						parameter "__MGU5EcOEem2CuEcvO9MXw" name arg2
+						parameter "_BsaYRE7gEempoLR4Pt5lOg" name arg2
 
 						type "org.springframework.jdbc.core.RowCallbackHandler"
 					);
-					signature "__MGU5UcOEem2CuEcvO9MXw" name call
+					signature "_BsaYRU7gEempoLR4Pt5lOg" name call
 
 					type "java.util.Map" parameters (
-						parameter "__MGU5kcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYRk7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.CallableStatementCreator";
-						parameter "__MGU50cOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYR07gEempoLR4Pt5lOg" name arg1
 
 						type "java.util.List"
 					);
-					signature "__MGU6EcOEem2CuEcvO9MXw" name batchUpdate
+					signature "_BsaYSE7gEempoLR4Pt5lOg" name queryForMap
 
-					type "[I" parameters (
-						parameter "__MGU6UcOEem2CuEcvO9MXw" name arg0
+					type "java.util.Map" parameters (
+						parameter "_BsaYSU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MGU6kcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYSk7gEempoLR4Pt5lOg" name arg1
 
-						type "org.springframework.jdbc.core.BatchPreparedStatementSetter"
+						type "[Ljava.lang.Object;"
 					);
-					signature "__MGU60cOEem2CuEcvO9MXw" name queryForObject
+					signature "_BsaYS07gEempoLR4Pt5lOg" name queryForObject
 
 					type "java.lang.Object" parameters (
-						parameter "__MGU7EcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYTE7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MGU7UcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYTU7gEempoLR4Pt5lOg" name arg1
 
-						type "[Ljava.lang.Object;";
-						parameter "__MGU7kcOEem2CuEcvO9MXw" name arg2
+						type "java.lang.Class";
+						parameter "_BsaYTk7gEempoLR4Pt5lOg" name arg2
 
-						type "org.springframework.jdbc.core.RowMapper"
+						type "[Ljava.lang.Object;"
 					);
-					signature "__MGU70cOEem2CuEcvO9MXw" name queryForList
-
-					type "java.util.List" parameters (
-						parameter "__MGU8EcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__MGU8UcOEem2CuEcvO9MXw" name queryForMap
-
-					type "java.util.Map" parameters (
-						parameter "__MGU8kcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String";
-						parameter "__MGU80cOEem2CuEcvO9MXw" name arg1
-
-						type "[Ljava.lang.Object;";
-						parameter "__MGU9EcOEem2CuEcvO9MXw" name arg2
-
-						type "[I"
-					);
-					signature "__MGU9UcOEem2CuEcvO9MXw" name queryForLong
+					signature "_BsaYT07gEempoLR4Pt5lOg" name queryForLong
 
 					type ^long parameters (
-						parameter "__MGU9kcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYUE7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String"
 					);
-					signature "__MGU90cOEem2CuEcvO9MXw" name queryForInt
+					signature "_BsaYUU7gEempoLR4Pt5lOg" name queryForInt
 
 					type ^int parameters (
-						parameter "__MGU-EcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYUk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MGU-UcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYU07gEempoLR4Pt5lOg" name arg1
 
 						type "[Ljava.lang.Object;";
-						parameter "__MGU-kcOEem2CuEcvO9MXw" name arg2
+						parameter "_BsaYVE7gEempoLR4Pt5lOg" name arg2
 
 						type "[I"
 					);
-					signature "__MGU-0cOEem2CuEcvO9MXw" name queryForRowSet
+					signature "_BsaYVU7gEempoLR4Pt5lOg" name queryForList
+
+					type "java.util.List" parameters (
+						parameter "_BsaYVk7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String";
+						parameter "_BsaYV07gEempoLR4Pt5lOg" name arg1
+
+						type "java.lang.Class";
+						parameter "_BsaYWE7gEempoLR4Pt5lOg" name arg2
+
+						type "[Ljava.lang.Object;"
+					);
+					signature "_BsaYWU7gEempoLR4Pt5lOg" name queryForRowSet
 
 					type "org.springframework.jdbc.support.rowset.SqlRowSet" parameters (
-						parameter "__MGU_EcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYWk7gEempoLR4Pt5lOg" name arg0
 
-						type "java.lang.String";
-						parameter "__MGU_UcOEem2CuEcvO9MXw" name arg1
-
-						type "[Ljava.lang.Object;"
+						type "java.lang.String"
 					);
-					signature "__MGU_kcOEem2CuEcvO9MXw" name isSkipResultsProcessing
+					signature "_BsaYW07gEempoLR4Pt5lOg" name batchUpdate
 
-					type ^boolean;
-					signature "__MGU_0cOEem2CuEcvO9MXw" name setNativeJdbcExtractor
+					type "[I" parameters (
+						parameter "_BsaYXE7gEempoLR4Pt5lOg" name arg0
 
-					type void parameters (
-						parameter "__MGVAEcOEem2CuEcvO9MXw" name arg0
-
-						type "org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor"
+						type "[Ljava.lang.String;"
 					);
-					signature "__MGVAUcOEem2CuEcvO9MXw" name applyStatementSettings
-
-					type void parameters (
-						parameter "__MGVAkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.sql.Statement"
-					);
-					signature "__MGVA0cOEem2CuEcvO9MXw" name getColumnMapRowMapper
-
-					type "org.springframework.jdbc.core.RowMapper";
-					signature "__MGVBEcOEem2CuEcvO9MXw" name setSkipUndeclaredResults
-
-					type void parameters (
-						parameter "__MGVBUcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__MGVBkcOEem2CuEcvO9MXw" name setResultsMapCaseInsensitive
-
-					type void parameters (
-						parameter "__MGVB0cOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__MGVCEcOEem2CuEcvO9MXw" name isSkipUndeclaredResults
-
-					type ^boolean;
-					signature "__MGVCUcOEem2CuEcvO9MXw" name createConnectionProxy
-
-					type "java.sql.Connection" parameters (
-						parameter "__MGVCkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.sql.Connection"
-					);
-					signature "__MGVC0cOEem2CuEcvO9MXw" name getSingleColumnRowMapper
-
-					type "org.springframework.jdbc.core.RowMapper" parameters (
-						parameter "__MGVDEcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.Class"
-					);
-					signature "__MGVDUcOEem2CuEcvO9MXw" name getNativeJdbcExtractor
-
-					type "org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor";
-					signature "__MGVDkcOEem2CuEcvO9MXw" name isResultsMapCaseInsensitive
-
-					type ^boolean;
-					signature "__MGVD0cOEem2CuEcvO9MXw" name setSkipResultsProcessing
-
-					type void parameters (
-						parameter "__MGVEEcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__MGVEUcOEem2CuEcvO9MXw" name
-					newArgTypePreparedStatementSetter
-
-					type "org.springframework.jdbc.core.PreparedStatementSetter" parameters (
-						parameter "__MGVEkcOEem2CuEcvO9MXw" name arg0
-
-						type "[Ljava.lang.Object;";
-						parameter "__MGVE0cOEem2CuEcvO9MXw" name arg1
-
-						type "[I"
-					);
-					signature "__MGVFEcOEem2CuEcvO9MXw" name setQueryTimeout
-
-					type void parameters (
-						parameter "__MGVFUcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__MGVFkcOEem2CuEcvO9MXw" name setFetchSize
-
-					type void parameters (
-						parameter "__MGVF0cOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__MGVGEcOEem2CuEcvO9MXw" name getMaxRows
-
-					type ^int;
-					signature "__MGVGUcOEem2CuEcvO9MXw" name handleWarnings
-
-					type void parameters (
-						parameter "__MGVGkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.sql.SQLWarning"
-					);
-					signature "__MGVG0cOEem2CuEcvO9MXw" name isIgnoreWarnings
-
-					type ^boolean;
-					signature "__MGVHEcOEem2CuEcvO9MXw" name getFetchSize
-
-					type ^int;
-					signature "__MGVHUcOEem2CuEcvO9MXw" name setMaxRows
-
-					type void parameters (
-						parameter "__MGVHkcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__MGVH0cOEem2CuEcvO9MXw" name getQueryTimeout
-
-					type ^int;
-					signature "__MGVIEcOEem2CuEcvO9MXw" name getSql
-
-					type "java.lang.String" parameters (
-						parameter "__MGVIUcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.Object"
-					);
-					signature "__MGVIkcOEem2CuEcvO9MXw" name setIgnoreWarnings
-
-					type void parameters (
-						parameter "__MGVI0cOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__MGVJEcOEem2CuEcvO9MXw" name createResultsMap
-
-					type "java.util.Map";
-					signature "__MGVJUcOEem2CuEcvO9MXw" name processResultSet
-
-					type "java.util.Map" parameters (
-						parameter "__MGVJkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.sql.ResultSet";
-						parameter "__MGVJ0cOEem2CuEcvO9MXw" name arg1
-
-						type "org.springframework.jdbc.core.ResultSetSupportingSqlParameter"
-					);
-					signature "__MGVKEcOEem2CuEcvO9MXw" name newArgPreparedStatementSetter
-
-					type "org.springframework.jdbc.core.PreparedStatementSetter" parameters (
-						parameter "__MGVKUcOEem2CuEcvO9MXw" name arg0
-
-						type "[Ljava.lang.Object;"
-					);
-					signature "__MGVKkcOEem2CuEcvO9MXw" name "access$1"
-
-					type "org.apache.commons.logging.Log" parameters (
-						parameter "__MGVK0cOEem2CuEcvO9MXw" name arg0
-
-						type "org.springframework.jdbc.core.JdbcTemplate"
-					);
-					signature "__MGVLEcOEem2CuEcvO9MXw" name "access$0"
+					signature "_BsaYXU7gEempoLR4Pt5lOg" name "access$0"
 
 					type "org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor"
 					parameters (
-						parameter "__MGVLUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYXk7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.JdbcTemplate"
 					);
-					signature "__MGVLkcOEem2CuEcvO9MXw" name extractReturnedResults
+					signature "_BsaYX07gEempoLR4Pt5lOg" name "access$1"
+
+					type "org.apache.commons.logging.Log" parameters (
+						parameter "_BsaYYE7gEempoLR4Pt5lOg" name arg0
+
+						type "org.springframework.jdbc.core.JdbcTemplate"
+					);
+					signature "_BsaYYU7gEempoLR4Pt5lOg" name getQueryTimeout
+
+					type ^int;
+					signature "_BsaYYk7gEempoLR4Pt5lOg" name getSql
+
+					type "java.lang.String" parameters (
+						parameter "_BsaYY07gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.Object"
+					);
+					signature "_BsaYZE7gEempoLR4Pt5lOg" name handleWarnings
+
+					type void parameters (
+						parameter "_BsaYZU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.sql.Statement"
+					);
+					signature "_BsaYZk7gEempoLR4Pt5lOg" name processResultSet
 
 					type "java.util.Map" parameters (
-						parameter "__MGVL0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYZ07gEempoLR4Pt5lOg" name arg0
+
+						type "java.sql.ResultSet";
+						parameter "_BsaYaE7gEempoLR4Pt5lOg" name arg1
+
+						type "org.springframework.jdbc.core.ResultSetSupportingSqlParameter"
+					);
+					signature "_BsaYaU7gEempoLR4Pt5lOg" name createResultsMap
+
+					type "java.util.Map";
+					signature "_BsaYak7gEempoLR4Pt5lOg" name setNativeJdbcExtractor
+
+					type void parameters (
+						parameter "_BsaYa07gEempoLR4Pt5lOg" name arg0
+
+						type "org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor"
+					);
+					signature "_BsaYbE7gEempoLR4Pt5lOg" name getNativeJdbcExtractor
+
+					type "org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor";
+					signature "_BsaYbU7gEempoLR4Pt5lOg" name setSkipResultsProcessing
+
+					type void parameters (
+						parameter "_BsaYbk7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsaYb07gEempoLR4Pt5lOg" name isSkipResultsProcessing
+
+					type ^boolean;
+					signature "_BsaYcE7gEempoLR4Pt5lOg" name setSkipUndeclaredResults
+
+					type void parameters (
+						parameter "_BsaYcU7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsaYck7gEempoLR4Pt5lOg" name isSkipUndeclaredResults
+
+					type ^boolean;
+					signature "_BsaYc07gEempoLR4Pt5lOg" name setResultsMapCaseInsensitive
+
+					type void parameters (
+						parameter "_BsaYdE7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsaYdU7gEempoLR4Pt5lOg" name isResultsMapCaseInsensitive
+
+					type ^boolean;
+					signature "_BsaYdk7gEempoLR4Pt5lOg" name createConnectionProxy
+
+					type "java.sql.Connection" parameters (
+						parameter "_BsaYd07gEempoLR4Pt5lOg" name arg0
+
+						type "java.sql.Connection"
+					);
+					signature "_BsaYeE7gEempoLR4Pt5lOg" name applyStatementSettings
+
+					type void parameters (
+						parameter "_BsaYeU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.sql.Statement"
+					);
+					signature "_BsaYek7gEempoLR4Pt5lOg" name getColumnMapRowMapper
+
+					type "org.springframework.jdbc.core.RowMapper";
+					signature "_BsaYe07gEempoLR4Pt5lOg" name getSingleColumnRowMapper
+
+					type "org.springframework.jdbc.core.RowMapper" parameters (
+						parameter "_BsaYfE7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.Class"
+					);
+					signature "_BsaYfU7gEempoLR4Pt5lOg" name
+					newArgTypePreparedStatementSetter
+
+					type "org.springframework.jdbc.core.PreparedStatementSetter" parameters (
+						parameter "_BsaYfk7gEempoLR4Pt5lOg" name arg0
+
+						type "[Ljava.lang.Object;";
+						parameter "_BsaYf07gEempoLR4Pt5lOg" name arg1
+
+						type "[I"
+					);
+					signature "_BsaYgE7gEempoLR4Pt5lOg" name newArgPreparedStatementSetter
+
+					type "org.springframework.jdbc.core.PreparedStatementSetter" parameters (
+						parameter "_BsaYgU7gEempoLR4Pt5lOg" name arg0
+
+						type "[Ljava.lang.Object;"
+					);
+					signature "_BsaYgk7gEempoLR4Pt5lOg" name extractReturnedResults
+
+					type "java.util.Map" parameters (
+						parameter "_BsaYg07gEempoLR4Pt5lOg" name arg0
 
 						type "java.sql.CallableStatement";
-						parameter "__MGVMEcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYhE7gEempoLR4Pt5lOg" name arg1
 
 						type "java.util.List";
-						parameter "__MGVMUcOEem2CuEcvO9MXw" name arg2
+						parameter "_BsaYhU7gEempoLR4Pt5lOg" name arg2
 
 						type "java.util.List";
-						parameter "__MGVMkcOEem2CuEcvO9MXw" name arg3
+						parameter "_BsaYhk7gEempoLR4Pt5lOg" name arg3
 
 						type ^int
 					);
-					signature "__MGVM0cOEem2CuEcvO9MXw" name extractOutputParameters
+					signature "_BsaYh07gEempoLR4Pt5lOg" name extractOutputParameters
 
 					type "java.util.Map" parameters (
-						parameter "__MGVNEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsaYiE7gEempoLR4Pt5lOg" name arg0
 
 						type "java.sql.CallableStatement";
-						parameter "__MGVNUcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsaYiU7gEempoLR4Pt5lOg" name arg1
 
 						type "java.util.List"
-					)
+					);
+					signature "_BsaYik7gEempoLR4Pt5lOg" name setQueryTimeout
+
+					type void parameters (
+						parameter "_BsaYi07gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsaYjE7gEempoLR4Pt5lOg" name setIgnoreWarnings
+
+					type void parameters (
+						parameter "_BsaYjU7gEempoLR4Pt5lOg" name arg0
+
+						type ^boolean
+					);
+					signature "_BsaYjk7gEempoLR4Pt5lOg" name isIgnoreWarnings
+
+					type ^boolean;
+					signature "_BsaYj07gEempoLR4Pt5lOg" name setFetchSize
+
+					type void parameters (
+						parameter "_BsaYkE7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsaYkU7gEempoLR4Pt5lOg" name getFetchSize
+
+					type ^int;
+					signature "_BsaYkk7gEempoLR4Pt5lOg" name setMaxRows
+
+					type void parameters (
+						parameter "_BsaYk07gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsaYlE7gEempoLR4Pt5lOg" name getMaxRows
+
+					type ^int
 				);
 
 			type IDataSource
 				signatures (
-					signature "__MIxEEcOEem2CuEcvO9MXw" name setLoginTimeout
+					signature "_BsbmUE7gEempoLR4Pt5lOg" name createShardingKeyBuilder
+
+					type "java.sql.ShardingKeyBuilder";
+					signature "_BsbmUU7gEempoLR4Pt5lOg" name getLoginTimeout
+
+					type ^int;
+					signature "_BsbmUk7gEempoLR4Pt5lOg" name getLogWriter
+
+					type "java.io.PrintWriter";
+					signature "_BsbmU07gEempoLR4Pt5lOg" name setLoginTimeout
 
 					type void parameters (
-						parameter "__MIxEUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsbmVE7gEempoLR4Pt5lOg" name arg0
 
 						type ^int
 					);
-					signature "__MIxEkcOEem2CuEcvO9MXw" name getLogWriter
-
-					type "java.io.PrintWriter";
-					signature "__MIxE0cOEem2CuEcvO9MXw" name getLoginTimeout
-
-					type ^int;
-					signature "__MIxFEcOEem2CuEcvO9MXw" name setLogWriter
+					signature "_BsbmVU7gEempoLR4Pt5lOg" name setLogWriter
 
 					type void parameters (
-						parameter "__MIxFUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsbmVk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.io.PrintWriter"
 					);
-					signature "__MIxFkcOEem2CuEcvO9MXw" name getParentLogger
+					signature "_BsbmV07gEempoLR4Pt5lOg" name getParentLogger
 
 					type "java.util.logging.Logger";
-					signature "__MIxF0cOEem2CuEcvO9MXw" name createShardingKeyBuilder
-
-					type "java.sql.ShardingKeyBuilder";
-					signature "__MIxGEcOEem2CuEcvO9MXw" name unwrap
+					signature "_BsbmWE7gEempoLR4Pt5lOg" name unwrap
 
 					type "java.lang.Object" parameters (
-						parameter "__MIxGUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsbmWU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__MIxGkcOEem2CuEcvO9MXw" name isWrapperFor
+					signature "_BsbmWk7gEempoLR4Pt5lOg" name isWrapperFor
 
 					type ^boolean parameters (
-						parameter "__MIxG0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsbmW07gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__MIxHEcOEem2CuEcvO9MXw" name getConnection
+					signature "_BsbmXE7gEempoLR4Pt5lOg" name getConnection
 
 					type "java.sql.Connection";
-					signature "__MIxHUcOEem2CuEcvO9MXw" name createConnectionBuilder
+					signature "_BsbmXU7gEempoLR4Pt5lOg" name createConnectionBuilder
 
 					type "java.sql.ConnectionBuilder"
 				);
 
 			type IJdbcDaoImpl
 				signatures (
-					signature "__MNCgEcOEem2CuEcvO9MXw" name insert
+					signature "_BsepoE7gEempoLR4Pt5lOg" name insert
 
 					type "java.lang.Long" parameters (
-						parameter "__MNCgUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsepoU7gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.BoundSql";
-						parameter "__MNCgkcOEem2CuEcvO9MXw" name arg1
+						parameter "_Bsepok7gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.Class"
 					);
-					signature "__MNCg0cOEem2CuEcvO9MXw" name getRowMapper
+					signature "_Bsepo07gEempoLR4Pt5lOg" name getRowMapper
 
 					type "org.springframework.jdbc.core.RowMapper" parameters (
-						parameter "__MNChEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BseppE7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__MNChUcOEem2CuEcvO9MXw" name setDialect
-
-					type void parameters (
-						parameter "__MNChkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__MNCh0cOEem2CuEcvO9MXw" name getDialect
-
-					type "java.lang.String";
-					signature "__MNCiEcOEem2CuEcvO9MXw" name setMappingHandler
-
-					type void parameters (
-						parameter "__MNCiUcOEem2CuEcvO9MXw" name arg0
-
-						type "com.dexcoder.dal.handler.MappingHandler"
-					);
-					signature "__MNCikcOEem2CuEcvO9MXw" name setRowMapperClass
-
-					type void parameters (
-						parameter "__MNCi0cOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__MNCjEcOEem2CuEcvO9MXw" name getMappingHandler
+					signature "_BseppU7gEempoLR4Pt5lOg" name getMappingHandler
 
 					type "com.dexcoder.dal.handler.MappingHandler";
-					signature "__MNCjUcOEem2CuEcvO9MXw" name mapToBean
+					signature "_Bseppk7gEempoLR4Pt5lOg" name getDialect
 
-					type "java.lang.Object" parameters (
-						parameter "__MNCjkcOEem2CuEcvO9MXw" name arg0
+					type "java.lang.String";
+					signature "_Bsepp07gEempoLR4Pt5lOg" name mapToBean
 
-						type "java.util.Map";
-						parameter "__MNCj0cOEem2CuEcvO9MXw" name arg1
+					type "java.util.List" parameters (
+						parameter "_BsepqE7gEempoLR4Pt5lOg" name arg0
+
+						type "java.util.List";
+						parameter "_BsepqU7gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.Class"
 					);
-					signature "__MNCkEcOEem2CuEcvO9MXw" name setJdbcTemplate
+					signature "_Bsepqk7gEempoLR4Pt5lOg" name setJdbcTemplate
 
 					type void parameters (
-						parameter "__MNCkUcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsepq07gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.JdbcOperations"
 					);
-					signature "__MNCkkcOEem2CuEcvO9MXw" name setSqlFactory
+					signature "_BseprE7gEempoLR4Pt5lOg" name setMappingHandler
 
 					type void parameters (
-						parameter "__MNCk0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BseprU7gEempoLR4Pt5lOg" name arg0
+
+						type "com.dexcoder.dal.handler.MappingHandler"
+					);
+					signature "_Bseprk7gEempoLR4Pt5lOg" name setRowMapperClass
+
+					type void parameters (
+						parameter "_Bsepr07gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsepsE7gEempoLR4Pt5lOg" name setDialect
+
+					type void parameters (
+						parameter "_BsepsU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_Bsepsk7gEempoLR4Pt5lOg" name setSqlFactory
+
+					type void parameters (
+						parameter "_Bseps07gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.SqlFactory"
 					);
-					signature "__MNClEcOEem2CuEcvO9MXw" name convertMapKeyToCamel
+					signature "_BseptE7gEempoLR4Pt5lOg" name convertMapKeyToCamel
 
-					type "java.util.Map" parameters (
-						parameter "__MNClUcOEem2CuEcvO9MXw" name arg0
+					type "java.util.List" parameters (
+						parameter "_BseptU7gEempoLR4Pt5lOg" name arg0
 
-						type "java.util.Map"
+						type "java.util.List"
 					);
-					signature "__MNClkcOEem2CuEcvO9MXw" name get
+					signature "_Bseptk7gEempoLR4Pt5lOg" name get
 
 					type "java.lang.Object" parameters (
-						parameter "__MNCl0cOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsept07gEempoLR4Pt5lOg" name arg0
 
-						type "com.dexcoder.dal.build.Criteria";
-						parameter "__MNCmEcOEem2CuEcvO9MXw" name arg1
+						type "java.lang.Class";
+						parameter "_BsepuE7gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.Long"
 					);
-					signature "__MNCmUcOEem2CuEcvO9MXw" name update
+					signature "_BsepuU7gEempoLR4Pt5lOg" name update
 
 					type ^int parameters (
-						parameter "__MNCmkcOEem2CuEcvO9MXw" name arg0
-
-						type "com.dexcoder.dal.build.Criteria"
-					);
-					signature "__MNCm0cOEem2CuEcvO9MXw" name delete
-
-					type ^int parameters (
-						parameter "__MNCnEcOEem2CuEcvO9MXw" name arg0
-
-						type "com.dexcoder.dal.build.Criteria"
-					);
-					signature "__MNCnUcOEem2CuEcvO9MXw" name save
-
-					type void parameters (
-						parameter "__MNCnkcOEem2CuEcvO9MXw" name arg0
-
-						type "com.dexcoder.dal.build.Criteria"
-					);
-					signature "__MNCn0cOEem2CuEcvO9MXw" name insert
-
-					type "java.lang.Long" parameters (
-						parameter "__MNCoEcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsepuk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Object"
 					);
-					signature "__MNCoUcOEem2CuEcvO9MXw" name queryCount
+					signature "_Bsepu07gEempoLR4Pt5lOg" name delete
 
 					type ^int parameters (
-						parameter "__MNCokcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsepvE7gEempoLR4Pt5lOg" name arg0
 
-						type "java.lang.Class"
+						type "java.lang.Object"
 					);
-					signature "__MNCo0cOEem2CuEcvO9MXw" name queryList
+					signature "_BsepvU7gEempoLR4Pt5lOg" name save
 
-					type "java.util.List" parameters (
-						parameter "__MNCpEcOEem2CuEcvO9MXw" name arg0
+					type void parameters (
+						parameter "_Bsepvk7gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.build.Criteria"
 					);
-					signature "__MNCpUcOEem2CuEcvO9MXw" name queryRowMap
+					signature "_Bsepv07gEempoLR4Pt5lOg" name insert
 
-					type "java.util.Map" parameters (
-						parameter "__MNCpkcOEem2CuEcvO9MXw" name arg0
-
-						type "com.dexcoder.dal.build.Criteria"
-					);
-					signature "__MNCp0cOEem2CuEcvO9MXw" name queryRowMapList
-
-					type "java.util.List" parameters (
-						parameter "__MNCqEcOEem2CuEcvO9MXw" name arg0
+					type "java.lang.Long" parameters (
+						parameter "_BsepwE7gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.build.Criteria"
 					);
-					signature "__MNCqUcOEem2CuEcvO9MXw" name querySingleResult
+					signature "_BsepwU7gEempoLR4Pt5lOg" name queryCount
+
+					type ^int parameters (
+						parameter "_Bsepwk7gEempoLR4Pt5lOg" name arg0
+
+						type "com.dexcoder.dal.build.Criteria"
+					);
+					signature "_Bsepw07gEempoLR4Pt5lOg" name querySingleResult
 
 					type "java.lang.Object" parameters (
-						parameter "__MNCqkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsepxE7gEempoLR4Pt5lOg" name arg0
 
-						type "com.dexcoder.dal.build.Criteria"
+						type "java.lang.Object"
 					);
-					signature "__MNCq0cOEem2CuEcvO9MXw" name queryObject
+					signature "_BsepxU7gEempoLR4Pt5lOg" name queryObject
 
 					type "java.lang.Object" parameters (
-						parameter "__MNCrEcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsepxk7gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.build.Criteria"
 					);
-					signature "__MNCrUcOEem2CuEcvO9MXw" name queryObjectList
+					signature "_Bsepx07gEempoLR4Pt5lOg" name queryObjectList
 
 					type "java.util.List" parameters (
-						parameter "__MNCrkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsepyE7gEempoLR4Pt5lOg" name arg0
 
 						type "com.dexcoder.dal.build.Criteria";
-						parameter "__MNCr0cOEem2CuEcvO9MXw" name arg1
+						parameter "_BsepyU7gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.Class"
 					);
-					signature "__MNCsEcOEem2CuEcvO9MXw" name queryObjectForSql
+					signature "_Bsepyk7gEempoLR4Pt5lOg" name queryRowMap
 
-					type "java.lang.Object" parameters (
-						parameter "__MNCsUcOEem2CuEcvO9MXw" name arg0
+					type "java.util.Map" parameters (
+						parameter "_Bsepy07gEempoLR4Pt5lOg" name arg0
 
-						type "java.lang.String";
-						parameter "__MNCskcOEem2CuEcvO9MXw" name arg1
-
-						type "[Ljava.lang.Object;"
+						type "com.dexcoder.dal.build.Criteria"
 					);
-					signature "__MNCs0cOEem2CuEcvO9MXw" name updateForSql
-
-					type ^int parameters (
-						parameter "__MNCtEcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String";
-						parameter "__MNCtUcOEem2CuEcvO9MXw" name arg1
-
-						type "java.lang.String";
-						parameter "__MNCtkcOEem2CuEcvO9MXw" name arg2
-
-						type "[Ljava.lang.Object;"
-					);
-					signature "__MNCt0cOEem2CuEcvO9MXw" name queryListForSql
+					signature "_BsepzE7gEempoLR4Pt5lOg" name queryRowMapList
 
 					type "java.util.List" parameters (
-						parameter "__MNCuEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsepzU7gEempoLR4Pt5lOg" name arg0
+
+						type "com.dexcoder.dal.build.Criteria"
+					);
+					signature "_Bsepzk7gEempoLR4Pt5lOg" name queryObjectForSql
+
+					type "java.lang.Object" parameters (
+						parameter "_Bsepz07gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNCuUcOEem2CuEcvO9MXw" name arg1
+						parameter "_Bsep0E7gEempoLR4Pt5lOg" name arg1
+
+						type "[Ljava.lang.Object;"
+					);
+					signature "_Bsep0U7gEempoLR4Pt5lOg" name queryListForSql
+
+					type "java.util.List" parameters (
+						parameter "_Bsep0k7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String";
+						parameter "_Bsep007gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.Class"
 					);
-					signature "__MNCukcOEem2CuEcvO9MXw" name querySingleResultForSql
+					signature "_Bsep1E7gEempoLR4Pt5lOg" name updateForSql
 
-					type "java.lang.Object" parameters (
-						parameter "__MNCu0cOEem2CuEcvO9MXw" name arg0
+					type ^int parameters (
+						parameter "_Bsep1U7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNCvEcOEem2CuEcvO9MXw" name arg1
+						parameter "_Bsep1k7gEempoLR4Pt5lOg" name arg1
 
-						type "java.lang.Class"
+						type "[Ljava.lang.Object;"
+					);
+					signature "_Bsep107gEempoLR4Pt5lOg" name queryList
+
+					type "java.util.List" parameters (
+						parameter "_Bsep2E7gEempoLR4Pt5lOg" name arg0
+
+						type "com.dexcoder.dal.build.Criteria"
+					);
+					signature "_Bsep2U7gEempoLR4Pt5lOg" name querySingleResultForSql
+
+					type "java.util.Map" parameters (
+						parameter "_Bsep2k7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
 					)
 				);
 
 			type IJdbcOperations
 				signatures (
-					signature "__MNpkUcOEem2CuEcvO9MXw" name update
+					signature "_BsfQsE7gEempoLR4Pt5lOg" name update
 
 					type ^int parameters (
-						parameter "__MNpkkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQsU7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.PreparedStatementCreator";
-						parameter "__MNpk0cOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQsk7gEempoLR4Pt5lOg" name arg1
 
 						type "org.springframework.jdbc.support.KeyHolder"
 					);
-					signature "__MNplEcOEem2CuEcvO9MXw" name execute
+					signature "_BsfQs07gEempoLR4Pt5lOg" name execute
 
 					type "java.lang.Object" parameters (
-						parameter "__MNplUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQtE7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.ConnectionCallback"
 					);
-					signature "__MNplkcOEem2CuEcvO9MXw" name query
+					signature "_BsfQtU7gEempoLR4Pt5lOg" name query
 
 					type void parameters (
-						parameter "__MNpl0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQtk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNpmEcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQt07gEempoLR4Pt5lOg" name arg1
 
 						type "[Ljava.lang.Object;";
-						parameter "__MNpmUcOEem2CuEcvO9MXw" name arg2
+						parameter "_BsfQuE7gEempoLR4Pt5lOg" name arg2
 
 						type "org.springframework.jdbc.core.RowCallbackHandler"
 					);
-					signature "__MNpmkcOEem2CuEcvO9MXw" name call
+					signature "_BsfQuU7gEempoLR4Pt5lOg" name call
 
 					type "java.util.Map" parameters (
-						parameter "__MNpm0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQuk7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.jdbc.core.CallableStatementCreator";
-						parameter "__MNpnEcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQu07gEempoLR4Pt5lOg" name arg1
 
 						type "java.util.List"
 					);
-					signature "__MNpnUcOEem2CuEcvO9MXw" name batchUpdate
-
-					type "[I" parameters (
-						parameter "__MNpnkcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String";
-						parameter "__MNpn0cOEem2CuEcvO9MXw" name arg1
-
-						type "org.springframework.jdbc.core.BatchPreparedStatementSetter"
-					);
-					signature "__MNpoEcOEem2CuEcvO9MXw" name queryForObject
-
-					type "java.lang.Object" parameters (
-						parameter "__MNpoUcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String";
-						parameter "__MNpokcOEem2CuEcvO9MXw" name arg1
-
-						type "[Ljava.lang.Object;";
-						parameter "__MNpo0cOEem2CuEcvO9MXw" name arg2
-
-						type "org.springframework.jdbc.core.RowMapper"
-					);
-					signature "__MNppEcOEem2CuEcvO9MXw" name queryForList
-
-					type "java.util.List" parameters (
-						parameter "__MNppUcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__MNppkcOEem2CuEcvO9MXw" name queryForMap
+					signature "_BsfQvE7gEempoLR4Pt5lOg" name queryForMap
 
 					type "java.util.Map" parameters (
-						parameter "__MNpp0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQvU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNpqEcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQvk7gEempoLR4Pt5lOg" name arg1
 
-						type "[Ljava.lang.Object;";
-						parameter "__MNpqUcOEem2CuEcvO9MXw" name arg2
-
-						type "[I"
+						type "[Ljava.lang.Object;"
 					);
-					signature "__MNpqkcOEem2CuEcvO9MXw" name queryForLong
+					signature "_BsfQv07gEempoLR4Pt5lOg" name queryForObject
+
+					type "java.lang.Object" parameters (
+						parameter "_BsfQwE7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String";
+						parameter "_BsfQwU7gEempoLR4Pt5lOg" name arg1
+
+						type "java.lang.Class";
+						parameter "_BsfQwk7gEempoLR4Pt5lOg" name arg2
+
+						type "[Ljava.lang.Object;"
+					);
+					signature "_BsfQw07gEempoLR4Pt5lOg" name queryForLong
 
 					type ^long parameters (
-						parameter "__MNpq0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQxE7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String"
 					);
-					signature "__MNprEcOEem2CuEcvO9MXw" name queryForInt
+					signature "_BsfQxU7gEempoLR4Pt5lOg" name queryForInt
 
 					type ^int parameters (
-						parameter "__MNprUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsfQxk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNprkcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQx07gEempoLR4Pt5lOg" name arg1
 
 						type "[Ljava.lang.Object;";
-						parameter "__MNpr0cOEem2CuEcvO9MXw" name arg2
+						parameter "_BsfQyE7gEempoLR4Pt5lOg" name arg2
 
 						type "[I"
 					);
-					signature "__MNpsEcOEem2CuEcvO9MXw" name queryForRowSet
+					signature "_BsfQyU7gEempoLR4Pt5lOg" name queryForList
 
-					type "org.springframework.jdbc.support.rowset.SqlRowSet" parameters (
-						parameter "__MNpsUcOEem2CuEcvO9MXw" name arg0
+					type "java.util.List" parameters (
+						parameter "_BsfQyk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String";
-						parameter "__MNpskcOEem2CuEcvO9MXw" name arg1
+						parameter "_BsfQy07gEempoLR4Pt5lOg" name arg1
+
+						type "java.lang.Class";
+						parameter "_BsfQzE7gEempoLR4Pt5lOg" name arg2
 
 						type "[Ljava.lang.Object;"
+					);
+					signature "_BsfQzU7gEempoLR4Pt5lOg" name queryForRowSet
+
+					type "org.springframework.jdbc.support.rowset.SqlRowSet" parameters (
+						parameter "_BsfQzk7gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsfQz07gEempoLR4Pt5lOg" name batchUpdate
+
+					type "[I" parameters (
+						parameter "_BsfQ0E7gEempoLR4Pt5lOg" name arg0
+
+						type "[Ljava.lang.String;"
 					)
 				);
 
 			type ISchedulerFactoryBean
 				signatures (
-					signature "__Mf9cEcOEem2CuEcvO9MXw" name setResourceLoader
+					signature "_Bsrd8E7gEempoLR4Pt5lOg" name setResourceLoader
 
 					type void parameters (
-						parameter "__Mf9cUcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd8U7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.core.io.ResourceLoader"
 					);
-					signature "__Mf9ckcOEem2CuEcvO9MXw" name setTransactionManager
+					signature "_Bsrd8k7gEempoLR4Pt5lOg" name getScheduler
+
+					type "org.quartz.Scheduler";
+					signature "_Bsrd807gEempoLR4Pt5lOg" name rescheduleJob
 
 					type void parameters (
-						parameter "__Mf9c0cOEem2CuEcvO9MXw" name arg0
-
-						type "org.springframework.transaction.PlatformTransactionManager"
-					);
-					signature "__Mf9dEcOEem2CuEcvO9MXw" name rescheduleJob
-
-					type void parameters (
-						parameter "__Mf9dUcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd9E7gEempoLR4Pt5lOg" name arg0
 
 						type "org.quartz.Trigger"
 					);
-					signature "__Mf9dkcOEem2CuEcvO9MXw" name getScheduler
+					signature "_Bsrd9U7gEempoLR4Pt5lOg" name registerListeners
 
-					type "org.quartz.Scheduler";
-					signature "__Mf9d0cOEem2CuEcvO9MXw" name setTriggers
-
-					type void parameters (
-						parameter "__Mf9eEcOEem2CuEcvO9MXw" name arg0
-
-						type "[Lorg.quartz.Trigger;"
-					);
-					signature "__Mf9eUcOEem2CuEcvO9MXw" name addJobToScheduler
-
-					type ^boolean parameters (
-						parameter "__Mf9ekcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.JobDetail"
-					);
-					signature "__Mf9e0cOEem2CuEcvO9MXw" name setJobDetails
+					type void;
+					signature "_Bsrd9k7gEempoLR4Pt5lOg" name setJobDetails
 
 					type void parameters (
-						parameter "__Mf9fEcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd907gEempoLR4Pt5lOg" name arg0
 
 						type "[Lorg.quartz.JobDetail;"
 					);
-					signature "__Mf9fUcOEem2CuEcvO9MXw" name setCalendars
+					signature "_Bsrd-E7gEempoLR4Pt5lOg" name setCalendars
 
 					type void parameters (
-						parameter "__Mf9fkcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd-U7gEempoLR4Pt5lOg" name arg0
 
 						type "java.util.Map"
 					);
-					signature "__Mf9f0cOEem2CuEcvO9MXw" name setJobListeners
+					signature "_Bsrd-k7gEempoLR4Pt5lOg" name setTriggers
 
 					type void parameters (
-						parameter "__Mf9gEcOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd-07gEempoLR4Pt5lOg" name arg0
+
+						type "[Lorg.quartz.Trigger;"
+					);
+					signature "_Bsrd_E7gEempoLR4Pt5lOg" name setJobListeners
+
+					type void parameters (
+						parameter "_Bsrd_U7gEempoLR4Pt5lOg" name arg0
 
 						type "[Lorg.quartz.JobListener;"
 					);
-					signature "__Mf9gUcOEem2CuEcvO9MXw" name registerListeners
-
-					type void;
-					signature "__Mf9gkcOEem2CuEcvO9MXw" name jobDetailExists
+					signature "_Bsrd_k7gEempoLR4Pt5lOg" name addJobToScheduler
 
 					type ^boolean parameters (
-						parameter "__Mf9g0cOEem2CuEcvO9MXw" name arg0
+						parameter "_Bsrd_07gEempoLR4Pt5lOg" name arg0
 
 						type "org.quartz.JobDetail"
 					);
-					signature "__Mf9hEcOEem2CuEcvO9MXw" name findJobDetail
-
-					type "org.quartz.JobDetail" parameters (
-						parameter "__Mf9hUcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.Trigger"
-					);
-					signature "__Mf9hkcOEem2CuEcvO9MXw" name triggerExists
+					signature "_BsreAE7gEempoLR4Pt5lOg" name jobDetailExists
 
 					type ^boolean parameters (
-						parameter "__Mf9h0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreAU7gEempoLR4Pt5lOg" name arg0
+
+						type "org.quartz.JobDetail"
+					);
+					signature "_BsreAk7gEempoLR4Pt5lOg" name triggerExists
+
+					type ^boolean parameters (
+						parameter "_BsreA07gEempoLR4Pt5lOg" name arg0
 
 						type "org.quartz.Trigger"
 					);
-					signature "__Mf9iEcOEem2CuEcvO9MXw" name registerJobsAndTriggers
+					signature "_BsreBE7gEempoLR4Pt5lOg" name findJobDetail
+
+					type "org.quartz.JobDetail" parameters (
+						parameter "_BsreBU7gEempoLR4Pt5lOg" name arg0
+
+						type "org.quartz.Trigger"
+					);
+					signature "_BsreBk7gEempoLR4Pt5lOg" name registerJobsAndTriggers
 
 					type void;
-					signature "__Mf9iUcOEem2CuEcvO9MXw" name setTriggerListeners
+					signature "_BsreB07gEempoLR4Pt5lOg" name setOverwriteExistingJobs
 
 					type void parameters (
-						parameter "__Mf9ikcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreCE7gEempoLR4Pt5lOg" name arg0
 
-						type "[Lorg.quartz.TriggerListener;"
+						type ^boolean
 					);
-					signature "__Mf9i0cOEem2CuEcvO9MXw" name setGlobalJobListeners
+					signature "_BsreCU7gEempoLR4Pt5lOg" name setJobSchedulingDataLocation
 
 					type void parameters (
-						parameter "__Mf9jEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreCk7gEempoLR4Pt5lOg" name arg0
 
-						type "[Lorg.quartz.JobListener;"
+						type "java.lang.String"
 					);
-					signature "__Mf9jUcOEem2CuEcvO9MXw" name setJobSchedulingDataLocations
+					signature "_BsreC07gEempoLR4Pt5lOg" name setJobSchedulingDataLocations
 
 					type void parameters (
-						parameter "__Mf9jkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreDE7gEempoLR4Pt5lOg" name arg0
 
 						type "[Ljava.lang.String;"
 					);
-					signature "__Mf9j0cOEem2CuEcvO9MXw" name setJobSchedulingDataLocation
+					signature "_BsreDU7gEempoLR4Pt5lOg" name setSchedulerListeners
 
 					type void parameters (
-						parameter "__Mf9kEcOEem2CuEcvO9MXw" name arg0
-
-						type "java.lang.String"
-					);
-					signature "__Mf9kUcOEem2CuEcvO9MXw" name addTriggerToScheduler
-
-					type ^boolean parameters (
-						parameter "__Mf9kkcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.Trigger"
-					);
-					signature "__Mf9k0cOEem2CuEcvO9MXw" name setOverwriteExistingJobs
-
-					type void parameters (
-						parameter "__Mf9lEcOEem2CuEcvO9MXw" name arg0
-
-						type ^boolean
-					);
-					signature "__Mf9lUcOEem2CuEcvO9MXw" name setSchedulerListeners
-
-					type void parameters (
-						parameter "__Mf9lkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreDk7gEempoLR4Pt5lOg" name arg0
 
 						type "[Lorg.quartz.SchedulerListener;"
 					);
-					signature "__Mf9l0cOEem2CuEcvO9MXw" name setGlobalTriggerListeners
+					signature "_BsreD07gEempoLR4Pt5lOg" name setGlobalJobListeners
 
 					type void parameters (
-						parameter "__Mf9mEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreEE7gEempoLR4Pt5lOg" name arg0
+
+						type "[Lorg.quartz.JobListener;"
+					);
+					signature "_BsreEU7gEempoLR4Pt5lOg" name setGlobalTriggerListeners
+
+					type void parameters (
+						parameter "_BsreEk7gEempoLR4Pt5lOg" name arg0
 
 						type "[Lorg.quartz.TriggerListener;"
 					);
-					signature "__Mf9mUcOEem2CuEcvO9MXw" name getObject
-
-					type "java.lang.Object";
-					signature "__Mf9mkcOEem2CuEcvO9MXw" name getObjectType
-
-					type "java.lang.Class";
-					signature "__Mf9m0cOEem2CuEcvO9MXw" name isSingleton
-
-					type ^boolean;
-					signature "__Mf9nEcOEem2CuEcvO9MXw" name setBeanName
+					signature "_BsreE07gEempoLR4Pt5lOg" name setTriggerListeners
 
 					type void parameters (
-						parameter "__Mf9nUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreFE7gEempoLR4Pt5lOg" name arg0
+
+						type "[Lorg.quartz.TriggerListener;"
+					);
+					signature "_BsreFU7gEempoLR4Pt5lOg" name addTriggerToScheduler
+
+					type ^boolean parameters (
+						parameter "_BsreFk7gEempoLR4Pt5lOg" name arg0
+
+						type "org.quartz.Trigger"
+					);
+					signature "_BsreF07gEempoLR4Pt5lOg" name setTransactionManager
+
+					type void parameters (
+						parameter "_BsreGE7gEempoLR4Pt5lOg" name arg0
+
+						type "org.springframework.transaction.PlatformTransactionManager"
+					);
+					signature "_BsreGU7gEempoLR4Pt5lOg" name getObject
+
+					type "java.lang.Object";
+					signature "_BsreGk7gEempoLR4Pt5lOg" name getObjectType
+
+					type "java.lang.Class";
+					signature "_BsreG07gEempoLR4Pt5lOg" name isSingleton
+
+					type ^boolean;
+					signature "_BsreHE7gEempoLR4Pt5lOg" name setBeanName
+
+					type void parameters (
+						parameter "_BsreHU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String"
 					);
-					signature "__Mf9nkcOEem2CuEcvO9MXw" name setApplicationContext
+					signature "_BsreHk7gEempoLR4Pt5lOg" name setApplicationContext
 
 					type void parameters (
-						parameter "__Mf9n0cOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreH07gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.context.ApplicationContext"
 					);
-					signature "__Mf9oEcOEem2CuEcvO9MXw" name afterPropertiesSet
+					signature "_BsreIE7gEempoLR4Pt5lOg" name afterPropertiesSet
 
 					type void;
-					signature "__Mf9oUcOEem2CuEcvO9MXw" name destroy
+					signature "_BsreIU7gEempoLR4Pt5lOg" name destroy
 
 					type void;
-					signature "__Mf9okcOEem2CuEcvO9MXw" name start
+					signature "_BsreIk7gEempoLR4Pt5lOg" name start
 
 					type void;
-					signature "__Mf9o0cOEem2CuEcvO9MXw" name stop
+					signature "_BsreI07gEempoLR4Pt5lOg" name stop
 
 					type void;
-					signature "__Mf9pEcOEem2CuEcvO9MXw" name isRunning
+					signature "_BsreJE7gEempoLR4Pt5lOg" name isRunning
 
 					type ^boolean;
-					signature "__Mf9pUcOEem2CuEcvO9MXw" name getPhase
+					signature "_BsreJU7gEempoLR4Pt5lOg" name getPhase
 
 					type ^int;
-					signature "__Mf9pkcOEem2CuEcvO9MXw" name isAutoStartup
+					signature "_BsreJk7gEempoLR4Pt5lOg" name isAutoStartup
 
 					type ^boolean;
-					signature "__Mf9p0cOEem2CuEcvO9MXw" name setJobFactory
+					signature "_BsreJ07gEempoLR4Pt5lOg" name setConfigLocation
 
 					type void parameters (
-						parameter "__Mf9qEcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.spi.JobFactory"
-					);
-					signature "__Mf9qUcOEem2CuEcvO9MXw" name setConfigLocation
-
-					type void parameters (
-						parameter "__Mf9qkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreKE7gEempoLR4Pt5lOg" name arg0
 
 						type "org.springframework.core.io.Resource"
 					);
-					signature "__Mf9q0cOEem2CuEcvO9MXw" name setDataSource
+					signature "_BsreKU7gEempoLR4Pt5lOg" name setJobFactory
 
 					type void parameters (
-						parameter "__Mf9rEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreKk7gEempoLR4Pt5lOg" name arg0
 
-						type "javax.sql.DataSource"
+						type "org.quartz.spi.JobFactory"
 					);
-					signature "__Mf9rUcOEem2CuEcvO9MXw" name setPhase
+					signature "_BsreK07gEempoLR4Pt5lOg" name setAutoStartup
 
 					type void parameters (
-						parameter "__Mf9rkcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__Mf9r0cOEem2CuEcvO9MXw" name setAutoStartup
-
-					type void parameters (
-						parameter "__Mf9sEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreLE7gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
 					);
-					signature "__Mf9sUcOEem2CuEcvO9MXw" name setStartupDelay
+					signature "_BsreLU7gEempoLR4Pt5lOg" name setTaskExecutor
 
 					type void parameters (
-						parameter "__Mf9skcOEem2CuEcvO9MXw" name arg0
-
-						type ^int
-					);
-					signature "__Mf9s0cOEem2CuEcvO9MXw" name startScheduler
-
-					type void parameters (
-						parameter "__Mf9tEcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.Scheduler";
-						parameter "__Mf9tUcOEem2CuEcvO9MXw" name arg1
-
-						type ^int
-					);
-					signature "__Mf9tkcOEem2CuEcvO9MXw" name createScheduler
-
-					type "org.quartz.Scheduler" parameters (
-						parameter "__Mf9t0cOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.SchedulerFactory";
-						parameter "__Mf9uEcOEem2CuEcvO9MXw" name arg1
-
-						type "java.lang.String"
-					);
-					signature "__Mf9uUcOEem2CuEcvO9MXw" name setTaskExecutor
-
-					type void parameters (
-						parameter "__Mf9ukcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreLk7gEempoLR4Pt5lOg" name arg0
 
 						type "java.util.concurrent.Executor"
 					);
-					signature "__Mf9u0cOEem2CuEcvO9MXw" name setSchedulerName
+					signature "_BsreL07gEempoLR4Pt5lOg" name setSchedulerName
 
 					type void parameters (
-						parameter "__Mf9vEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreME7gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.String"
 					);
-					signature "__Mf9vUcOEem2CuEcvO9MXw" name
-					setApplicationContextSchedulerContextKey
+					signature "_BsreMU7gEempoLR4Pt5lOg" name setPhase
 
 					type void parameters (
-						parameter "__Mf9vkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreMk7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsreM07gEempoLR4Pt5lOg" name setStartupDelay
+
+					type void parameters (
+						parameter "_BsreNE7gEempoLR4Pt5lOg" name arg0
+
+						type ^int
+					);
+					signature "_BsreNU7gEempoLR4Pt5lOg" name createScheduler
+
+					type "org.quartz.Scheduler" parameters (
+						parameter "_BsreNk7gEempoLR4Pt5lOg" name arg0
+
+						type "org.quartz.SchedulerFactory";
+						parameter "_BsreN07gEempoLR4Pt5lOg" name arg1
 
 						type "java.lang.String"
 					);
-					signature "__Mf9v0cOEem2CuEcvO9MXw" name
-					getConfigTimeNonTransactionalDataSource
-
-					type "javax.sql.DataSource";
-					signature "__Mf9wEcOEem2CuEcvO9MXw" name setNonTransactionalDataSource
+					signature "_BsreOE7gEempoLR4Pt5lOg" name startScheduler
 
 					type void parameters (
-						parameter "__Mf9wUcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreOU7gEempoLR4Pt5lOg" name arg0
 
-						type "javax.sql.DataSource"
+						type "org.quartz.Scheduler";
+						parameter "_BsreOk7gEempoLR4Pt5lOg" name arg1
+
+						type ^int
 					);
-					signature "__Mf9wkcOEem2CuEcvO9MXw" name getConfigTimeTaskExecutor
-
-					type "java.util.concurrent.Executor";
-					signature "__Mf9w0cOEem2CuEcvO9MXw" name getConfigTimeDataSource
-
-					type "javax.sql.DataSource";
-					signature "__Mf9xEcOEem2CuEcvO9MXw" name getConfigTimeResourceLoader
+					signature "_BsreO07gEempoLR4Pt5lOg" name getConfigTimeResourceLoader
 
 					type "org.springframework.core.io.ResourceLoader";
-					signature "__Mf9xUcOEem2CuEcvO9MXw" name initSchedulerFactory
+					signature "_BsrePE7gEempoLR4Pt5lOg" name getConfigTimeTaskExecutor
+
+					type "java.util.concurrent.Executor";
+					signature "_BsrePU7gEempoLR4Pt5lOg" name getConfigTimeDataSource
+
+					type "javax.sql.DataSource";
+					signature "_BsrePk7gEempoLR4Pt5lOg" name setSchedulerFactoryClass
 
 					type void parameters (
-						parameter "__Mf9xkcOEem2CuEcvO9MXw" name arg0
-
-						type "org.quartz.SchedulerFactory"
-					);
-					signature "__Mf9x0cOEem2CuEcvO9MXw" name setQuartzProperties
-
-					type void parameters (
-						parameter "__Mf9yEcOEem2CuEcvO9MXw" name arg0
-
-						type "java.util.Properties"
-					);
-					signature "__Mf9yUcOEem2CuEcvO9MXw" name setSchedulerFactoryClass
-
-					type void parameters (
-						parameter "__Mf9ykcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreP07gEempoLR4Pt5lOg" name arg0
 
 						type "java.lang.Class"
 					);
-					signature "__Mf9y0cOEem2CuEcvO9MXw" name setSchedulerContextAsMap
+					signature "_BsreQE7gEempoLR4Pt5lOg" name setQuartzProperties
 
 					type void parameters (
-						parameter "__Mf9zEcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreQU7gEempoLR4Pt5lOg" name arg0
+
+						type "java.util.Properties"
+					);
+					signature "_BsreQk7gEempoLR4Pt5lOg" name setNonTransactionalDataSource
+
+					type void parameters (
+						parameter "_BsreQ07gEempoLR4Pt5lOg" name arg0
+
+						type "javax.sql.DataSource"
+					);
+					signature "_BsreRE7gEempoLR4Pt5lOg" name setSchedulerContextAsMap
+
+					type void parameters (
+						parameter "_BsreRU7gEempoLR4Pt5lOg" name arg0
 
 						type "java.util.Map"
 					);
-					signature "__Mf9zUcOEem2CuEcvO9MXw" name
-					setWaitForJobsToCompleteOnShutdown
+					signature "_BsreRk7gEempoLR4Pt5lOg" name setExposeSchedulerInRepository
 
 					type void parameters (
-						parameter "__Mf9zkcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreR07gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
 					);
-					signature "__Mf9z0cOEem2CuEcvO9MXw" name populateSchedulerContext
-
-					type void;
-					signature "__Mf90EcOEem2CuEcvO9MXw" name setExposeSchedulerInRepository
+					signature "_BsreSE7gEempoLR4Pt5lOg" name
+					setWaitForJobsToCompleteOnShutdown
 
 					type void parameters (
-						parameter "__Mf90UcOEem2CuEcvO9MXw" name arg0
+						parameter "_BsreSU7gEempoLR4Pt5lOg" name arg0
 
 						type ^boolean
+					);
+					signature "_BsreSk7gEempoLR4Pt5lOg" name initSchedulerFactory
+
+					type void parameters (
+						parameter "_BsreS07gEempoLR4Pt5lOg" name arg0
+
+						type "org.quartz.SchedulerFactory"
+					);
+					signature "_BsreTE7gEempoLR4Pt5lOg" name populateSchedulerContext
+
+					type void;
+					signature "_BsreTU7gEempoLR4Pt5lOg" name
+					getConfigTimeNonTransactionalDataSource
+
+					type "javax.sql.DataSource";
+					signature "_BsreTk7gEempoLR4Pt5lOg" name
+					setApplicationContextSchedulerContextKey
+
+					type void parameters (
+						parameter "_BsreT07gEempoLR4Pt5lOg" name arg0
+
+						type "java.lang.String"
+					);
+					signature "_BsreUE7gEempoLR4Pt5lOg" name setDataSource
+
+					type void parameters (
+						parameter "_BsreUU7gEempoLR4Pt5lOg" name arg0
+
+						type "javax.sql.DataSource"
 					)
 				)
 		)
