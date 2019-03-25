@@ -9,10 +9,14 @@ import org.eclipse.emf.common.util.EList;
 import dedal.Assembly;
 import dedal.ClassConnection;
 import dedal.CompClass;
+import dedal.CompInstance;
 import dedal.CompRole;
 import dedal.Component;
+import dedal.Configuration;
 import dedal.DIRECTION;
 import dedal.DedalFactory;
+import dedal.InstConnection;
+import dedal.Interaction;
 import dedal.Interface;
 import dedal.RoleConnection;
 import dedal.Specification;
@@ -26,6 +30,8 @@ public class DedalComponentRole extends DedalComponentType {
 	CompRole componentRole;
 	List<DedalComponentRole> candidateComponentRoles;
 	List<DedalComponentRole> substitutableComponentRoles = new ArrayList<>();
+	private List<DedalInterfaceType> requiredInterfaces = new ArrayList<>();
+	private List<DedalInterfaceType> providedInterfaces = new ArrayList<>();
 
 	public DedalComponentRole(String projectPath, Component component, DedalFactory dedalFactory, 
 			DedalArchitecture architecture, Component sourceComponent, 
@@ -125,17 +131,17 @@ public class DedalComponentRole extends DedalComponentType {
 		return this.componentRole.getName();
 	}
 
-	public void refineRole(Assembly asm, Specification spec, AbstractionOption abstractOption) {
+	public void refineRole(Assembly asm, Configuration config, Specification spec, AbstractionOption abstractOption) {
 		this.defineSubstitutable(spec.getSpecConnections());
 		switch(abstractOption) {
 		case ALLABSTRACT:
-			this.refineAllAbstract(asm, spec);
+			this.refineAllAbstract(asm, config, spec);
 			break;
 		case MIXED:
-			this.refineMixed(asm, spec);
+			this.refineMixed(asm, config, spec);
 			break;
 		case ALLCONCRETE:
-			this.refineAllConcrete(asm, spec);
+			this.refineAllConcrete(asm, config, spec);
 			break;
 		default: 
 			throw new UnsupportedOperationException();
@@ -143,37 +149,207 @@ public class DedalComponentRole extends DedalComponentType {
 	}
 
 	private void defineSubstitutable(EList<RoleConnection> specConnections) {
-		if(!this.candidateComponentRoles.isEmpty()) {
-			List<DedalInterfaceType> requiredInterfaces = new ArrayList<>();
+//		if(!this.candidateComponentRoles.isEmpty()) {
 			List<DedalInterfaceType> minProvidedInterfaces = new ArrayList<>();
-			for(DedalInterface inter : this.interfaces) {
-				if(inter.getCompInterface().getDirection().equals(DIRECTION.REQUIRED)) {
-					requiredInterfaces.add(inter.getInterfaceType());
-				}
-			}
 			for(RoleConnection conn : specConnections) {
 				if(conn.getServerCompElem().equals(this.componentRole)) {
 					minProvidedInterfaces.add(this.architecture.findInterfaceType(((Interface)conn.getClientIntElem()).getType())); //this is the smallest interface to remain substitutable
+					this.providedInterfaces.add(this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType()));
 				}
 			}
-			System.out.println();
+			for(DedalInterface inter : this.interfaces) {
+				if(inter.getCompInterface().getDirection().equals(DIRECTION.REQUIRED)) {
+					requiredInterfaces .add(inter.getInterfaceType());
+				}
+			}
+			for(DedalComponentRole candidate : this.candidateComponentRoles) {
+				candidate.defineSubstitutable(this.requiredInterfaces, this.providedInterfaces, minProvidedInterfaces);
+			}
+			if(this.isSubstitutable()) {
+				this.substitutableComponentRoles.addAll(this.candidateComponentRoles);
+				this.refineSubstitutable();
+			}
+//		}
+	}
+
+	private void refineSubstitutable() {
+		List<DedalComponentRole> toRemove = new ArrayList<>();
+		for(DedalComponentRole scr : this.substitutableComponentRoles) {
+			if(scr.providedInterfaces.isEmpty() && scr.requiredInterfaces.isEmpty())
+				toRemove.add(scr);
+		}
+		this.substitutableComponentRoles.removeAll(toRemove);
+	}
+
+	private Boolean isSubstitutable() {
+		List<DedalInterfaceType> provInterfaceTypes = new ArrayList<>();
+		List<DedalInterfaceType> reqInterfaceTypes = new ArrayList<>();
+		for(DedalComponentRole candidate : this.candidateComponentRoles) {
+			provInterfaceTypes.addAll(candidate.providedInterfaces);
+			reqInterfaceTypes.addAll(candidate.requiredInterfaces);
+		}
+		if(!reqInterfaceTypes.containsAll(this.requiredInterfaces)) {
+			return Boolean.FALSE;
+		}
+		if(provInterfaceTypes.containsAll(this.providedInterfaces)) {
+			return Boolean.TRUE;
+		} else {
+			for(DedalInterfaceType inter : this.providedInterfaces) {
+				if(!existsIn(inter, provInterfaceTypes)) {
+					return Boolean.FALSE;
+				}
+			}
+		}
+		return Boolean.TRUE;
+	}
+
+	private Boolean existsIn(DedalInterfaceType inter, List<DedalInterfaceType> provInterfaceTypes) {
+		for(DedalInterfaceType inter2 : provInterfaceTypes) {
+			if(inter.equals(inter2)) {
+				return Boolean.TRUE;
+			}
+		}
+		return Boolean.FALSE;
+	}
+
+	private void defineSubstitutable(List<DedalInterfaceType> requiredInterfaces2,
+			List<DedalInterfaceType> providedInterfaces2, List<DedalInterfaceType> minProvidedInterfaces) {
+		for(DedalInterface inter : this.interfaces) {
+			switch(inter.getCompInterface().getDirection()) {
+			case PROVIDED:
+				if(providedInterfaces2.size() == minProvidedInterfaces.size()) {
+					for(int i = 0; i < providedInterfaces2.size(); i++) {
+						JavaType interJType = inter.getInterfaceType().getjType();
+						if(interJType.isSubtypeOf(minProvidedInterfaces.get(i).getjType())
+								&& providedInterfaces2.get(i).getjType().isSubtypeOf(interJType)) {
+							this.providedInterfaces.add(inter.getInterfaceType());
+						}
+					}
+				}
+				break;
+			case REQUIRED:
+				if(requiredInterfaces2.contains(inter.getInterfaceType())) {
+					this.requiredInterfaces.add(inter.getInterfaceType());
+				}
+				break;
+			}
+		}
+		for(DedalComponentRole candidate : this.candidateComponentRoles) {
+			candidate.defineSubstitutable(this.requiredInterfaces, this.providedInterfaces, minProvidedInterfaces);
 		}
 	}
 
-	private void refineAllConcrete(Assembly asm, Specification spec) {
-		// TODO Auto-generated method stub
+	private void refineAllConcrete(Assembly asm, Configuration config, Specification spec) {
+		this.substitute(config, spec);
+		if(this.getjType().isAbstractType()) {
+			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getjType().getSimpleName());
+		} else 
+			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
+			candidate.refineAllConcrete(asm, config, spec);
+		}
 	}
 
-	private void refineMixed(Assembly asm, Specification spec) {
-		// TODO Auto-generated method stub
-		
+	private void refineMixed(Assembly asm, Configuration config, Specification spec) {
+		this.substitute(config, spec);
+		if(this.getjType().isAbstractType()) {
+			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getjType().getSimpleName());
+		} else {
+			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+		}
+		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
+			candidate.refineMixed(asm, config, spec);
+		}
 	}
 
-	private void refineAllAbstract(Assembly asm, Specification spec) {
-		// TODO Auto-generated method stub
-		
+	private void refineAllAbstract(Assembly asm, Configuration config, Specification spec) {
+		this.substitute(config, spec);
+		this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
+			candidate.refineAllAbstract(asm, config, spec);
+		}
 	}
-	
-	
+
+	private String findAsmNames(Assembly asm) {
+		StringBuilder strBuilder = new StringBuilder();
+		for(CompInstance ci : asm.getAssmComponents()) {
+			if(ci.getInstantiates().getRealizes().contains(this.componentRole)) { // we get to the comp instance that instantiates the class which realizes the current role
+				for(InstConnection conn : asm.getAssemblyConnections()) {
+					if(conn.getServerInstElem().equals(ci)) { // we found a connection
+						DedalInterfaceType intType = this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType());
+						System.out.println();
+						for(DedalInterfaceType prov : this.providedInterfaces) {
+							if(intType.getjType().isSubtypeOf(prov.getjType())) {
+								String propName = conn.getProperty().substring(conn.getProperty().lastIndexOf('.')+1);
+								if("".contentEquals(strBuilder.toString()))
+									strBuilder.append(propName);
+								else {
+									if(!(strBuilder.toString().equals(propName)
+											|| strBuilder.toString().endsWith(","+propName)
+											|| strBuilder.toString().startsWith(propName+",")
+											|| strBuilder.toString().contains(","+propName+",")))
+										strBuilder.append("," + propName);
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+		return strBuilder.toString();
+	}
+
+	private void substitute(Configuration config, Specification spec) {
+		if(!this.substitutableComponentRoles.isEmpty()) { // the current component role is gonna be replaced in the architecture
+			this.replaceInConnections(spec);
+			this.replaceInConfigComponents(config); // For realizes property of component classes
+			spec.getSpecComponents().remove(this.getComponentRole());
+			for(DedalComponentRole substitutable : this.substitutableComponentRoles) {
+				spec.getSpecComponents().add(substitutable.getComponentRole());
+			}
+		}
+	}
+
+	private void replaceInConfigComponents(Configuration config) {
+		for(CompClass cc : config.getConfigComponents()) {
+			if(cc.getRealizes().contains(this.componentRole)) {
+				cc.getRealizes().remove(this.componentRole);
+				for(DedalComponentRole candidate : this.substitutableComponentRoles) {
+					cc.getRealizes().add(candidate.getComponentRole());
+				}
+			}
+		}
+	}
+
+	private void replaceInConnections(Specification spec) {
+		List<RoleConnection> connections = new ArrayList<>();
+		for(RoleConnection connection : spec.getSpecConnections()) { //list of the connections the current component role is involved in
+			if(connection.getServerCompElem().equals(this.componentRole)) {
+				connections.add(connection);
+			}
+		}
+		for(RoleConnection connection : connections) {
+			DedalInterfaceType inter = this.architecture.findInterfaceType(((Interface)connection.getServerIntElem()).getType());
+			for(DedalComponentRole candidate : this.substitutableComponentRoles) {
+				for(DedalInterfaceType candInt : candidate.providedInterfaces) {
+					if(candInt.equals(inter) || inter.getCandidateInterfaceTypes().contains(candInt)) {
+						connection.setServerCompElem(candidate.getComponentRole());
+						connection.setServerIntElem(candidate.findInterface(candInt));
+					}
+				}
+			}
+		}
+	}
+
+	private Interaction findInterface(DedalInterfaceType inter) {
+		for(DedalInterface inteface : this.interfaces) {
+			if(inteface.interfaceType.equals(inter))
+				return inteface.getCompInterface();
+		}
+		return null;
+	}
+
+
 
 }

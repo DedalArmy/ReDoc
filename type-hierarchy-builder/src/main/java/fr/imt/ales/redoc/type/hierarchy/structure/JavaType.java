@@ -430,4 +430,9 @@ public class JavaType {
 		}
 		return Boolean.FALSE;
 	}
+
+	public Boolean isAbstractType() {
+		return this.typeDeclaration.asClassOrInterfaceDeclaration().isAbstract() 
+				|| this.typeDeclaration.asClassOrInterfaceDeclaration().isInterface();
+	}
 }

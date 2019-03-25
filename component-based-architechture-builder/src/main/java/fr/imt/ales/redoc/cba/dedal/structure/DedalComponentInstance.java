@@ -67,14 +67,34 @@ public class DedalComponentInstance extends DedalComponentType {
 			JavaField jField = this.getjType().getRequiredType(name);
 			if(jField != null && this.componentInstance.equals(connection.getClientInstElem())) {
 				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
-				DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
-				inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
-				this.interfaces.add(inter);
-				connection.setClientIntElem(inter.getCompInterface());
+				if(!this.interfaceExists(jt)) {
+					DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
+					inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
+					this.interfaces.add(inter);
+					connection.setClientIntElem(inter.getCompInterface());
+				} else {
+					connection.setClientIntElem(this.findCompInterface(jt));
+				}
 			} else if(this.componentInstance.equals(connection.getServerInstElem())) {
 				connection.setServerIntElem(this.interfaces.get(0).getCompInterface());
 			}
 		}
+	}
+
+	private Interaction findCompInterface(JavaType jt) {
+		for(DedalInterface inter : this.interfaces) {
+			if(inter.getInterfaceType().getjType().equals(jt))
+				return inter.getCompInterface();
+		}
+		return null;
+	}
+
+	private Boolean interfaceExists(JavaType jt) {
+		for(DedalInterface inter : this.interfaces) {
+			if(inter.getInterfaceType().getjType().equals(jt))
+				return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 	/**

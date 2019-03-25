@@ -233,5 +233,11 @@ public class CompiledJavaType extends JavaType {
 		}
 		return null;
 	}
+	
+	@Override
+	public Boolean isAbstractType() {
+		return this.clazz.isInterface() 
+				|| Modifier.isAbstract(this.clazz.getModifiers());
+	}
 
 }

@@ -174,17 +174,17 @@ public class DedalArchitectureBuilder {
 			specConn.setServerIntElem(serverInter);
 			spec.getSpecConnections().add(specConn);
 		}
-		this.applyOptionsToSpecification(asm, spec);
+		this.applyOptionsToSpecification(asm, config, spec);
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
 		}
 	}
 
-	private void applyOptionsToSpecification(Assembly asm, Specification spec) {
+	private void applyOptionsToSpecification(Assembly asm, Configuration config, Specification spec) {
 		List<DedalComponentRole> initialRoles = new ArrayList<>();
 		initialRoles .addAll(this.dedalArchitecture.getSpecification());
 		for(DedalComponentRole comp : initialRoles) {
-			comp.refineRole(asm, spec, abstractOption);
+			comp.refineRole(asm, config, spec, abstractOption);
 		}
 	}
 
