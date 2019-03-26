@@ -25,6 +25,7 @@ import dedal.Repository;
 import dedal.RoleConnection;
 import dedal.Specification;
 import dedal.impl.DedalFactoryImpl;
+import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalArchitecture;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentClass;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentInstance;

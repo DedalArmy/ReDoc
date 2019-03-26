@@ -162,9 +162,7 @@ public class Main {
 		PrintWriter writer = new PrintWriter(out, UTF_8);
 		writer.println("Metric,Value");
 		writer.println("NbSpringXMLFiles," + Metrics.getNbSpringXML());
-		writer.println("NbEmptySpringXMLFiles," + Metrics.getNbEmptySpringXML());
 		writer.println("NbClasses," + Metrics.getNbClasses());
-		writer.println("NbFailedClasses," + Metrics.getNbFailedClass());
 		writer.println("NbSpecs," + Metrics.getNbSpecs());
 		writer.println("NbCompRoles," + Metrics.getNbCompsRoles());
 		writer.println("NbConfigs," + Metrics.getNbConfs());
@@ -173,11 +171,7 @@ public class Main {
 		writer.println("NbAssms," + Metrics.getNbAssembs());
 		writer.println("NbCompInsts," + Metrics.getNbCompsInst());
 		writer.println("NbSpecEqualConfigs," + Metrics.getNbSpecsEqualsConf());
-		writer.println("NbInterfaces," + Metrics.getNbInterfaces());
-		writer.println("NbSplitInterface," + Metrics.getNbSplitInterfaces());
-		writer.println("NbAbstractedInterface," + Metrics.getNbAbstractedInterfaceType());
 		writer.println("NbConnections," + Metrics.getNbConnexions());
-		writer.println("NbUnconnectedArch," + Metrics.getNbConnexionlessArchis());
 		writer.close();
 	}
 

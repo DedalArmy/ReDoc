@@ -1,170 +1,168 @@
 <?xml version="1.0" encoding="ASCII"?>
 <dedal:DedalDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dedal="http://www.dedal.fr/metamodel" name="examples_HAS.v2.sdsl_genDedalDiag">
   <architectureDescriptions xsi:type="dedal:Configuration" name="Configuration" implements="//@architectureDescriptions[name='Specification']">
-    <configComponents name="&quot;fr.ema.examples.has.config.AdjustableLamp&quot;" id="_GYpRME-5EemRt-TQwi37KA" realizes="_GZrL8E-5EemRt-TQwi37KA" implements="_GZj3Mk-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZj3ME5EemRtTQwi37KA" type="IAdjustableLamp"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZj3MU5EemRtTQwi37KA" type="ILight"/>
+    <configComponents name="&quot;fr.ema.examples.has.config.AdjustableLamp&quot;" id="_3rsigE_iEemd8rnpPfy4bg" realizes="_3s5cYE_iEemd8rnpPfy4bg" implements="_3s3AIE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp" type="IAdjustableLamp"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AdjustableLamp.provILight" type="ILight"/>
     </configComponents>
-    <configComponents name="&quot;fr.ema.examples.has.config.AlarmClock&quot;" id="_GYrGYE-5EemRt-TQwi37KA" realizes="_GZrL9U-5EemRt-TQwi37KA _GZrL-U-5EemRt-TQwi37KA" implements="_GZkeRU-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeQU5EemRtTQwi37KA" type="IAlarmClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeQk5EemRtTQwi37KA" type="IAlarm"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeQ05EemRtTQwi37KA" type="IClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeRE5EemRtTQwi37KA" type="IIAlarm"/>
+    <configComponents name="&quot;fr.ema.examples.has.config.AlarmClock&quot;" id="_3ruXsE_iEemd8rnpPfy4bg" realizes="_3s5cZU_iEemd8rnpPfy4bg _3s5caU_iEemd8rnpPfy4bg" implements="_3s3AJ0_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AlarmClock.provIAlarmClock" type="IAlarmClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AlarmClock.provIAlarm" type="IAlarm"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AlarmClock.provIClock" type="IClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.AlarmClock.provIIAlarm" type="IIAlarm"/>
     </configComponents>
-    <configComponents name="&quot;fr.ema.examples.has.config.SecurityManager&quot;" id="_GYrtcE-5EemRt-TQwi37KA" realizes="_GZrL_0-5EemRt-TQwi37KA" implements="_GZkeTE-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeSk5EemRtTQwi37KA" type="ISecurityManager"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeS05EemRtTQwi37KA" direction="REQUIRED" type="IAlarm"/>
+    <configComponents name="&quot;fr.ema.examples.has.config.SecurityManager&quot;" id="_3ru-wE_iEemd8rnpPfy4bg" realizes="_3s5cb0_iEemd8rnpPfy4bg" implements="_3s3ALk_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.SecurityManager.provISecurityManager" type="ISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.SecurityManager.alarm" direction="REQUIRED" type="IAlarm"/>
     </configComponents>
-    <configComponents name="&quot;fr.ema.examples.has.config.HomeOrchestrator&quot;" id="_GYs7kE-5EemRt-TQwi37KA" realizes="_GZrzAU-5EemRt-TQwi37KA" implements="_GZkeVU-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeT05EemRtTQwi37KA" type="IHomeOrchestrator"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeUE5EemRtTQwi37KA" direction="REQUIRED" type="ILight"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeUU5EemRtTQwi37KA" direction="REQUIRED" type="IClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeUk5EemRtTQwi37KA" direction="REQUIRED" type="ISecurityManager"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeU05EemRtTQwi37KA" type="IOrchestratorImpl"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeVE5EemRtTQwi37KA" type="IOrchestrator"/>
+    <configComponents name="&quot;fr.ema.examples.has.config.HomeOrchestrator&quot;" id="_3rvl0E_iEemd8rnpPfy4bg" realizes="_3s5cck_iEemd8rnpPfy4bg" implements="_3s3AN0_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.provIHomeOrchestrator" type="IHomeOrchestrator"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights" direction="REQUIRED" type="ILight"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.clock" direction="REQUIRED" type="IClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.securityManager" direction="REQUIRED" type="ISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.provIOrchestratorImpl" type="IOrchestratorImpl"/>
+      <compInterfaces xsi:type="dedal:Interface" name="fr.ema.examples.has.config.HomeOrchestrator.provIOrchestrator" type="IOrchestrator"/>
     </configComponents>
-    <configConnections serverIntElem="_GZkeQk5EemRtTQwi37KA" clientIntElem="_GZkeS05EemRtTQwi37KA" refID="_GZHyUE-5EemRt-TQwi37KA" property="&quot;alarm&quot;" clientClassElem="_GYrtcE-5EemRt-TQwi37KA" serverClassElem="_GYrGYE-5EemRt-TQwi37KA"/>
-    <configConnections serverIntElem="_GZj3MU5EemRtTQwi37KA" clientIntElem="_GZkeUE5EemRtTQwi37KA" refID="_GZIZYE-5EemRt-TQwi37KA" property="&quot;arrayOfLights&quot;" clientClassElem="_GYs7kE-5EemRt-TQwi37KA" serverClassElem="_GYpRME-5EemRt-TQwi37KA"/>
-    <configConnections serverIntElem="_GZkeQ05EemRtTQwi37KA" clientIntElem="_GZkeUU5EemRtTQwi37KA" refID="_GZKOkE-5EemRt-TQwi37KA" property="&quot;clock&quot;" clientClassElem="_GYs7kE-5EemRt-TQwi37KA" serverClassElem="_GYrGYE-5EemRt-TQwi37KA"/>
-    <configConnections serverIntElem="_GZkeSk5EemRtTQwi37KA" clientIntElem="_GZkeUk5EemRtTQwi37KA" refID="_GZK1oE-5EemRt-TQwi37KA" property="&quot;securityManager&quot;" clientClassElem="_GYs7kE-5EemRt-TQwi37KA" serverClassElem="_GYrtcE-5EemRt-TQwi37KA"/>
-    <comptypes name="AdjustableLamp_Type" id="_GZj3Mk-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZj3M05EemRtTQwi37KA" type="IAdjustableLamp"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeQE5EemRtTQwi37KA" type="ILight"/>
+    <configConnections serverIntElem="fr.ema.examples.has.config.AlarmClock.provIAlarm" clientIntElem="fr.ema.examples.has.config.SecurityManager.alarm" refID="_3sAEgE_iEemd8rnpPfy4bg" property="&quot;alarm&quot;" clientClassElem="_3ru-wE_iEemd8rnpPfy4bg" serverClassElem="_3ruXsE_iEemd8rnpPfy4bg"/>
+    <configConnections serverIntElem="fr.ema.examples.has.config.AdjustableLamp.provILight" clientIntElem="fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights" refID="_3sB5sE_iEemd8rnpPfy4bg" property="&quot;arrayOfLights&quot;" clientClassElem="_3rvl0E_iEemd8rnpPfy4bg" serverClassElem="_3rsigE_iEemd8rnpPfy4bg"/>
+    <configConnections serverIntElem="fr.ema.examples.has.config.AlarmClock.provIClock" clientIntElem="fr.ema.examples.has.config.HomeOrchestrator.clock" refID="_3sEV8E_iEemd8rnpPfy4bg" property="&quot;clock&quot;" clientClassElem="_3rvl0E_iEemd8rnpPfy4bg" serverClassElem="_3ruXsE_iEemd8rnpPfy4bg"/>
+    <configConnections serverIntElem="fr.ema.examples.has.config.SecurityManager.provISecurityManager" clientIntElem="fr.ema.examples.has.config.HomeOrchestrator.securityManager" refID="_3sE9AE_iEemd8rnpPfy4bg" property="&quot;securityManager&quot;" clientClassElem="_3rvl0E_iEemd8rnpPfy4bg" serverClassElem="_3ru-wE_iEemd8rnpPfy4bg"/>
+    <comptypes name="AdjustableLamp_Type" id="_3s3AIE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AIU_iEemd8rnpPfy4bg" type="IAdjustableLamp"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AIk_iEemd8rnpPfy4bg" type="ILight"/>
     </comptypes>
-    <comptypes name="AlarmClock_Type" id="_GZkeRU-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeRk5EemRtTQwi37KA" type="IAlarmClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeR05EemRtTQwi37KA" type="IAlarm"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeSE5EemRtTQwi37KA" type="IClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeSU5EemRtTQwi37KA" type="IIAlarm"/>
+    <comptypes name="AlarmClock_Type" id="_3s3AJ0_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AKE_iEemd8rnpPfy4bg" type="IAlarmClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AKU_iEemd8rnpPfy4bg" type="IAlarm"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AKk_iEemd8rnpPfy4bg" type="IClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AK0_iEemd8rnpPfy4bg" type="IIAlarm"/>
     </comptypes>
-    <comptypes name="SecurityManager_Type" id="_GZkeTE-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeTU5EemRtTQwi37KA" type="ISecurityManager"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeTk5EemRtTQwi37KA" direction="REQUIRED" type="IAlarm"/>
+    <comptypes name="SecurityManager_Type" id="_3s3ALk_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AL0_iEemd8rnpPfy4bg" type="ISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AME_iEemd8rnpPfy4bg" direction="REQUIRED" type="IAlarm"/>
     </comptypes>
-    <comptypes name="HomeOrchestrator_Type" id="_GZkeVU-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeVk5EemRtTQwi37KA" type="IHomeOrchestrator"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeV05EemRtTQwi37KA" direction="REQUIRED" type="ILight"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeWE5EemRtTQwi37KA" direction="REQUIRED" type="IClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeWU5EemRtTQwi37KA" direction="REQUIRED" type="ISecurityManager"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeWk5EemRtTQwi37KA" type="IOrchestratorImpl"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZkeW05EemRtTQwi37KA" type="IOrchestrator"/>
+    <comptypes name="HomeOrchestrator_Type" id="_3s3AN0_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AOE_iEemd8rnpPfy4bg" type="IHomeOrchestrator"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AOU_iEemd8rnpPfy4bg" direction="REQUIRED" type="ILight"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AOk_iEemd8rnpPfy4bg" direction="REQUIRED" type="IClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3AO0_iEemd8rnpPfy4bg" direction="REQUIRED" type="ISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3APE_iEemd8rnpPfy4bg" type="IOrchestratorImpl"/>
+      <compInterfaces xsi:type="dedal:Interface" name="_3s3nME_iEemd8rnpPfy4bg" type="IOrchestrator"/>
     </comptypes>
   </architectureDescriptions>
   <architectureDescriptions xsi:type="dedal:Assembly" name="Assembly" instantiates="//@architectureDescriptions[name='Configuration']">
-    <assmComponents name="&quot;lampDesk&quot;" id="_GZN48E-5EemRt-TQwi37KA" instantiates="_GYpRME-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZgM0E5EemRtTQwi37KA" type="IAdjustableLamp" instantiates="_GZj3ME5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipJU5EemRtTQwi37KA" type="ILight" instantiates="_GZj3MU5EemRtTQwi37KA"/>
+    <assmComponents name="&quot;lampDesk&quot;" id="_3sHZQE_iEemd8rnpPfy4bg" instantiates="_3rsigE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="lampDesk.provIAdjustableLamp" type="IAdjustableLamp" instantiates="fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp"/>
+      <compInterfaces xsi:type="dedal:Interface" name="lampDesk.provILight" type="ILight" instantiates="fr.ema.examples.has.config.AdjustableLamp.provILight"/>
     </assmComponents>
-    <assmComponents name="&quot;lampSitting&quot;" id="_GZPHEE-5EemRt-TQwi37KA" instantiates="_GYpRME-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZha8E5EemRtTQwi37KA" type="IAdjustableLamp" instantiates="_GZj3ME5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQIE5EemRtTQwi37KA" type="ILight" instantiates="_GZj3MU5EemRtTQwi37KA"/>
+    <assmComponents name="&quot;lampSitting&quot;" id="_3sInYE_iEemd8rnpPfy4bg" instantiates="_3rsigE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="lampSitting.provIAdjustableLamp" type="IAdjustableLamp" instantiates="fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp"/>
+      <compInterfaces xsi:type="dedal:Interface" name="lampSitting.provILight" type="ILight" instantiates="fr.ema.examples.has.config.AdjustableLamp.provILight"/>
     </assmComponents>
-    <assmComponents name="&quot;aClock1&quot;" id="_GZPuIE-5EemRt-TQwi37KA" instantiates="_GYrGYE-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZiCBU5EemRtTQwi37KA" type="IAlarmClock" instantiates="_GZkeQU5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQIU5EemRtTQwi37KA" type="IAlarm" instantiates="_GZkeQk5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQIk5EemRtTQwi37KA" type="IClock" instantiates="_GZkeQ05EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQI05EemRtTQwi37KA" type="IIAlarm" instantiates="_GZkeRE5EemRtTQwi37KA"/>
+    <assmComponents name="&quot;aClock1&quot;" id="_3sJOcE_iEemd8rnpPfy4bg" instantiates="_3ruXsE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="aClock1.provIAlarmClock" type="IAlarmClock" instantiates="fr.ema.examples.has.config.AlarmClock.provIAlarmClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="aClock1.provIAlarm" type="IAlarm" instantiates="fr.ema.examples.has.config.AlarmClock.provIAlarm"/>
+      <compInterfaces xsi:type="dedal:Interface" name="aClock1.provIClock" type="IClock" instantiates="fr.ema.examples.has.config.AlarmClock.provIClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="aClock1.provIIAlarm" type="IIAlarm" instantiates="fr.ema.examples.has.config.AlarmClock.provIIAlarm"/>
     </assmComponents>
-    <assmComponents name="&quot;securityManager1&quot;" id="_GZQVME-5EemRt-TQwi37KA" instantiates="_GYrtcE-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZiCCE5EemRtTQwi37KA" type="ISecurityManager" instantiates="_GZkeSk5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipEE5EemRtTQwi37KA" direction="REQUIRED" type="IAlarm" instantiates="_GZkeS05EemRtTQwi37KA"/>
+    <assmComponents name="&quot;securityManager1&quot;" id="_3sJOcU_iEemd8rnpPfy4bg" instantiates="_3ru-wE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="securityManager1.provISecurityManager" type="ISecurityManager" instantiates="fr.ema.examples.has.config.SecurityManager.provISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="securityManager1.alarm" direction="REQUIRED" type="IAlarm" instantiates="fr.ema.examples.has.config.SecurityManager.alarm"/>
     </assmComponents>
-    <assmComponents name="&quot;orchestrator1&quot;" id="_GZSKYE-5EemRt-TQwi37KA" instantiates="_GYs7kE-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipIU5EemRtTQwi37KA" type="IHomeOrchestrator" instantiates="_GZkeT05EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipIk5EemRtTQwi37KA" direction="REQUIRED" type="ILight" instantiates="_GZkeUE5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipI05EemRtTQwi37KA" direction="REQUIRED" type="IClock" instantiates="_GZkeUU5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZipJE5EemRtTQwi37KA" direction="REQUIRED" type="ISecurityManager" instantiates="_GZkeUk5EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQJE5EemRtTQwi37KA" type="IOrchestratorImpl" instantiates="_GZkeU05EemRtTQwi37KA"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZjQJU5EemRtTQwi37KA" type="IOrchestrator" instantiates="_GZkeVE5EemRtTQwi37KA"/>
+    <assmComponents name="&quot;orchestrator1&quot;" id="_3sJ1gE_iEemd8rnpPfy4bg" instantiates="_3rvl0E_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.provIHomeOrchestrator" type="IHomeOrchestrator" instantiates="fr.ema.examples.has.config.HomeOrchestrator.provIHomeOrchestrator"/>
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.arrayOfLights" direction="REQUIRED" type="ILight" instantiates="fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights"/>
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.clock" direction="REQUIRED" type="IClock" instantiates="fr.ema.examples.has.config.HomeOrchestrator.clock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.securityManager" direction="REQUIRED" type="ISecurityManager" instantiates="fr.ema.examples.has.config.HomeOrchestrator.securityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.provIOrchestratorImpl" type="IOrchestratorImpl" instantiates="fr.ema.examples.has.config.HomeOrchestrator.provIOrchestratorImpl"/>
+      <compInterfaces xsi:type="dedal:Interface" name="orchestrator1.provIOrchestrator" type="IOrchestrator" instantiates="fr.ema.examples.has.config.HomeOrchestrator.provIOrchestrator"/>
     </assmComponents>
-    <assemblyConnections serverIntElem="_GZjQIU5EemRtTQwi37KA" clientIntElem="_GZipEE5EemRtTQwi37KA" refID="_GZUmoE-5EemRt-TQwi37KA" property="securityManager1.alarm" clientInstElem="_GZQVME-5EemRt-TQwi37KA" serverInstElem="_GZPuIE-5EemRt-TQwi37KA"/>
-    <assemblyConnections serverIntElem="_GZipJU5EemRtTQwi37KA" clientIntElem="_GZipIk5EemRtTQwi37KA" refID="_GZV0wE-5EemRt-TQwi37KA" property="orchestrator1.arrayOfLights" clientInstElem="_GZSKYE-5EemRt-TQwi37KA" serverInstElem="_GZN48E-5EemRt-TQwi37KA"/>
-    <assemblyConnections serverIntElem="_GZjQIE5EemRtTQwi37KA" clientIntElem="_GZipIk5EemRtTQwi37KA" refID="_GZXC4E-5EemRt-TQwi37KA" property="orchestrator1.arrayOfLights" clientInstElem="_GZSKYE-5EemRt-TQwi37KA" serverInstElem="_GZPHEE-5EemRt-TQwi37KA"/>
-    <assemblyConnections serverIntElem="_GZjQIk5EemRtTQwi37KA" clientIntElem="_GZipI05EemRtTQwi37KA" refID="_GZXp8E-5EemRt-TQwi37KA" property="orchestrator1.clock" clientInstElem="_GZSKYE-5EemRt-TQwi37KA" serverInstElem="_GZPuIE-5EemRt-TQwi37KA"/>
-    <assemblyConnections serverIntElem="_GZiCCE5EemRtTQwi37KA" clientIntElem="_GZipJE5EemRtTQwi37KA" refID="_GZYRAE-5EemRt-TQwi37KA" property="orchestrator1.securityManager" clientInstElem="_GZSKYE-5EemRt-TQwi37KA" serverInstElem="_GZQVME-5EemRt-TQwi37KA"/>
+    <assemblyConnections serverIntElem="aClock1.provIAlarm" clientIntElem="securityManager1.alarm" refID="_3sLDoE_iEemd8rnpPfy4bg" property="securityManager1.alarm" clientInstElem="_3sJOcU_iEemd8rnpPfy4bg" serverInstElem="_3sJOcE_iEemd8rnpPfy4bg"/>
+    <assemblyConnections serverIntElem="lampDesk.provILight" clientIntElem="orchestrator1.arrayOfLights" refID="_3sMRwE_iEemd8rnpPfy4bg" property="orchestrator1.arrayOfLights" clientInstElem="_3sJ1gE_iEemd8rnpPfy4bg" serverInstElem="_3sHZQE_iEemd8rnpPfy4bg"/>
+    <assemblyConnections serverIntElem="lampSitting.provILight" clientIntElem="orchestrator1.arrayOfLights" refID="_3sM40E_iEemd8rnpPfy4bg" property="orchestrator1.arrayOfLights" clientInstElem="_3sJ1gE_iEemd8rnpPfy4bg" serverInstElem="_3sInYE_iEemd8rnpPfy4bg"/>
+    <assemblyConnections serverIntElem="aClock1.provIClock" clientIntElem="orchestrator1.clock" refID="_3sqL0E_iEemd8rnpPfy4bg" property="orchestrator1.clock" clientInstElem="_3sJ1gE_iEemd8rnpPfy4bg" serverInstElem="_3sJOcE_iEemd8rnpPfy4bg"/>
+    <assemblyConnections serverIntElem="securityManager1.provISecurityManager" clientIntElem="orchestrator1.securityManager" refID="_3sqy4E_iEemd8rnpPfy4bg" property="orchestrator1.securityManager" clientInstElem="_3sJ1gE_iEemd8rnpPfy4bg" serverInstElem="_3sJOcU_iEemd8rnpPfy4bg"/>
   </architectureDescriptions>
   <architectureDescriptions xsi:type="dedal:Specification" name="Specification">
-    <specComponents name="securityManager : SecurityManager_role" id="_GZrL_0-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrMAE5EemRtTQwi37KA" type="ISecurityManager"/>
+    <specComponents name="SecurityManager_role" id="_3s5cb0_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="SecurityManager_role.provISecurityManager" type="ISecurityManager"/>
+      <compInterfaces xsi:type="dedal:Interface" name="SecurityManager_role.alarm" direction="REQUIRED" type="IAlarm"/>
     </specComponents>
-    <specComponents name=" : HomeOrchestrator_role" id="_GZrzAU-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzBk5EemRtTQwi37KA" type="IHomeOrchestrator"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzB05EemRtTQwi37KA" direction="REQUIRED" type="ILight"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzCE5EemRtTQwi37KA" direction="REQUIRED" type="IClock"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzCU5EemRtTQwi37KA" direction="REQUIRED" type="ISecurityManager"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzCk5EemRtTQwi37KA" type="IOrchestratorImpl"/>
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrzC05EemRtTQwi37KA" type="IOrchestrator"/>
+    <specComponents name="HomeOrchestrator_role" id="_3s5cck_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="HomeOrchestrator_role.arrayOfLights" direction="REQUIRED" type="ILight"/>
+      <compInterfaces xsi:type="dedal:Interface" name="HomeOrchestrator_role.clock" direction="REQUIRED" type="IClock"/>
+      <compInterfaces xsi:type="dedal:Interface" name="HomeOrchestrator_role.securityManager" direction="REQUIRED" type="ISecurityManager"/>
     </specComponents>
-    <specComponents name="arrayOfLights : Light_role" id="_GZrL8E-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrL8U5EemRtTQwi37KA" type="ILight"/>
+    <specComponents name="Light_role" id="_3s5cYE_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="Light_role.provILight" type="ILight"/>
     </specComponents>
-    <specComponents name="alarm : Alarm_role" id="_GZrL9U-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrLE5EemRtTQwi37KA" type="IAlarm"/>
+    <specComponents name="Alarm_role" id="_3s5cZU_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="Alarm_role.provIAlarm" type="IAlarm"/>
     </specComponents>
-    <specComponents name="clock : Clock" id="_GZrL-U-5EemRt-TQwi37KA">
-      <compInterfaces xsi:type="dedal:Interface" name="_GZrLk5EemRtTQwi37KA" type="IClock"/>
+    <specComponents name="Clock" id="_3s5caU_iEemd8rnpPfy4bg">
+      <compInterfaces xsi:type="dedal:Interface" name="Clock_role.provIClock" type="IClock"/>
     </specComponents>
-    <specConnections serverIntElem="_GZrLE5EemRtTQwi37KA" clientIntElem="_GZrzAE5EemRtTQwi37KA" refID="_GZsaEE-5EemRt-TQwi37KA" clientCompElem="_GZrL_0-5EemRt-TQwi37KA" serverCompElem="_GZrL9U-5EemRt-TQwi37KA"/>
-    <specConnections serverIntElem="_GZrL8U5EemRtTQwi37KA" clientIntElem="_GZrzB05EemRtTQwi37KA" refID="_GZsaEU-5EemRt-TQwi37KA" clientCompElem="_GZrzAU-5EemRt-TQwi37KA" serverCompElem="_GZrL8E-5EemRt-TQwi37KA"/>
-    <specConnections serverIntElem="_GZrLk5EemRtTQwi37KA" clientIntElem="_GZrzCE5EemRtTQwi37KA" refID="_GZsaEk-5EemRt-TQwi37KA" clientCompElem="_GZrzAU-5EemRt-TQwi37KA" serverCompElem="_GZrL-U-5EemRt-TQwi37KA"/>
-    <specConnections serverIntElem="_GZrMAE5EemRtTQwi37KA" clientIntElem="_GZrzCU5EemRtTQwi37KA" refID="_GZsaE0-5EemRt-TQwi37KA" clientCompElem="_GZrzAU-5EemRt-TQwi37KA" serverCompElem="_GZrL_0-5EemRt-TQwi37KA"/>
+    <specConnections serverIntElem="Alarm_role.provIAlarm" clientIntElem="SecurityManager_role.alarm" refID="_3s6qgE_iEemd8rnpPfy4bg" clientCompElem="_3s5cb0_iEemd8rnpPfy4bg" serverCompElem="_3s5cZU_iEemd8rnpPfy4bg"/>
+    <specConnections serverIntElem="Light_role.provILight" clientIntElem="HomeOrchestrator_role.arrayOfLights" refID="_3s6qgU_iEemd8rnpPfy4bg" clientCompElem="_3s5cck_iEemd8rnpPfy4bg" serverCompElem="_3s5cYE_iEemd8rnpPfy4bg"/>
+    <specConnections serverIntElem="Clock_role.provIClock" clientIntElem="HomeOrchestrator_role.clock" refID="_3s6qgk_iEemd8rnpPfy4bg" clientCompElem="_3s5cck_iEemd8rnpPfy4bg" serverCompElem="_3s5caU_iEemd8rnpPfy4bg"/>
+    <specConnections serverIntElem="SecurityManager_role.provISecurityManager" clientIntElem="HomeOrchestrator_role.securityManager" refID="_3s6qg0_iEemd8rnpPfy4bg" clientCompElem="_3s5cck_iEemd8rnpPfy4bg" serverCompElem="_3s5cb0_iEemd8rnpPfy4bg"/>
   </architectureDescriptions>
   <repositories name="genRepo">
     <interfaceTypes name="ILight">
-      <signatures name="switchState" type="void" id="_GZflw0-5EemRt-TQwi37KA">
-        <parameters name="s" type="State" id="_GZflxE-5EemRt-TQwi37KA"/>
+      <signatures name="switchState" type="void" id="_3syHok_iEemd8rnpPfy4bg">
+        <parameters name="s" type="State" id="_3syHo0_iEemd8rnpPfy4bg"/>
       </signatures>
     </interfaceTypes>
     <interfaceTypes name="IAdjustableLamp">
-      <signatures name="switchState" type="void" id="_GZe-sE-5EemRt-TQwi37KA">
-        <parameters name="s" type="State" id="_GZflwE-5EemRt-TQwi37KA"/>
+      <signatures name="switchState" type="void" id="_3sxgkE_iEemd8rnpPfy4bg">
+        <parameters name="s" type="State" id="_3sxgkU_iEemd8rnpPfy4bg"/>
       </signatures>
-      <signatures name="adjustIntensity" type="void" id="_GZflwU-5EemRt-TQwi37KA">
-        <parameters name="value" type="int" id="_GZflwk-5EemRt-TQwi37KA"/>
+      <signatures name="adjustIntensity" type="void" id="_3syHoE_iEemd8rnpPfy4bg">
+        <parameters name="value" type="int" id="_3syHoU_iEemd8rnpPfy4bg"/>
       </signatures>
     </interfaceTypes>
     <interfaceTypes name="IIAlarm">
-      <signatures name="ring" type="void" id="_GZiCA0-5EemRt-TQwi37KA"/>
+      <signatures name="ring" type="void" id="_3sz81E_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="IAlarm">
-      <signatures name="ring" type="void" id="_GZiCAk-5EemRt-TQwi37KA"/>
+      <signatures name="ring" type="void" id="_3sz800_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="IClock">
-      <signatures name="displayTime" type="void" id="_GZiCBE-5EemRt-TQwi37KA"/>
+      <signatures name="displayTime" type="void" id="_3sz81U_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="IAlarmClock">
-      <signatures name="ring" type="void" id="_GZiCAE-5EemRt-TQwi37KA"/>
-      <signatures name="displayTime" type="void" id="_GZiCAU-5EemRt-TQwi37KA"/>
+      <signatures name="ring" type="void" id="_3sz80U_iEemd8rnpPfy4bg"/>
+      <signatures name="displayTime" type="void" id="_3sz80k_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="ISecurityManager">
-      <signatures name="activate" type="void" id="_GZiCBk-5EemRt-TQwi37KA"/>
-      <signatures name="triggerAlarm" type="void" id="_GZiCB0-5EemRt-TQwi37KA"/>
+      <signatures name="activate" type="void" id="_3s0j4U_iEemd8rnpPfy4bg"/>
+      <signatures name="triggerAlarm" type="void" id="_3s0j4k_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="IOrchestrator">
-      <signatures name="synchronizeLights" type="void" id="_GZipIE-5EemRt-TQwi37KA"/>
+      <signatures name="synchronizeLights" type="void" id="_3s1K_0_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
     <interfaceTypes name="IOrchestratorImpl">
-      <signatures name="synchronizeLights" type="void" id="_GZipGU-5EemRt-TQwi37KA"/>
-      <signatures name="getLights" type="Light[]" id="_GZipGk-5EemRt-TQwi37KA"/>
-      <signatures name="setLights" type="void" id="_GZipG0-5EemRt-TQwi37KA">
-        <parameters name="lights" type="Light[]" id="_GZipHE-5EemRt-TQwi37KA"/>
+      <signatures name="synchronizeLights" type="void" id="_3s1K-E_iEemd8rnpPfy4bg"/>
+      <signatures name="getLights" type="Light[]" id="_3s1K-U_iEemd8rnpPfy4bg"/>
+      <signatures name="setLights" type="void" id="_3s1K-k_iEemd8rnpPfy4bg">
+        <parameters name="lights" type="Light[]" id="_3s1K-0_iEemd8rnpPfy4bg"/>
       </signatures>
-      <signatures name="getClock" type="Clock" id="_GZipHU-5EemRt-TQwi37KA"/>
-      <signatures name="setClock" type="void" id="_GZipHk-5EemRt-TQwi37KA">
-        <parameters name="clock" type="Clock" id="_GZipH0-5EemRt-TQwi37KA"/>
+      <signatures name="getClock" type="Clock" id="_3s1K_E_iEemd8rnpPfy4bg"/>
+      <signatures name="setClock" type="void" id="_3s1K_U_iEemd8rnpPfy4bg">
+        <parameters name="clock" type="Clock" id="_3s1K_k_iEemd8rnpPfy4bg"/>
       </signatures>
     </interfaceTypes>
     <interfaceTypes name="IHomeOrchestrator">
-      <signatures name="synchronizeLights" type="void" id="_GZipEU-5EemRt-TQwi37KA"/>
-      <signatures name="getLights" type="Light[]" id="_GZipEk-5EemRt-TQwi37KA"/>
-      <signatures name="setLights" type="void" id="_GZipE0-5EemRt-TQwi37KA">
-        <parameters name="lights" type="Light[]" id="_GZipFE-5EemRt-TQwi37KA"/>
+      <signatures name="synchronizeLights" type="void" id="_3s1K8E_iEemd8rnpPfy4bg"/>
+      <signatures name="getLights" type="Light[]" id="_3s1K8U_iEemd8rnpPfy4bg"/>
+      <signatures name="setLights" type="void" id="_3s1K8k_iEemd8rnpPfy4bg">
+        <parameters name="lights" type="Light[]" id="_3s1K80_iEemd8rnpPfy4bg"/>
       </signatures>
-      <signatures name="getClock" type="Clock" id="_GZipFU-5EemRt-TQwi37KA"/>
-      <signatures name="setClock" type="void" id="_GZipFk-5EemRt-TQwi37KA">
-        <parameters name="clock" type="Clock" id="_GZipF0-5EemRt-TQwi37KA"/>
+      <signatures name="getClock" type="Clock" id="_3s1K9E_iEemd8rnpPfy4bg"/>
+      <signatures name="setClock" type="void" id="_3s1K9U_iEemd8rnpPfy4bg">
+        <parameters name="clock" type="Clock" id="_3s1K9k_iEemd8rnpPfy4bg"/>
       </signatures>
-      <signatures name="activateSecurity" type="void" id="_GZipGE-5EemRt-TQwi37KA"/>
+      <signatures name="activateSecurity" type="void" id="_3s1K90_iEemd8rnpPfy4bg"/>
     </interfaceTypes>
   </repositories>
 </dedal:DedalDiagram>

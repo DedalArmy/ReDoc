@@ -12,9 +12,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import dedal.ArchitectureDescription;
+import dedal.Assembly;
+import dedal.CompClass;
+import dedal.CompRole;
+import dedal.Configuration;
 import dedal.DedalDiagram;
+import dedal.Specification;
 import fr.imt.ales.redoc.cba.dedal.builder.DedalArchitectureBuilder;
 import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
+import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
@@ -49,6 +56,7 @@ public class DedalDiagramGenerator {
 	public static List<DedalDiagram> generateAll(String projectPath) throws ParserConfigurationException, SAXException, IOException, TransformerException, URISyntaxException {
 		
 		List<DedalDiagram> result = new ArrayList<>();
+		Metrics.initMetrics();
 		
 		// Generates the type hierarchy
 		HierarchyBuilderManager hbmanager = HierarchyBuilderManager.getInstance();
@@ -81,12 +89,61 @@ public class DedalDiagramGenerator {
 		
 		// Generate a Dedal Diagram for each merged deployment descriptor
 		for(XMLFile xml : topDescriptions) {
+			Metrics.addNbSpringXML();
 			result.add(generate(projectPath, xml));
+		}
+
+		for(DedalDiagram dedalDiagram : result) {
+			// Counting stuff
+			for(ArchitectureDescription arch : dedalDiagram.getArchitectureDescriptions()) {
+				if(arch instanceof Assembly) {
+					Metrics.addNbAssembs();
+					((Assembly)arch).getAssmComponents().forEach(a -> Metrics.addNbCompInst());
+					((Assembly)arch).getAssemblyConnections().forEach(a -> Metrics.addNbConnexions());
+				}
+				if(arch instanceof Configuration) {
+					Metrics.addNbConfs();
+					((Configuration)arch).getConfigComponents().forEach(a -> {
+						Metrics.addNbCompClasses();
+						if(a.getRealizes().size()>1) {
+							Metrics.addNbCompClassMultiRoles();
+						}
+					});
+					DedalDiagramGenerator.compareSpec(((Configuration)arch));
+				}
+				if(arch instanceof Specification) {
+					Metrics.addNbSpecs();
+					((Specification)arch).getSpecComponents().forEach(a -> Metrics.addNbCompRoles());
+				}
+			}
 		}
 		
 		return result;
 	}
 	
+	private static void compareSpec(Configuration arch) {
+		for(Specification spec : arch.getImplements()) {
+			if(spec.getSpecComponents().size() != arch.getConfigComponents().size()) {
+				Metrics.addNbDiffSpecs();
+			}
+			else if(allDifferent(spec, arch)) {
+				Metrics.addNbDiffSpecs();
+			}
+		}
+	}
+
+	private static boolean allDifferent(Specification spec, Configuration arch) {
+		for(CompClass cc : arch.getConfigComponents()) {
+			for(CompRole cr : spec.getSpecComponents()) {
+				String name = cr.getName().endsWith("_role")?cr.getName().substring(0, cr.getName().indexOf("_role")):cr.getName();
+				if(cc.getRealizes().contains(cr) ) { // if the first interface has the same type, then both are extracted from exctly the same type
+					
+				}
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * 
 	 * @param hierarchyBuilder
