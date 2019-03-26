@@ -53,7 +53,10 @@ public class DedalComponentInstance extends DedalComponentType {
 	 * @throws IOException
 	 */
 	protected void mapInterfaces() throws IOException {
-		this.interfaces.add(new DedalInterface(this.getProjectPath(), this.getDedalFactory(), this.getjType(), this.architecture));
+		DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), this.getjType(), this.architecture);
+		String name = this.componentInstance.getName()+".prov"+inter.getCompInterface().getType().getName();
+		inter.getCompInterface().setName(name);
+		this.interfaces.add(inter);
 	}
 
 	/**
@@ -69,6 +72,7 @@ public class DedalComponentInstance extends DedalComponentType {
 				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
 				if(!this.interfaceExists(jt)) {
 					DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
+					inter.getCompInterface().setName(connection.getProperty());
 					inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
 					this.interfaces.add(inter);
 					connection.setClientIntElem(inter.getCompInterface());
@@ -117,6 +121,13 @@ public class DedalComponentInstance extends DedalComponentType {
 				this.setSmallestInterface(conn);
 			}
 		}
+		for(DedalInterface inter : this.interfaces) {
+			if(inter.getCompInterface().getDirection().equals(DIRECTION.PROVIDED)) {
+				String name = this.componentInstance.getName().replaceAll("\"", "")+".prov"+inter.getCompInterface().getType().getName();
+				inter.getCompInterface().setName(name);
+			}
+		}
+		
 	}
 
 	private void setSmallestInterface(InstConnection conn) {

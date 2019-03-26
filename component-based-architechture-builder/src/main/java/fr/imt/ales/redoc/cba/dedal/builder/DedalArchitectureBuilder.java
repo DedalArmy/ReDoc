@@ -160,7 +160,6 @@ public class DedalArchitectureBuilder {
 				dcc.getComponentClass().getRealizes().add(cr.getComponentRole());
 				spec.getSpecComponents().add(cr.getComponentRole());
 			}
-			this.dedalArchitecture.getSpecification().addAll(componentRoles);
 		}
 		for(ClassConnection ccon : config.getConfigConnections()) {
 			RoleConnection specConn = this.factory.createRoleConnection();

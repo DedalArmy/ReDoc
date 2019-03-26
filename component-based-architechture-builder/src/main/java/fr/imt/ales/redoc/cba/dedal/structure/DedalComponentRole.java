@@ -37,6 +37,7 @@ public class DedalComponentRole extends DedalComponentType {
 			DedalArchitecture architecture, Component sourceComponent, 
 			List<ClassConnection> configConnections, CompClass initialComponentClass) throws IOException {
 		super(projectPath, component, dedalFactory, architecture);
+		this.architecture.getSpecification().add(this);
 		this.candidateComponentRoles = this.computeCandidateComponentRoles(configConnections, initialComponentClass);
 		this.mapInterfaces(sourceComponent, configConnections, initialComponentClass);
 	}
@@ -48,6 +49,15 @@ public class DedalComponentRole extends DedalComponentType {
 				DedalInterface dedalInterface = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), 
 						inter.getInterfaceType().getjType(), this.architecture);
 				dedalInterface.getCompInterface().setDirection(inter.getCompInterface().getDirection());
+				if(dedalInterface.getCompInterface().getDirection().equals(DIRECTION.PROVIDED)) {
+					String name = this.componentRole.getName()+".prov"+dedalInterface.getCompInterface().getType().getName();
+					dedalInterface.getCompInterface().setName(name);
+				}
+				else if(dedalInterface.getCompInterface().getDirection().equals(DIRECTION.REQUIRED)) {
+					String name = this.componentRole.getName() 
+							+ inter.getCompInterface().getName().substring(inter.getCompInterface().getName().lastIndexOf('.'));
+					dedalInterface.getCompInterface().setName(name);
+				}
 				this.interfaces.add(dedalInterface);
 				this.componentRole.getCompInterfaces().add(dedalInterface.getCompInterface());
 			}
@@ -56,6 +66,10 @@ public class DedalComponentRole extends DedalComponentType {
 			this.mapRequiredInterfaces(configConnections, initialComponentClass);
 			for(DedalInterface inter : this.interfaces) {
 				this.componentRole.getCompInterfaces().add(inter.getCompInterface());
+				if(inter.getCompInterface().getDirection().equals(DIRECTION.PROVIDED)) {
+					String name = this.componentRole.getName()+".prov"+inter.getCompInterface().getType().getName();
+					inter.getCompInterface().setName(name);
+				}
 			}
 		}
 	}
@@ -69,11 +83,13 @@ public class DedalComponentRole extends DedalComponentType {
 		}
 		for(ClassConnection ccon : clientConnections) {
 			String name = ccon.getProperty().substring(ccon.getProperty().lastIndexOf('.') + 1);
+			String interName = this.componentRole.getName()+"."+name;
 			JavaField jField = this.getjType().getRequiredType(name);
 			if(jField != null && initialComponentClass.equals(ccon.getClientClassElem())) {
 				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
 				DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
 				inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
+				inter.getCompInterface().setName(interName);
 				this.interfaces.add(inter);
 				ccon.setClientIntElem(inter.getCompInterface());
 			} else if(initialComponentClass.equals(ccon.getServerClassElem())) {
@@ -242,10 +258,11 @@ public class DedalComponentRole extends DedalComponentType {
 	private void refineAllConcrete(Assembly asm, Configuration config, Specification spec) {
 		this.substitute(config, spec);
 		if(this.getjType().isAbstractType()) {
-			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getjType().getSimpleName());
-		} else {
-			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
-		}
+			this.getComponentRole().setName(/*this.findAsmNames(asm) +" : " + */this.getjType().getSimpleName());
+		} 
+//		else {
+//			this.getComponentRole().setName(/*this.findAsmNames(asm) +" : " + */this.getComponentRole().getName());
+//		}
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineAllConcrete(asm, config, spec);
 		}
@@ -254,10 +271,11 @@ public class DedalComponentRole extends DedalComponentType {
 	private void refineMixed(Assembly asm, Configuration config, Specification spec) {
 		this.substitute(config, spec);
 		if(this.getjType().isAbstractType()) {
-			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getjType().getSimpleName());
-		} else {
-			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
-		}
+			this.getComponentRole().setName(/*this.findAsmNames(asm) +" : " + */this.getjType().getSimpleName());
+		} 
+//		else {
+//			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+//		}
 		this.removeUnusedInterfaces(spec);
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineMixed(asm, config, spec);
@@ -291,7 +309,7 @@ public class DedalComponentRole extends DedalComponentType {
 
 	private void refineAllAbstract(Assembly asm, Configuration config, Specification spec) {
 		this.substitute(config, spec);
-		this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+//		this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
 		this.removeUnusedInterfaces(spec);
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineAllAbstract(asm, config, spec);

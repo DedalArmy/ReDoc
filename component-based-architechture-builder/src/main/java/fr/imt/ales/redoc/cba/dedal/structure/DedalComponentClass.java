@@ -27,10 +27,20 @@ public class DedalComponentClass extends DedalComponentType {
 	public DedalComponentClass(String projectPath, CompClass componentClass, DedalFactory dedalFactory, DedalArchitecture architecture, DedalComponentInstance componentInstance) throws IOException {
 		this(projectPath, componentClass, dedalFactory, architecture);
 		this.mapInterfaces(componentInstance);
+		this.renameProvidedInterfaces();
 		this.componentClass.setImplements(this.getComponentType());
 		((Configuration)this.componentClass.eContainer()).getComptypes().add(componentType);
 		for(DedalInterface inter : this.interfaces) {
 			this.componentClass.getCompInterfaces().add(inter.getCompInterface());
+		}
+	}
+
+	private void renameProvidedInterfaces() {
+		for(DedalInterface inter : this.interfaces) {
+			if(inter.getCompInterface().getDirection().equals(DIRECTION.PROVIDED)) {
+				String name = this.componentClass.getName().replaceAll("\"", "")+".prov"+inter.getCompInterface().getType().getName();
+				inter.getCompInterface().setName(name);
+			}
 		}
 	}
 
@@ -46,6 +56,8 @@ public class DedalComponentClass extends DedalComponentType {
 			DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), compInt.getInterfaceType().getjType(), this.architecture);
 			if(compInt.getCompInterface().getDirection().equals(DIRECTION.REQUIRED)) {
 				inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
+				inter.getCompInterface().setName(this.componentClass.getName().replaceAll("\"", "")
+						+compInt.getCompInterface().getName().substring(compInt.getCompInterface().getName().lastIndexOf('.')));
 			}
 			compInt.getCompInterface().setInstantiates(inter.getCompInterface());
 			this.interfaces.add(inter);
