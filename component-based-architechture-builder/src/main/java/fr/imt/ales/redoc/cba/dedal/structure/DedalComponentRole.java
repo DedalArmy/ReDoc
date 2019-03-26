@@ -243,8 +243,9 @@ public class DedalComponentRole extends DedalComponentType {
 		this.substitute(config, spec);
 		if(this.getjType().isAbstractType()) {
 			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getjType().getSimpleName());
-		} else 
+		} else {
 			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+		}
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineAllConcrete(asm, config, spec);
 		}
@@ -257,14 +258,41 @@ public class DedalComponentRole extends DedalComponentType {
 		} else {
 			this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
 		}
+		this.removeUnusedInterfaces(spec);
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineMixed(asm, config, spec);
+		}
+	}
+
+	private void removeUnusedInterfaces(Specification spec) {
+		List<Interaction> toRemove = new ArrayList<>();
+		List<Interaction> toKeep = new ArrayList<>();
+		for(Interaction inter : this.componentRole.getCompInterfaces()) {
+			if(((Interface)inter).getDirection().equals(DIRECTION.PROVIDED)) {
+				toRemove.add(inter);
+			}
+		}
+		boolean isInvolved = false;
+		for(CompRole role : spec.getSpecComponents()) {
+			if(this.componentRole.equals(role)) {
+				isInvolved = true;
+			}
+		}
+		for(RoleConnection conn : spec.getSpecConnections()) {
+			if(conn.getServerCompElem().equals(this.componentRole)) {
+				toKeep.add(conn.getServerIntElem());
+			}
+		}
+		if(isInvolved) { // otherwise it means that this component role is not part of the specification
+			toRemove.removeAll(toKeep);
+			this.componentRole.getCompInterfaces().removeAll(toRemove);
 		}
 	}
 
 	private void refineAllAbstract(Assembly asm, Configuration config, Specification spec) {
 		this.substitute(config, spec);
 		this.getComponentRole().setName(this.findAsmNames(asm) +" : " + this.getComponentRole().getName());
+		this.removeUnusedInterfaces(spec);
 		for(DedalComponentRole candidate : this.substitutableComponentRoles) {
 			candidate.refineAllAbstract(asm, config, spec);
 		}

@@ -7,151 +7,151 @@ dedal_diagram "examples_HAS.v2.sdsl_genDedalDiag"
 
 		primitive_component_class "fr.ema.examples.has.config.AdjustableLamp" as
 		"arrayOfLights : Light_role"
-			id "_GLLp8E8qEem6789Vc0mVWQ"
+			id "_GYpRME-5EemRt-TQwi37KA"
 			implements AdjustableLamp_Type
 			interfaces
-				interface _GMobcE8qEem6789Vc0mVWQ
+				interface _GZj3ME5EemRtTQwi37KA
 					interface_direction provided
 					implementation IAdjustableLamp;
-				interface _GMobcU8qEem6789Vc0mVWQ
+				interface _GZj3MU5EemRtTQwi37KA
 					interface_direction provided
 					implementation ILight;
 
 		primitive_component_class "fr.ema.examples.has.config.AlarmClock" as
 		"alarm : Alarm_role";
 		"clock : Clock"
-			id "_GLOGME8qEem6789Vc0mVWQ"
+			id "_GYrGYE-5EemRt-TQwi37KA"
 			implements AlarmClock_Type
 			interfaces
-				interface _GMpCgE8qEem6789Vc0mVWQ
+				interface _GZkeQU5EemRtTQwi37KA
 					interface_direction provided
 					implementation IAlarmClock;
-				interface _GMpCgU8qEem6789Vc0mVWQ
+				interface _GZkeQk5EemRtTQwi37KA
 					interface_direction provided
 					implementation IAlarm;
-				interface _GMpCgk8qEem6789Vc0mVWQ
+				interface _GZkeQ05EemRtTQwi37KA
 					interface_direction provided
 					implementation IClock;
-				interface _GMpCg08qEem6789Vc0mVWQ
+				interface _GZkeRE5EemRtTQwi37KA
 					interface_direction provided
 					implementation IIAlarm;
 
 		primitive_component_class "fr.ema.examples.has.config.SecurityManager" as
 		"securityManager : SecurityManager_role"
-			id "_GLPUUE8qEem6789Vc0mVWQ"
+			id "_GYrtcE-5EemRt-TQwi37KA"
 			implements SecurityManager_Type
 			interfaces
-				interface _GMpCiU8qEem6789Vc0mVWQ
+				interface _GZkeSk5EemRtTQwi37KA
 					interface_direction provided
 					implementation ISecurityManager;
-				interface _GMpCik8qEem6789Vc0mVWQ
+				interface _GZkeS05EemRtTQwi37KA
 					interface_direction required
 					implementation IAlarm;
 
 		primitive_component_class "fr.ema.examples.has.config.HomeOrchestrator" as
 		" : HomeOrchestrator_role"
-			id "_GLP7YE8qEem6789Vc0mVWQ"
+			id "_GYs7kE-5EemRt-TQwi37KA"
 			implements HomeOrchestrator_Type
 			interfaces
-				interface _GMpCjk8qEem6789Vc0mVWQ
+				interface _GZkeT05EemRtTQwi37KA
 					interface_direction provided
 					implementation IHomeOrchestrator;
-				interface _GMpCj08qEem6789Vc0mVWQ
+				interface _GZkeUE5EemRtTQwi37KA
 					interface_direction required
 					implementation ILight;
-				interface _GMpCkE8qEem6789Vc0mVWQ
+				interface _GZkeUU5EemRtTQwi37KA
 					interface_direction required
 					implementation IClock;
-				interface _GMpCkU8qEem6789Vc0mVWQ
+				interface _GZkeUk5EemRtTQwi37KA
 					interface_direction required
 					implementation ISecurityManager;
-				interface _GMppkE8qEem6789Vc0mVWQ
+				interface _GZkeU05EemRtTQwi37KA
 					interface_direction provided
 					implementation IOrchestratorImpl;
-				interface _GMppkU8qEem6789Vc0mVWQ
+				interface _GZkeVE5EemRtTQwi37KA
 					interface_direction provided
 					implementation IOrchestrator component_types (
 
 			component_type AdjustableLamp_Type
-				id "_GMobck8qEem6789Vc0mVWQ" required_interfaces
-					interface _GMobc08qEem6789Vc0mVWQ
+				id "_GZj3Mk-5EemRt-TQwi37KA" required_interfaces
+					interface _GZj3M05EemRtTQwi37KA
 						interface_direction provided
 						implementation IAdjustableLamp;
-					interface _GMobdE8qEem6789Vc0mVWQ
+					interface _GZkeQE5EemRtTQwi37KA
 						interface_direction provided
 						implementation ILight;
 
 			component_type AlarmClock_Type
-				id "_GMpChE8qEem6789Vc0mVWQ" required_interfaces
-					interface _GMpChU8qEem6789Vc0mVWQ
+				id "_GZkeRU-5EemRt-TQwi37KA" required_interfaces
+					interface _GZkeRk5EemRtTQwi37KA
 						interface_direction provided
 						implementation IAlarmClock;
-					interface _GMpChk8qEem6789Vc0mVWQ
+					interface _GZkeR05EemRtTQwi37KA
 						interface_direction provided
 						implementation IAlarm;
-					interface _GMpCh08qEem6789Vc0mVWQ
+					interface _GZkeSE5EemRtTQwi37KA
 						interface_direction provided
 						implementation IClock;
-					interface _GMpCiE8qEem6789Vc0mVWQ
+					interface _GZkeSU5EemRtTQwi37KA
 						interface_direction provided
 						implementation IIAlarm;
 
 			component_type SecurityManager_Type
-				id "_GMpCi08qEem6789Vc0mVWQ" required_interfaces
-					interface _GMpCjE8qEem6789Vc0mVWQ
+				id "_GZkeTE-5EemRt-TQwi37KA" required_interfaces
+					interface _GZkeTU5EemRtTQwi37KA
 						interface_direction provided
 						implementation ISecurityManager;
-					interface _GMpCjU8qEem6789Vc0mVWQ
+					interface _GZkeTk5EemRtTQwi37KA
 						interface_direction required
 						implementation IAlarm;
 
 			component_type HomeOrchestrator_Type
-				id "_GMppkk8qEem6789Vc0mVWQ" required_interfaces
-					interface _GMppk08qEem6789Vc0mVWQ
+				id "_GZkeVU-5EemRt-TQwi37KA" required_interfaces
+					interface _GZkeVk5EemRtTQwi37KA
 						interface_direction provided
 						implementation IHomeOrchestrator;
-					interface _GMpplE8qEem6789Vc0mVWQ
+					interface _GZkeV05EemRtTQwi37KA
 						interface_direction required
 						implementation ILight;
-					interface _GMpplU8qEem6789Vc0mVWQ
+					interface _GZkeWE5EemRtTQwi37KA
 						interface_direction required
 						implementation IClock;
-					interface _GMpplk8qEem6789Vc0mVWQ
+					interface _GZkeWU5EemRtTQwi37KA
 						interface_direction required
 						implementation ISecurityManager;
-					interface _GMppl08qEem6789Vc0mVWQ
+					interface _GZkeWk5EemRtTQwi37KA
 						interface_direction provided
 						implementation IOrchestratorImpl;
-					interface _GMppmE8qEem6789Vc0mVWQ
+					interface _GZkeW05EemRtTQwi37KA
 						interface_direction provided
 						implementation IOrchestrator
 		)
 
 			configConnections (
 
-				class_connection "_GLjdYE8qEem6789Vc0mVWQ" property "\"alarm\""
+				class_connection "_GZHyUE-5EemRt-TQwi37KA" property "\"alarm\""
 					client
-					"\"fr.ema.examples.has.config.SecurityManager\""."_GMpCik8qEem6789Vc0mVWQ"
+					"\"fr.ema.examples.has.config.SecurityManager\""."_GZkeS05EemRtTQwi37KA"
 					server
-				"\"fr.ema.examples.has.config.AlarmClock\""."_GMpCgU8qEem6789Vc0mVWQ";
+				"\"fr.ema.examples.has.config.AlarmClock\""."_GZkeQk5EemRtTQwi37KA";
 
-				class_connection "_GLlSkE8qEem6789Vc0mVWQ" property "\"arrayOfLights\""
+				class_connection "_GZIZYE-5EemRt-TQwi37KA" property "\"arrayOfLights\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GMpCj08qEem6789Vc0mVWQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GZkeUE5EemRtTQwi37KA"
 					server
-				"\"fr.ema.examples.has.config.AdjustableLamp\""."_GMobcU8qEem6789Vc0mVWQ";
+				"\"fr.ema.examples.has.config.AdjustableLamp\""."_GZj3MU5EemRtTQwi37KA";
 
-				class_connection "_GLnHwE8qEem6789Vc0mVWQ" property "\"clock\""
+				class_connection "_GZKOkE-5EemRt-TQwi37KA" property "\"clock\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GMpCkE8qEem6789Vc0mVWQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GZkeUU5EemRtTQwi37KA"
 					server
-				"\"fr.ema.examples.has.config.AlarmClock\""."_GMpCgk8qEem6789Vc0mVWQ";
+				"\"fr.ema.examples.has.config.AlarmClock\""."_GZkeQ05EemRtTQwi37KA";
 
-				class_connection "_GLoV4E8qEem6789Vc0mVWQ" property "\"securityManager\""
+				class_connection "_GZK1oE-5EemRt-TQwi37KA" property "\"securityManager\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GMpCkU8qEem6789Vc0mVWQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_GZkeUk5EemRtTQwi37KA"
 					server
-				"\"fr.ema.examples.has.config.SecurityManager\""."_GMpCiU8qEem6789Vc0mVWQ"
+				"\"fr.ema.examples.has.config.SecurityManager\""."_GZkeSk5EemRtTQwi37KA"
 			);
 
 		assembly Assembly
@@ -160,325 +160,74 @@ dedal_diagram "examples_HAS.v2.sdsl_genDedalDiag"
 			component_instances (
 
 				component_instance "lampDesk"
-					id "_GLqyIE8qEem6789Vc0mVWQ"
+					id "_GZN48E-5EemRt-TQwi37KA"
 					instance_of "\"fr.ema.examples.has.config.AdjustableLamp\""
 					component_interfaces
-						interface _GMiU0E8qEem6789Vc0mVWQ
+						interface _GZgM0E5EemRtTQwi37KA
 							interface_direction provided
 							implementation IAdjustableLamp
-							instantiates "_GMobcE8qEem6789Vc0mVWQ";
-						interface _GMmmVE8qEem6789Vc0mVWQ
+							instantiates "_GZj3ME5EemRtTQwi37KA";
+						interface _GZipJU5EemRtTQwi37KA
 							interface_direction provided
 							implementation ILight
-							instantiates "_GMobcU8qEem6789Vc0mVWQ";
+							instantiates "_GZj3MU5EemRtTQwi37KA";
 
 				component_instance "lampSitting"
-					id "_GLsnUE8qEem6789Vc0mVWQ"
+					id "_GZPHEE-5EemRt-TQwi37KA"
 					instance_of "\"fr.ema.examples.has.config.AdjustableLamp\""
 					component_interfaces
-						interface _GMkKAE8qEem6789Vc0mVWQ
+						interface _GZha8E5EemRtTQwi37KA
 							interface_direction provided
 							implementation IAdjustableLamp
-							instantiates "_GMobcE8qEem6789Vc0mVWQ";
-						interface _GMnNUE8qEem6789Vc0mVWQ
+							instantiates "_GZj3ME5EemRtTQwi37KA";
+						interface _GZjQIE5EemRtTQwi37KA
 							interface_direction provided
 							implementation ILight
-							instantiates "_GMobcU8qEem6789Vc0mVWQ";
+							instantiates "_GZj3MU5EemRtTQwi37KA";
 
 				component_instance "aClock1"
-					id "_GLtOYE8qEem6789Vc0mVWQ"
+					id "_GZPuIE-5EemRt-TQwi37KA"
 					instance_of "\"fr.ema.examples.has.config.AlarmClock\""
 					component_interfaces
-						interface _GMkxFU8qEem6789Vc0mVWQ
+						interface _GZiCBU5EemRtTQwi37KA
 							interface_direction provided
 							implementation IAlarmClock
-							instantiates "_GMpCgE8qEem6789Vc0mVWQ";
-						interface _GMnNUU8qEem6789Vc0mVWQ
+							instantiates "_GZkeQU5EemRtTQwi37KA";
+						interface _GZjQIU5EemRtTQwi37KA
 							interface_direction provided
 							implementation IAlarm
-							instantiates "_GMpCgU8qEem6789Vc0mVWQ";
-						interface _GMnNUk8qEem6789Vc0mVWQ
+							instantiates "_GZkeQk5EemRtTQwi37KA";
+						interface _GZjQIk5EemRtTQwi37KA
 							interface_direction provided
 							implementation IClock
-							instantiates "_GMpCgk8qEem6789Vc0mVWQ";
-						interface _GMnNU08qEem6789Vc0mVWQ
+							instantiates "_GZkeQ05EemRtTQwi37KA";
+						interface _GZjQI05EemRtTQwi37KA
 							interface_direction provided
 							implementation IIAlarm
-							instantiates "_GMpCg08qEem6789Vc0mVWQ";
+							instantiates "_GZkeRE5EemRtTQwi37KA";
 
 				component_instance "securityManager1"
-					id "_GLxf0E8qEem6789Vc0mVWQ"
+					id "_GZQVME-5EemRt-TQwi37KA"
 					instance_of "\"fr.ema.examples.has.config.SecurityManager\""
 					component_interfaces
-						interface _GMlYIk8qEem6789Vc0mVWQ
+						interface _GZiCCE5EemRtTQwi37KA
 							interface_direction provided
 							implementation ISecurityManager
-							instantiates "_GMpCiU8qEem6789Vc0mVWQ";
-						interface _GMl_ME8qEem6789Vc0mVWQ
+							instantiates "_GZkeSk5EemRtTQwi37KA";
+						interface _GZipEE5EemRtTQwi37KA
 							interface_direction required
 							implementation IAlarm
-							instantiates "_GMpCik8qEem6789Vc0mVWQ";
+							instantiates "_GZkeS05EemRtTQwi37KA";
 
 				component_instance "orchestrator1"
-					id "_GLz8EE8qEem6789Vc0mVWQ"
+					id "_GZSKYE-5EemRt-TQwi37KA"
 					instance_of "\"fr.ema.examples.has.config.HomeOrchestrator\""
 					component_interfaces
-						interface _GMmmUE8qEem6789Vc0mVWQ
+						interface _GZipIU5EemRtTQwi37KA
 							interface_direction provided
 							implementation IHomeOrchestrator
-							instantiates "_GMpCjk8qEem6789Vc0mVWQ";
-						interface _GMmmUU8qEem6789Vc0mVWQ
+							instantiates "_GZkeT05EemRtTQwi37KA";
+						interface _GZipIk5EemRtTQwi37KA
 							interface_direction required
 							implementation ILight
-							instantiates "_GMpCj08qEem6789Vc0mVWQ";
-						interface _GMmmUk8qEem6789Vc0mVWQ
-							interface_direction required
-							implementation IClock
-							instantiates "_GMpCkE8qEem6789Vc0mVWQ";
-						interface _GMmmU08qEem6789Vc0mVWQ
-							interface_direction required
-							implementation ISecurityManager
-							instantiates "_GMpCkU8qEem6789Vc0mVWQ";
-						interface _GMnNVE8qEem6789Vc0mVWQ
-							interface_direction provided
-							implementation IOrchestratorImpl
-							instantiates "_GMppkE8qEem6789Vc0mVWQ";
-						interface _GMn0YE8qEem6789Vc0mVWQ
-							interface_direction provided
-							implementation IOrchestrator
-							instantiates "_GMppkU8qEem6789Vc0mVWQ"
-			)
-
-			assembly_connections (
-
-				instance_connection "_GL1xQE8qEem6789Vc0mVWQ"
-					client "\"securityManager1\""."_GMl_ME8qEem6789Vc0mVWQ"
-					server "\"aClock1\""."_GMnNUU8qEem6789Vc0mVWQ";
-
-				instance_connection "_GL2_YE8qEem6789Vc0mVWQ"
-					client "\"orchestrator1\""."_GMmmUU8qEem6789Vc0mVWQ"
-					server "\"lampDesk\""."_GMmmVE8qEem6789Vc0mVWQ";
-
-				instance_connection "_GL3mcE8qEem6789Vc0mVWQ"
-					client "\"orchestrator1\""."_GMmmUU8qEem6789Vc0mVWQ"
-					server "\"lampSitting\""."_GMnNUE8qEem6789Vc0mVWQ";
-
-				instance_connection "_GMXVsE8qEem6789Vc0mVWQ"
-					client "\"orchestrator1\""."_GMmmUk8qEem6789Vc0mVWQ"
-					server "\"aClock1\""."_GMnNUk8qEem6789Vc0mVWQ";
-
-				instance_connection "_GMX8wE8qEem6789Vc0mVWQ"
-					client "\"orchestrator1\""."_GMmmU08qEem6789Vc0mVWQ"
-					server "\"securityManager1\""."_GMlYIk8qEem6789Vc0mVWQ"
-			);
-
-		specification Specification component_roles
-
-		component_role securityManager : SecurityManager_role
-			id "_GMss408qEem6789Vc0mVWQ" required_interfaces
-				interface _GMss5E8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation ISecurityManager;
-				interface _GMss5U8qEem6789Vc0mVWQ
-					interface_direction required
-					implementation IAlarm;
-
-		component_role  : HomeOrchestrator_role
-			id "_GMss5k8qEem6789Vc0mVWQ" required_interfaces
-				interface _GMtT8U8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation IHomeOrchestrator;
-				interface _GMtT8k8qEem6789Vc0mVWQ
-					interface_direction required
-					implementation ILight;
-				interface _GMt7AE8qEem6789Vc0mVWQ
-					interface_direction required
-					implementation IClock;
-				interface _GMt7AU8qEem6789Vc0mVWQ
-					interface_direction required
-					implementation ISecurityManager;
-				interface _GMt7Ak8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation IOrchestratorImpl;
-				interface _GMt7A08qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation IOrchestrator;
-
-		component_role arrayOfLights : Light_role
-			id "_GMrewE8qEem6789Vc0mVWQ" required_interfaces
-				interface _GMrewU8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation ILight;
-
-		component_role alarm : Alarm_role
-			id "_GMrexU8qEem6789Vc0mVWQ" required_interfaces
-				interface _GMreyE8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation IAlarm;
-
-		component_role clock : Clock
-			id "_GMreyU8qEem6789Vc0mVWQ" required_interfaces
-				interface _GMsF0E8qEem6789Vc0mVWQ
-					interface_direction provided
-					implementation IClock
-
-		connections
-
-		connection "_GMuiEE8qEem6789Vc0mVWQ"
-			client "securityManager : SecurityManager_role"."_GMss5U8qEem6789Vc0mVWQ"
-			server "alarm : Alarm_role"."_GMreyE8qEem6789Vc0mVWQ"
-
-		connection "_GMuiEU8qEem6789Vc0mVWQ"
-			client " : HomeOrchestrator_role"."_GMtT8k8qEem6789Vc0mVWQ"
-			server "arrayOfLights : Light_role"."_GMrewU8qEem6789Vc0mVWQ"
-
-		connection "_GMuiEk8qEem6789Vc0mVWQ"
-			client " : HomeOrchestrator_role"."_GMt7AE8qEem6789Vc0mVWQ"
-			server "clock : Clock"."_GMsF0E8qEem6789Vc0mVWQ"
-
-		connection "_GMuiE08qEem6789Vc0mVWQ"
-			client " : HomeOrchestrator_role"."_GMt7AU8qEem6789Vc0mVWQ"
-			server "securityManager : SecurityManager_role"."_GMss5E8qEem6789Vc0mVWQ"
-	)
-
-	repositories (
-
-		repository genRepo
-
-		interface_types (
-
-			type ILight
-				signatures (
-					signature "_GMhtw08qEem6789Vc0mVWQ" name switchState
-
-					type void parameters (
-						parameter "_GMhtxE8qEem6789Vc0mVWQ" name s
-
-						type State
-					)
-				);
-
-			type IAdjustableLamp
-				signatures (
-					signature "_GMhGsE8qEem6789Vc0mVWQ" name switchState
-
-					type void parameters (
-						parameter "_GMhtwE8qEem6789Vc0mVWQ" name s
-
-						type State
-					);
-					signature "_GMhtwU8qEem6789Vc0mVWQ" name adjustIntensity
-
-					type void parameters (
-						parameter "_GMhtwk8qEem6789Vc0mVWQ" name value
-
-						type ^int
-					)
-				);
-
-			type IIAlarm
-				signatures (
-					signature "_GMkxE08qEem6789Vc0mVWQ" name ring
-
-					type void
-				);
-
-			type IAlarm
-				signatures (
-					signature "_GMkxEk8qEem6789Vc0mVWQ" name ring
-
-					type void
-				);
-
-			type IClock
-				signatures (
-					signature "_GMkxFE8qEem6789Vc0mVWQ" name displayTime
-
-					type void
-				);
-
-			type IAlarmClock
-				signatures (
-					signature "_GMkxEE8qEem6789Vc0mVWQ" name ring
-
-					type void;
-					signature "_GMkxEU8qEem6789Vc0mVWQ" name displayTime
-
-					type void
-				);
-
-			type ISecurityManager
-				signatures (
-					signature "_GMlYIE8qEem6789Vc0mVWQ" name activate
-
-					type void;
-					signature "_GMlYIU8qEem6789Vc0mVWQ" name triggerAlarm
-
-					type void
-				);
-
-			type IOrchestrator
-				signatures (
-					signature "_GMmmT08qEem6789Vc0mVWQ" name synchronizeLights
-
-					type void
-				);
-
-			type IOrchestratorImpl
-				signatures (
-					signature "_GMmmSE8qEem6789Vc0mVWQ" name synchronizeLights
-
-					type void;
-					signature "_GMmmSU8qEem6789Vc0mVWQ" name getLights
-
-					type "Light[]";
-					signature "_GMmmSk8qEem6789Vc0mVWQ" name setLights
-
-					type void parameters (
-						parameter "_GMmmS08qEem6789Vc0mVWQ" name lights
-
-						type "Light[]"
-					);
-					signature "_GMmmTE8qEem6789Vc0mVWQ" name getClock
-
-					type Clock;
-					signature "_GMmmTU8qEem6789Vc0mVWQ" name setClock
-
-					type void parameters (
-						parameter "_GMmmTk8qEem6789Vc0mVWQ" name clock
-
-						type Clock
-					)
-				);
-
-			type IHomeOrchestrator
-				signatures (
-					signature "_GMmmQE8qEem6789Vc0mVWQ" name synchronizeLights
-
-					type void;
-					signature "_GMmmQU8qEem6789Vc0mVWQ" name getLights
-
-					type "Light[]";
-					signature "_GMmmQk8qEem6789Vc0mVWQ" name setLights
-
-					type void parameters (
-						parameter "_GMmmQ08qEem6789Vc0mVWQ" name lights
-
-						type "Light[]"
-					);
-					signature "_GMmmRE8qEem6789Vc0mVWQ" name getClock
-
-					type Clock;
-					signature "_GMmmRU8qEem6789Vc0mVWQ" name setClock
-
-					type void parameters (
-						parameter "_GMmmRk8qEem6789Vc0mVWQ" name clock
-
-						type Clock
-					);
-					signature "_GMmmR08qEem6789Vc0mVWQ" name activateSecurity
-
-					type void
-				)
-		)
-	)
+							instantiates "_GZkeUE5EemRt
