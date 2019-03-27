@@ -5,12 +5,17 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
+
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.TypeDeclaration;
 
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
@@ -22,9 +27,11 @@ import dedal.Specification;
 import fr.imt.ales.redoc.cba.dedal.builder.DedalArchitectureBuilder;
 import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
 import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
+import fr.imt.ales.redoc.cba.dedal.writer.DedalDiagramWriter;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
+import fr.imt.ales.redoc.type.hierarchy.structure.CompiledJavaType;
 import fr.imt.ales.redoc.xml.spring.structure.ClassPath;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
@@ -62,6 +69,12 @@ public class DedalDiagramGenerator {
 		HierarchyBuilderManager hbmanager = HierarchyBuilderManager.getInstance();
 		HierarchyBuilder hierarchyBuilder = hbmanager.getHierarchyBuilder(projectPath);
 		hierarchyBuilder.build();
+		for(CompilationUnit cu : hierarchyBuilder.getCompilationUnits()) {
+			Optional<TypeDeclaration<?>> primaryType = cu.getPrimaryType();
+			if(primaryType.isPresent() && primaryType.get().isClassOrInterfaceDeclaration()) {
+				Metrics.addNbClasses();
+			}
+		}
 		logger.info("Hierarchy built");
 		
 		// Write the extracted UML diagram for comparison purpose
@@ -93,8 +106,8 @@ public class DedalDiagramGenerator {
 			result.add(generate(projectPath, xml));
 		}
 
+		// Counting stuff about the extracted architecture
 		for(DedalDiagram dedalDiagram : result) {
-			// Counting stuff
 			for(ArchitectureDescription arch : dedalDiagram.getArchitectureDescriptions()) {
 				if(arch instanceof Assembly) {
 					Metrics.addNbAssembs();
@@ -117,31 +130,32 @@ public class DedalDiagramGenerator {
 				}
 			}
 		}
+		logger.info(Metrics.print());
+		
+		DedalDiagramWriter.saveArchitectures(result, projectPath);
+		DedalDiagramWriter.exportMetrics(projectPath);
 		
 		return result;
 	}
 	
 	private static void compareSpec(Configuration arch) {
 		for(Specification spec : arch.getImplements()) {
-			if(spec.getSpecComponents().size() != arch.getConfigComponents().size()) {
-				Metrics.addNbDiffSpecs();
-			}
-			else if(allDifferent(spec, arch)) {
+			if(spec.getSpecComponents().size() != arch.getConfigComponents().size() || allDifferent(spec, arch)) {
 				Metrics.addNbDiffSpecs();
 			}
 		}
 	}
 
-	private static boolean allDifferent(Specification spec, Configuration arch) {
+	private static Boolean allDifferent(Specification spec, Configuration arch) {
 		for(CompClass cc : arch.getConfigComponents()) {
 			for(CompRole cr : spec.getSpecComponents()) {
 				String name = cr.getName().endsWith("_role")?cr.getName().substring(0, cr.getName().indexOf("_role")):cr.getName();
-				if(cc.getRealizes().contains(cr) ) { // if the first interface has the same type, then both are extracted from exctly the same type
-					
+				if(cc.getName().endsWith(name)) { // if the first interface has the same type, then both are extracted from exctly the same type
+					return Boolean.TRUE;
 				}
 			}
 		}
-		return false;
+		return Boolean.FALSE;
 	}
 
 	/**
@@ -157,16 +171,14 @@ public class DedalDiagramGenerator {
 		 * we instantiate a new Dedal diagram that we will return as the result of this method
 		 */
 		DedalArchitectureBuilder dBuilder = new DedalArchitectureBuilder(projectPath, InterfaceOption.SMALLINTERFACES);
-		return dBuilder.build(springXMLFile);
-	}
-	
-	public static void main(String[] args) {
-		try {
-			DedalDiagramGenerator.generateAll(args[0]);
-		} catch (ParserConfigurationException | SAXException | IOException | TransformerException
-				| URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		DedalDiagram diagram = dBuilder.build(springXMLFile);
+		dBuilder.getDedalArchitecture().getConfiguration().forEach(dcc -> {
+			if(dcc.getjType() instanceof CompiledJavaType) {
+				Metrics.addNbOutterClasses();
+			} else {
+				Metrics.addNbSourceCodeClasses();
+			}
+		});
+		return diagram;
 	}
 }

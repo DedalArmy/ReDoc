@@ -6,157 +6,154 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 			implements Specification component_classes
 
 		primitive_component_class "fr.ema.examples.has.config.AdjustableLamp" as
-		AdjustableLamp_role
-			id "_EF_qsE5cEemdKd42nse5DQ"
+		Light_role
+			id "_rllAQFAZEemIT5HgLrPlHg"
 			implements AdjustableLamp_Type
 			interfaces
-				interface _EGqZEE5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp
 					interface_direction provided
 					implementation IAdjustableLamp;
-				interface _EGqZEU5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AdjustableLamp.provILight
 					interface_direction provided
 					implementation ILight;
 
 		primitive_component_class "fr.ema.examples.has.config.AlarmClock" as
-		AlarmClock_role
-			id "_EGBf4E5cEemdKd42nse5DQ"
+		Alarm_role;
+		Clock
+			id "_rlncgFAZEemIT5HgLrPlHg"
 			implements AlarmClock_Type
 			interfaces
-				interface _EGrAI05cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AlarmClock.provIAlarmClock
 					interface_direction provided
 					implementation IAlarmClock;
-				interface _EGrAJE5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AlarmClock.provIAlarm
 					interface_direction provided
 					implementation IAlarm;
-				interface _EGrAJU5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AlarmClock.provIClock
 					interface_direction provided
 					implementation IClock;
-				interface _EGrAJk5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.AlarmClock.provIIAlarm
 					interface_direction provided
 					implementation IIAlarm;
 
 		primitive_component_class "fr.ema.examples.has.config.SecurityManager" as
 		SecurityManager_role
-			id "_EGCG8E5cEemdKd42nse5DQ"
+			id "_rloDkFAZEemIT5HgLrPlHg"
 			implements SecurityManager_Type
 			interfaces
-				interface _EGrALE5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.SecurityManager.provISecurityManager
 					interface_direction provided
 					implementation ISecurityManager;
-				interface _EGrALU5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.SecurityManager.alarm
 					interface_direction required
 					implementation IAlarm;
 
 		primitive_component_class "fr.ema.examples.has.config.HomeOrchestrator" as
 		HomeOrchestrator_role
-			id "_EGCG8U5cEemdKd42nse5DQ"
+			id "_rloDkVAZEemIT5HgLrPlHg"
 			implements HomeOrchestrator_Type
 			interfaces
-				interface _EGrAMU5cEemdKd42nse5DQ
+				interface
+		fr.ema.examples.has.config.HomeOrchestrator.provIHomeOrchestrator
 					interface_direction provided
 					implementation IHomeOrchestrator;
-				interface _EGrAMk5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights
 					interface_direction required
 					implementation ILight;
-				interface _EGrAM05cEemdKd42nse5DQ
-					interface_direction required
-					implementation ILight;
-				interface _EGrANE5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.HomeOrchestrator.clock
 					interface_direction required
 					implementation IClock;
-				interface _EGrANU5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.HomeOrchestrator.securityManager
 					interface_direction required
 					implementation ISecurityManager;
-				interface _EGrnME5cEemdKd42nse5DQ
+				interface
+		fr.ema.examples.has.config.HomeOrchestrator.provIOrchestratorImpl
 					interface_direction provided
 					implementation IOrchestratorImpl;
-				interface _EGrnMU5cEemdKd42nse5DQ
+				interface fr.ema.examples.has.config.HomeOrchestrator.provIOrchestrator
 					interface_direction provided
 					implementation IOrchestrator component_types (
 
 			component_type AdjustableLamp_Type
-				id "_EGrAIE5cEemdKd42nse5DQ" required_interfaces
-					interface _EGrAIU5cEemdKd42nse5DQ
+				id "_rmXqcFAZEemIT5HgLrPlHg" required_interfaces
+					interface _rmXqcVAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IAdjustableLamp;
-					interface _EGrAIk5cEemdKd42nse5DQ
+					interface _rmXqclAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation ILight;
 
 			component_type AlarmClock_Type
-				id "_EGrAJ05cEemdKd42nse5DQ" required_interfaces
-					interface _EGrAKE5cEemdKd42nse5DQ
+				id "_rmYRhFAZEemIT5HgLrPlHg" required_interfaces
+					interface _rmYRhVAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IAlarmClock;
-					interface _EGrAKU5cEemdKd42nse5DQ
+					interface _rmYRhlAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IAlarm;
-					interface _EGrAKk5cEemdKd42nse5DQ
+					interface _rmYRh1AZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IClock;
-					interface _EGrAK05cEemdKd42nse5DQ
+					interface _rmYRiFAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IIAlarm;
 
 			component_type SecurityManager_Type
-				id "_EGrALk5cEemdKd42nse5DQ" required_interfaces
-					interface _EGrAL05cEemdKd42nse5DQ
+				id "_rmYRi1AZEemIT5HgLrPlHg" required_interfaces
+					interface _rmYRjFAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation ISecurityManager;
-					interface _EGrAME5cEemdKd42nse5DQ
+					interface _rmYRjVAZEemIT5HgLrPlHg
 						interface_direction required
 						implementation IAlarm;
 
 			component_type HomeOrchestrator_Type
-				id "_EGrnMk5cEemdKd42nse5DQ" required_interfaces
-					interface _EGrnM05cEemdKd42nse5DQ
+				id "_rmY4lFAZEemIT5HgLrPlHg" required_interfaces
+					interface _rmY4lVAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IHomeOrchestrator;
-					interface _EGrnNE5cEemdKd42nse5DQ
+					interface _rmY4llAZEemIT5HgLrPlHg
 						interface_direction required
 						implementation ILight;
-					interface _EGrnNU5cEemdKd42nse5DQ
-						interface_direction required
-						implementation ILight;
-					interface _EGrnNk5cEemdKd42nse5DQ
+					interface _rmY4l1AZEemIT5HgLrPlHg
 						interface_direction required
 						implementation IClock;
-					interface _EGrnN05cEemdKd42nse5DQ
+					interface _rmY4mFAZEemIT5HgLrPlHg
 						interface_direction required
 						implementation ISecurityManager;
-					interface _EGrnOE5cEemdKd42nse5DQ
+					interface _rmY4mVAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IOrchestratorImpl;
-					interface _EGrnOU5cEemdKd42nse5DQ
+					interface _rmY4mlAZEemIT5HgLrPlHg
 						interface_direction provided
 						implementation IOrchestrator
 		)
 
 			configConnections (
 
-				class_connection "_EGTzwE5cEemdKd42nse5DQ" property "\"alarm\""
+				class_connection "_rl5JUFAZEemIT5HgLrPlHg" property "\"alarm\""
 					client
-					"\"fr.ema.examples.has.config.SecurityManager\""."_EGrALU5cEemdKd42nse5DQ"
+					"\"fr.ema.examples.has.config.SecurityManager\""."fr.ema.examples.has.config.SecurityManager.alarm"
 					server
-				"\"fr.ema.examples.has.config.AlarmClock\""."_EGrAJE5cEemdKd42nse5DQ";
+				"\"fr.ema.examples.has.config.AlarmClock\""."fr.ema.examples.has.config.AlarmClock.provIAlarm";
 
-				class_connection "_EGUa0E5cEemdKd42nse5DQ" property "\"arrayOfLights\""
+				class_connection "_rl6XcFAZEemIT5HgLrPlHg" property "\"arrayOfLights\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_EGrAMk5cEemdKd42nse5DQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights"
 					server
-				"\"fr.ema.examples.has.config.AdjustableLamp\""."_EGqZEU5cEemdKd42nse5DQ";
+				"\"fr.ema.examples.has.config.AdjustableLamp\""."fr.ema.examples.has.config.AdjustableLamp.provILight";
 
-				class_connection "_EGVo8E5cEemdKd42nse5DQ" property "\"clock\""
+				class_connection "_rl7lkFAZEemIT5HgLrPlHg" property "\"clock\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_EGrANE5cEemdKd42nse5DQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."fr.ema.examples.has.config.HomeOrchestrator.clock"
 					server
-				"\"fr.ema.examples.has.config.AlarmClock\""."_EGrAJU5cEemdKd42nse5DQ";
+				"\"fr.ema.examples.has.config.AlarmClock\""."fr.ema.examples.has.config.AlarmClock.provIClock";
 
-				class_connection "_EGW3EE5cEemdKd42nse5DQ" property "\"securityManager\""
+				class_connection "_rl8MoFAZEemIT5HgLrPlHg" property "\"securityManager\""
 					client
-					"\"fr.ema.examples.has.config.HomeOrchestrator\""."_EGrANU5cEemdKd42nse5DQ"
+					"\"fr.ema.examples.has.config.HomeOrchestrator\""."fr.ema.examples.has.config.HomeOrchestrator.securityManager"
 					server
-				"\"fr.ema.examples.has.config.SecurityManager\""."_EGrALE5cEemdKd42nse5DQ"
+				"\"fr.ema.examples.has.config.SecurityManager\""."fr.ema.examples.has.config.SecurityManager.provISecurityManager"
 			);
 
 		assembly Assembly
@@ -165,198 +162,184 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 			component_instances (
 
 				component_instance "lampDesk"
-					id "_EGYFME5cEemdKd42nse5DQ"
+					id "_rl-B0FAZEemIT5HgLrPlHg"
 					instance_of "\"fr.ema.examples.has.config.AdjustableLamp\""
 					component_interfaces
-						interface _EGmusE5cEemdKd42nse5DQ
+						interface lampDesk.provIAdjustableLamp
 							interface_direction provided
 							implementation IAdjustableLamp
-							instantiates "_EGqZEE5cEemdKd42nse5DQ";
-						interface _EGpLBk5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp";
+						interface lampDesk.provILight
 							interface_direction provided
 							implementation ILight
-							instantiates "_EGqZEU5cEemdKd42nse5DQ";
+							instantiates "fr.ema.examples.has.config.AdjustableLamp.provILight";
 
 				component_instance "lampSitting"
-					id "_EGZTUE5cEemdKd42nse5DQ"
+					id "_rl_P8FAZEemIT5HgLrPlHg"
 					instance_of "\"fr.ema.examples.has.config.AdjustableLamp\""
 					component_interfaces
-						interface _EGn80E5cEemdKd42nse5DQ
+						interface lampSitting.provIAdjustableLamp
 							interface_direction provided
 							implementation IAdjustableLamp
-							instantiates "_EGqZEE5cEemdKd42nse5DQ";
-						interface _EGpyAE5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.AdjustableLamp.provIAdjustableLamp";
+						interface lampSitting.provILight
 							interface_direction provided
 							implementation ILight
-							instantiates "_EGqZEU5cEemdKd42nse5DQ";
+							instantiates "fr.ema.examples.has.config.AdjustableLamp.provILight";
 
 				component_instance "aClock1"
-					id "_EGZTUU5cEemdKd42nse5DQ"
+					id "_rl_3AFAZEemIT5HgLrPlHg"
 					instance_of "\"fr.ema.examples.has.config.AlarmClock\""
 					component_interfaces
-						interface _EGn81k5cEemdKd42nse5DQ
+						interface aClock1.provIAlarmClock
 							interface_direction provided
 							implementation IAlarmClock
-							instantiates "_EGrAI05cEemdKd42nse5DQ";
-						interface _EGpyAU5cEemdKd42nse5DQ
+							instantiates "fr.ema.examples.has.config.AlarmClock.provIAlarmClock";
+						interface aClock1.provIAlarm
 							interface_direction provided
 							implementation IAlarm
-							instantiates "_EGrAJE5cEemdKd42nse5DQ";
-						interface _EGpyAk5cEemdKd42nse5DQ
+							instantiates "fr.ema.examples.has.config.AlarmClock.provIAlarm";
+						interface aClock1.provIClock
 							interface_direction provided
 							implementation IClock
-							instantiates "_EGrAJU5cEemdKd42nse5DQ";
-						interface _EGpyA05cEemdKd42nse5DQ
+							instantiates "fr.ema.examples.has.config.AlarmClock.provIClock";
+						interface aClock1.provIIAlarm
 							interface_direction provided
 							implementation IIAlarm
-							instantiates "_EGrAJk5cEemdKd42nse5DQ";
+							instantiates "fr.ema.examples.has.config.AlarmClock.provIIAlarm";
 
 				component_instance "securityManager1"
-					id "_EGZ6YE5cEemdKd42nse5DQ"
+					id "_rl_3AVAZEemIT5HgLrPlHg"
 					instance_of "\"fr.ema.examples.has.config.SecurityManager\""
 					component_interfaces
-						interface _EGoj4k5cEemdKd42nse5DQ
+						interface securityManager1.provISecurityManager
 							interface_direction provided
 							implementation ISecurityManager
-							instantiates "_EGrALE5cEemdKd42nse5DQ";
-						interface _EGpK8E5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.SecurityManager.provISecurityManager";
+						interface securityManager1.alarm
 							interface_direction required
 							implementation IAlarm
-							instantiates "_EGrALU5cEemdKd42nse5DQ";
+							instantiates "fr.ema.examples.has.config.SecurityManager.alarm";
 
 				component_instance "orchestrator1"
-					id "_EGZ6YU5cEemdKd42nse5DQ"
+					id "_rmAeEFAZEemIT5HgLrPlHg"
 					instance_of "\"fr.ema.examples.has.config.HomeOrchestrator\""
 					component_interfaces
-						interface _EGpLAU5cEemdKd42nse5DQ
+						interface orchestrator1.provIHomeOrchestrator
 							interface_direction provided
 							implementation IHomeOrchestrator
-							instantiates "_EGrAMU5cEemdKd42nse5DQ";
-						interface _EGpLAk5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.HomeOrchestrator.provIHomeOrchestrator";
+						interface orchestrator1.arrayOfLights
 							interface_direction required
 							implementation ILight
-							instantiates "_EGrAMk5cEemdKd42nse5DQ";
-						interface _EGpLA05cEemdKd42nse5DQ
-							interface_direction required
-							implementation ILight
-							instantiates "_EGrAM05cEemdKd42nse5DQ";
-						interface _EGpLBE5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.HomeOrchestrator.arrayOfLights";
+						interface orchestrator1.clock
 							interface_direction required
 							implementation IClock
-							instantiates "_EGrANE5cEemdKd42nse5DQ";
-						interface _EGpLBU5cEemdKd42nse5DQ
+							instantiates "fr.ema.examples.has.config.HomeOrchestrator.clock";
+						interface orchestrator1.securityManager
 							interface_direction required
 							implementation ISecurityManager
-							instantiates "_EGrANU5cEemdKd42nse5DQ";
-						interface _EGpyBE5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.HomeOrchestrator.securityManager";
+						interface orchestrator1.provIOrchestratorImpl
 							interface_direction provided
 							implementation IOrchestratorImpl
-							instantiates "_EGrnME5cEemdKd42nse5DQ";
-						interface _EGpyBU5cEemdKd42nse5DQ
+							instantiates
+				"fr.ema.examples.has.config.HomeOrchestrator.provIOrchestratorImpl";
+						interface orchestrator1.provIOrchestrator
 							interface_direction provided
 							implementation IOrchestrator
-							instantiates "_EGrnMU5cEemdKd42nse5DQ"
+							instantiates
+				"fr.ema.examples.has.config.HomeOrchestrator.provIOrchestrator"
 			)
 
 			assembly_connections (
 
-				instance_connection "_EGbIgE5cEemdKd42nse5DQ"
-					client "\"securityManager1\""."_EGpK8E5cEemdKd42nse5DQ"
-					server "\"aClock1\""."_EGpyAU5cEemdKd42nse5DQ";
+				instance_connection "_rmBsMFAZEemIT5HgLrPlHg"
+					client "\"securityManager1\""."securityManager1.alarm"
+					server "\"aClock1\""."aClock1.provIAlarm";
 
-				instance_connection "_EGcWoE5cEemdKd42nse5DQ"
-					client "\"orchestrator1\""."_EGpLAk5cEemdKd42nse5DQ"
-					server "\"lampDesk\""."_EGpLBk5cEemdKd42nse5DQ";
+				instance_connection "_rmC6UFAZEemIT5HgLrPlHg"
+					client "\"orchestrator1\""."orchestrator1.arrayOfLights"
+					server "\"lampDesk\""."lampDesk.provILight";
 
-				instance_connection "_EGcWoU5cEemdKd42nse5DQ"
-					client "\"orchestrator1\""."_EGpLA05cEemdKd42nse5DQ"
-					server "\"lampSitting\""."_EGpyAE5cEemdKd42nse5DQ";
+				instance_connection "_rmDhYFAZEemIT5HgLrPlHg"
+					client "\"orchestrator1\""."orchestrator1.arrayOfLights"
+					server "\"lampSitting\""."lampSitting.provILight";
 
-				instance_connection "_EGc9sE5cEemdKd42nse5DQ"
-					client "\"orchestrator1\""."_EGpLBE5cEemdKd42nse5DQ"
-					server "\"aClock1\""."_EGpyAk5cEemdKd42nse5DQ";
+				instance_connection "_rmDhYVAZEemIT5HgLrPlHg"
+					client "\"orchestrator1\""."orchestrator1.clock"
+					server "\"aClock1\""."aClock1.provIClock";
 
-				instance_connection "_EGc9sU5cEemdKd42nse5DQ"
-					client "\"orchestrator1\""."_EGpLBU5cEemdKd42nse5DQ"
-					server "\"securityManager1\""."_EGoj4k5cEemdKd42nse5DQ"
+				instance_connection "_rmEIcFAZEemIT5HgLrPlHg"
+					client "\"orchestrator1\""."orchestrator1.securityManager"
+					server "\"securityManager1\""."securityManager1.provISecurityManager"
 			);
 
 		specification Specification component_roles
 
-		component_role AdjustableLamp_role
-			id "_EGsOQE5cEemdKd42nse5DQ" required_interfaces
-				interface _EGs1Uk5cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IAdjustableLamp;
-				interface _EGs1U05cEemdKd42nse5DQ
-					interface_direction provided
-					implementation ILight;
-
-		component_role AlarmClock_role
-			id "_EGs1VE5cEemdKd42nse5DQ" required_interfaces
-				interface _EGs1W05cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IAlarmClock;
-				interface _EGs1XE5cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IAlarm;
-				interface _EGtcYE5cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IClock;
-				interface _EGtcYU5cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IIAlarm;
-
 		component_role SecurityManager_role
-			id "_EGtcYk5cEemdKd42nse5DQ" required_interfaces
-				interface _EGtcY05cEemdKd42nse5DQ
+			id "_rme_PVAZEemIT5HgLrPlHg" required_interfaces
+				interface SecurityManager_role.provISecurityManager
 					interface_direction provided
 					implementation ISecurityManager;
-				interface _EGtcZE5cEemdKd42nse5DQ
+				interface SecurityManager_role.alarm
 					interface_direction required
 					implementation IAlarm;
 
 		component_role HomeOrchestrator_role
-			id "_EGtcZU5cEemdKd42nse5DQ" required_interfaces
-				interface _EGtcak5cEemdKd42nse5DQ
-					interface_direction provided
-					implementation IHomeOrchestrator;
-				interface _EGtca05cEemdKd42nse5DQ
+			id "_rme_QFAZEemIT5HgLrPlHg" required_interfaces
+				interface HomeOrchestrator_role.arrayOfLights
 					interface_direction required
 					implementation ILight;
-				interface _EGtcbE5cEemdKd42nse5DQ
-					interface_direction required
-					implementation ILight;
-				interface _EGtcbU5cEemdKd42nse5DQ
+				interface HomeOrchestrator_role.clock
 					interface_direction required
 					implementation IClock;
-				interface _EGtcbk5cEemdKd42nse5DQ
+				interface HomeOrchestrator_role.securityManager
 					interface_direction required
 					implementation ISecurityManager;
-				interface _EGtcb05cEemdKd42nse5DQ
+
+		component_role Light_role
+			id "_rmeYIFAZEemIT5HgLrPlHg" required_interfaces
+				interface Light_role.provILight
 					interface_direction provided
-					implementation IOrchestratorImpl;
-				interface _EGtccE5cEemdKd42nse5DQ
+					implementation ILight;
+
+		component_role Alarm_role
+			id "_rme_M1AZEemIT5HgLrPlHg" required_interfaces
+				interface Alarm_role.provIAlarm
 					interface_direction provided
-					implementation IOrchestrator
+					implementation IAlarm;
+
+		component_role Clock
+			id "_rme_N1AZEemIT5HgLrPlHg" required_interfaces
+				interface Clock_role.provIClock
+					interface_direction provided
+					implementation IClock
 
 		connections
 
-		connection "_EGuDcE5cEemdKd42nse5DQ"
-			client SecurityManager_role."_EGtcZE5cEemdKd42nse5DQ"
-			server AlarmClock_role."_EGs1XE5cEemdKd42nse5DQ"
+		connection "_rmgNUFAZEemIT5HgLrPlHg"
+			client SecurityManager_role."SecurityManager_role.alarm"
+			server Alarm_role."Alarm_role.provIAlarm"
 
-		connection "_EGuDcU5cEemdKd42nse5DQ"
-			client HomeOrchestrator_role."_EGtca05cEemdKd42nse5DQ"
-			server AdjustableLamp_role."_EGs1U05cEemdKd42nse5DQ"
+		connection "_rmgNUVAZEemIT5HgLrPlHg"
+			client HomeOrchestrator_role."HomeOrchestrator_role.arrayOfLights"
+			server Light_role."Light_role.provILight"
 
-		connection "_EGuDck5cEemdKd42nse5DQ"
-			client HomeOrchestrator_role."_EGtcbU5cEemdKd42nse5DQ"
-			server AlarmClock_role."_EGtcYE5cEemdKd42nse5DQ"
+		connection "_rmgNUlAZEemIT5HgLrPlHg"
+			client HomeOrchestrator_role."HomeOrchestrator_role.clock"
+			server Clock."Clock_role.provIClock"
 
-		connection "_EGuDc05cEemdKd42nse5DQ"
-			client HomeOrchestrator_role."_EGtcbk5cEemdKd42nse5DQ"
-			server SecurityManager_role."_EGtcY05cEemdKd42nse5DQ"
+		connection "_rmgNU1AZEemIT5HgLrPlHg"
+			client HomeOrchestrator_role."HomeOrchestrator_role.securityManager"
+			server SecurityManager_role."SecurityManager_role.provISecurityManager"
 	)
 
 	repositories (
@@ -367,10 +350,10 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 
 			type ILight
 				signatures (
-					signature "_EGlgk05cEemdKd42nse5DQ" name switchState
+					signature "_rmQ8wlAZEemIT5HgLrPlHg" name switchState
 
 					type void parameters (
-						parameter "_EGlglE5cEemdKd42nse5DQ" name s
+						parameter "_rmQ8w1AZEemIT5HgLrPlHg" name s
 
 						type State
 					)
@@ -378,17 +361,17 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 
 			type IAdjustableLamp
 				signatures (
-					signature "_EGk5gE5cEemdKd42nse5DQ" name switchState
+					signature "_rmPuoFAZEemIT5HgLrPlHg" name switchState
 
 					type void parameters (
-						parameter "_EGlgkE5cEemdKd42nse5DQ" name s
+						parameter "_rmQVsFAZEemIT5HgLrPlHg" name s
 
 						type State
 					);
-					signature "_EGlgkU5cEemdKd42nse5DQ" name adjustIntensity
+					signature "_rmQ8wFAZEemIT5HgLrPlHg" name adjustIntensity
 
 					type void parameters (
-						parameter "_EGlgkk5cEemdKd42nse5DQ" name value
+						parameter "_rmQ8wVAZEemIT5HgLrPlHg" name value
 
 						type ^int
 					)
@@ -396,74 +379,74 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 
 			type IIAlarm
 				signatures (
-					signature "_EGn81E5cEemdKd42nse5DQ" name ring
+					signature "_rmUAFFAZEemIT5HgLrPlHg" name ring
 
 					type void
 				);
 
 			type IAlarm
 				signatures (
-					signature "_EGn8005cEemdKd42nse5DQ" name ring
+					signature "_rmUAE1AZEemIT5HgLrPlHg" name ring
 
 					type void
 				);
 
 			type IClock
 				signatures (
-					signature "_EGn81U5cEemdKd42nse5DQ" name displayTime
+					signature "_rmUAFVAZEemIT5HgLrPlHg" name displayTime
 
 					type void
 				);
 
 			type IAlarmClock
 				signatures (
-					signature "_EGn80U5cEemdKd42nse5DQ" name ring
+					signature "_rmUAEVAZEemIT5HgLrPlHg" name ring
 
 					type void;
-					signature "_EGn80k5cEemdKd42nse5DQ" name displayTime
+					signature "_rmUAElAZEemIT5HgLrPlHg" name displayTime
 
 					type void
 				);
 
 			type ISecurityManager
 				signatures (
-					signature "_EGoj4E5cEemdKd42nse5DQ" name activate
+					signature "_rmUAF1AZEemIT5HgLrPlHg" name activate
 
 					type void;
-					signature "_EGoj4U5cEemdKd42nse5DQ" name triggerAlarm
+					signature "_rmUAGFAZEemIT5HgLrPlHg" name triggerAlarm
 
 					type void
 				);
 
 			type IOrchestrator
 				signatures (
-					signature "_EGpLAE5cEemdKd42nse5DQ" name synchronizeLights
+					signature "_rmVOQFAZEemIT5HgLrPlHg" name synchronizeLights
 
 					type void
 				);
 
 			type IOrchestratorImpl
 				signatures (
-					signature "_EGpK-U5cEemdKd42nse5DQ" name synchronizeLights
+					signature "_rmVOOVAZEemIT5HgLrPlHg" name synchronizeLights
 
 					type void;
-					signature "_EGpK-k5cEemdKd42nse5DQ" name getLights
+					signature "_rmVOOlAZEemIT5HgLrPlHg" name getLights
 
 					type "Light[]";
-					signature "_EGpK-05cEemdKd42nse5DQ" name setLights
+					signature "_rmVOO1AZEemIT5HgLrPlHg" name setLights
 
 					type void parameters (
-						parameter "_EGpK_E5cEemdKd42nse5DQ" name lights
+						parameter "_rmVOPFAZEemIT5HgLrPlHg" name lights
 
 						type "Light[]"
 					);
-					signature "_EGpK_U5cEemdKd42nse5DQ" name getClock
+					signature "_rmVOPVAZEemIT5HgLrPlHg" name getClock
 
 					type Clock;
-					signature "_EGpK_k5cEemdKd42nse5DQ" name setClock
+					signature "_rmVOPlAZEemIT5HgLrPlHg" name setClock
 
 					type void parameters (
-						parameter "_EGpK_05cEemdKd42nse5DQ" name clock
+						parameter "_rmVOP1AZEemIT5HgLrPlHg" name clock
 
 						type Clock
 					)
@@ -471,30 +454,30 @@ dedal_diagram "fr.ema.examples_HAS.v2.sdsl_genDedalDiag"
 
 			type IHomeOrchestrator
 				signatures (
-					signature "_EGpK8U5cEemdKd42nse5DQ" name synchronizeLights
+					signature "_rmVOMVAZEemIT5HgLrPlHg" name synchronizeLights
 
 					type void;
-					signature "_EGpK8k5cEemdKd42nse5DQ" name getLights
+					signature "_rmVOMlAZEemIT5HgLrPlHg" name getLights
 
 					type "Light[]";
-					signature "_EGpK805cEemdKd42nse5DQ" name setLights
+					signature "_rmVOM1AZEemIT5HgLrPlHg" name setLights
 
 					type void parameters (
-						parameter "_EGpK9E5cEemdKd42nse5DQ" name lights
+						parameter "_rmVONFAZEemIT5HgLrPlHg" name lights
 
 						type "Light[]"
 					);
-					signature "_EGpK9U5cEemdKd42nse5DQ" name getClock
+					signature "_rmVONVAZEemIT5HgLrPlHg" name getClock
 
 					type Clock;
-					signature "_EGpK9k5cEemdKd42nse5DQ" name setClock
+					signature "_rmVONlAZEemIT5HgLrPlHg" name setClock
 
 					type void parameters (
-						parameter "_EGpK905cEemdKd42nse5DQ" name clock
+						parameter "_rmVON1AZEemIT5HgLrPlHg" name clock
 
 						type Clock
 					);
-					signature "_EGpK-E5cEemdKd42nse5DQ" name activateSecurity
+					signature "_rmVOOFAZEemIT5HgLrPlHg" name activateSecurity
 
 					type void
 				)

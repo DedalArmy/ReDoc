@@ -10,51 +10,51 @@ public class Metrics {
 	/**
 	 * Analyzed Spring XML descriptors
 	 */
-	private static double nbXMLFiles = 0;
+	private static int nbXMLFiles = 0;
 	/**
 	 * Reconstructed Dedal Specification
 	 */
-	private static double nbSpecs = 0;
+	private static int nbSpecs = 0;
 	/**
 	 * Reconstructed Dedal Configurations
 	 */
-	private static double nbConfs = 0;
+	private static int nbConfs = 0;
 	/**
 	 * Reconstructed Dedal Assemblies
 	 */
-	private static double nbAssembs = 0;
+	private static int nbAssembs = 0;
 	/**
 	 * Analyzed Java classes
 	 */
-	private static double nbClasses = 0;
-	private static double nbSourceCodeClasses = 0;
-	private static double nbOutterClasses = 0;
+	private static int nbClasses = 0;
+	private static int nbSourceCodeClasses = 0;
+	private static int nbOutterClasses = 0;
 	/**
 	 * Reconstructed Dedal component classes
 	 */
-	private static double nbCompClasses = 0;
+	private static int nbCompClasses = 0;
 	/**
 	 * Reconstructed Dedal component instances
 	 */
-	private static double nbCompInst = 0;
+	private static int nbCompInst = 0;
 	/**
 	 * Reconstructed Dedal component roles
 	 */
-	private static double nbCompRoles = 0;
+	private static int nbCompRoles = 0;
 	/**
 	 * Reconstructed Dedal component classes realizing several component roles
 	 */
-	private static double nbCompClassMultiRoles= 0;
+	private static int nbCompClassMultiRoles= 0;
 	/**
 	 * Reconstructed Dedal Specifications which are
 	 * the same as their corresponding Reconstructed
 	 * Dedal Configurations
 	 */
-	private static double nbDifferentSpecs = 0;
+	private static int nbDifferentSpecs = 0;
 	/**
 	 * Reconstructed connections between components
 	 */
-	private static double nbConnections = 0;
+	private static int nbConnections = 0;
 	
 	/**
 	 * Default private constructor for avoiding instantiation
@@ -242,6 +242,25 @@ public class Metrics {
 	
 	public static void addNbOutterClasses() {
 		Metrics.nbOutterClasses++;
+	}
+
+	public static String print() {
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append("metric," + "value"+"\n");
+		strBuilder.append("nbXMLFiles," + nbXMLFiles+"\n");
+		strBuilder.append("nbClasses," + nbClasses+"\n");
+		strBuilder.append("nbSourceCodeClasses," + nbSourceCodeClasses+"\n");
+		strBuilder.append("nbOutterClasses," + nbOutterClasses+"\n");
+		strBuilder.append("nbAssembs," + nbAssembs+"\n");
+		strBuilder.append("nbCompInst," + nbCompInst+"\n");
+		strBuilder.append("nbConnections," + nbConnections+"\n");
+		strBuilder.append("nbConfs," + nbConfs+"\n");
+		strBuilder.append("nbCompClasses," + nbCompClasses+"\n");
+		strBuilder.append("nbCompClassMultiRoles," + nbCompClassMultiRoles+"\n");
+		strBuilder.append("nbSpecs," + nbSpecs+"\n");
+		strBuilder.append("nbCompRoles," + nbCompRoles+"\n");
+		strBuilder.append("nbDifferentSpecs," + nbDifferentSpecs+"\n");
+		return strBuilder.toString();
 	}
 	
 	

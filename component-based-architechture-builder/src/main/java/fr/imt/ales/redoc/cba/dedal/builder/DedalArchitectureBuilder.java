@@ -2,14 +2,11 @@ package fr.imt.ales.redoc.cba.dedal.builder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient.Redirect;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
-
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
 import dedal.ClassConnection;
@@ -25,17 +22,13 @@ import dedal.Repository;
 import dedal.RoleConnection;
 import dedal.Specification;
 import dedal.impl.DedalFactoryImpl;
-import fr.imt.ales.redoc.cba.dedal.metrics.Metrics;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalArchitecture;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentClass;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentInstance;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalComponentRole;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalInterfaceType;
 import fr.imt.ales.redoc.cba.dedal.transformation.SdslTransformer;
-import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
-import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
-import gen.lib.pack.ccomps__c;
 
 /**
  * This class is designed for inspecting jar/war files and generate the Dedal
@@ -50,7 +43,6 @@ public class DedalArchitectureBuilder {
 	 */
 	static final Logger logger = LogManager.getLogger(DedalArchitectureBuilder.class);
 	private DedalFactory factory;
-	private HierarchyBuilder hierarchyBuilder;
 	private DedalArchitecture dedalArchitecture;
 	private String projectPath;
 
@@ -63,7 +55,6 @@ public class DedalArchitectureBuilder {
 
 	public DedalArchitectureBuilder(String projectPath) throws IOException {
 		this.projectPath = projectPath;
-		this.hierarchyBuilder = HierarchyBuilderManager.getInstance().getHierarchyBuilder(projectPath);
 		this.factory = DedalFactoryImpl.init();
 	}
 
@@ -192,6 +183,13 @@ public class DedalArchitectureBuilder {
 		for(DedalComponentInstance comp : this.dedalArchitecture.getAssembly()) {
 			comp.refine(this.interfaceOption);
 		}
+	}
+
+	/**
+	 * @return the dedalArchitecture
+	 */
+	public DedalArchitecture getDedalArchitecture() {
+		return dedalArchitecture;
 	}
 
 	private Interface findInterface(Interaction inter, CompRole role) {
