@@ -45,4 +45,8 @@ public class HierarchyBuilderManager {
 		hierarchyBuilders.add(hb);
 		return hb;
 	}
+
+	public void init() {
+		HierarchyBuilderManager.hierarchyBuilders = new ArrayList<>();
+	}
 }

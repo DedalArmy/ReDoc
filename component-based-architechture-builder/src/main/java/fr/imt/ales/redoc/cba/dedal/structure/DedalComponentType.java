@@ -27,7 +27,11 @@ public abstract class DedalComponentType extends DedalType {
 	public DedalComponentType(String projectPath, Component component, DedalFactory dedalFactory, DedalArchitecture architecture) throws IOException {
 		super(projectPath, dedalFactory, architecture);
 		this.componentType = null;
-		this.initJType(component);
+		try {
+			this.initJType(component);
+		} catch (NullPointerException e) {
+			System.out.println();
+		}
 		this.interfaces = new ArrayList<>();
 	}
 	

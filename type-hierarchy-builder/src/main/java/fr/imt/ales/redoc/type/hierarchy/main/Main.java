@@ -102,6 +102,8 @@ public class Main {
 					PlantUMLWritter.generateSVG(out);
 				} catch (IOException e) {
 					logger.error("An error occured while writting plantuml file.");
+				} catch (InterruptedException e) {
+					logger.error("The SVG file could not be generated because the UML diagram is probably too big for graphviz", e);
 				}
 			} else {
 				logger.fatal("Nothing could be generated from the input.");

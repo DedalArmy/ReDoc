@@ -156,7 +156,12 @@ public class DedalArchitecture {
 	public DedalComponentClass createCompClassIfNotExists(CompClass cc, DedalFactory factory,
 			DedalComponentInstance compInstance) throws IOException {
 		if(!this.compClassExists(cc)) {
+			try {
 			return new DedalComponentClass(this.projectPath, cc, factory, this, compInstance);
+			} catch (NullPointerException e) {
+				System.out.println();
+				return null;
+			}
 		} else {
 			DedalComponentClass compClass = this.findCompClass(cc);
 			compClass.setInstantiatedBy(compInstance);

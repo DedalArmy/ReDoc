@@ -262,6 +262,20 @@ public class Metrics {
 		strBuilder.append("nbDifferentSpecs," + nbDifferentSpecs+"\n");
 		return strBuilder.toString();
 	}
+
+	public static void resetForNext() {
+		Metrics.nbAssembs = 0;
+		Metrics.nbCompClassMultiRoles = 0;
+		Metrics.nbCompClasses = 0;
+		Metrics.nbCompInst = 0;
+		Metrics.nbCompRoles = 0;
+		Metrics.nbConfs = 0;
+		Metrics.nbConnections = 0;
+		Metrics.nbDifferentSpecs = 0;
+		Metrics.nbOutterClasses = 0;
+		Metrics.nbSourceCodeClasses = 0;
+		Metrics.nbSpecs = 0;
+	}
 	
 	
 }

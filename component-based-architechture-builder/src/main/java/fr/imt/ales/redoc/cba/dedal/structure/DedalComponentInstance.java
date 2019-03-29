@@ -65,24 +65,30 @@ public class DedalComponentInstance extends DedalComponentType {
 	 * @throws IOException
 	 */
 	protected void mapRequiredInterfaces(List<InstConnection> connections) throws IOException {
+		List<InstConnection> toRemove = new ArrayList<>();
 		for(InstConnection connection : connections) {
-			String name = connection.getProperty().substring(connection.getProperty().lastIndexOf('.') + 1);
-			JavaField jField = this.getjType().getRequiredType(name);
-			if(jField != null && this.componentInstance.equals(connection.getClientInstElem())) {
-				JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
-				if(!this.interfaceExists(jt)) {
-					DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
-					inter.getCompInterface().setName(connection.getProperty());
-					inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
-					this.interfaces.add(inter);
-					connection.setClientIntElem(inter.getCompInterface());
-				} else {
-					connection.setClientIntElem(this.findCompInterface(jt));
+			if(connection.getProperty()!=null) {
+				String name = connection.getProperty().substring(connection.getProperty().lastIndexOf('.') + 1);
+				JavaField jField = this.getjType().getRequiredType(name);
+				if(jField != null && this.componentInstance.equals(connection.getClientInstElem())) {
+					JavaType jt = this.hierarchyBuilder.findJavaType(jField.getType());
+					if(!this.interfaceExists(jt)) {
+						DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), jt, this.architecture);
+						inter.getCompInterface().setName(connection.getProperty());
+						inter.getCompInterface().setDirection(DIRECTION.REQUIRED);
+						this.interfaces.add(inter);
+						connection.setClientIntElem(inter.getCompInterface());
+					} else {
+						connection.setClientIntElem(this.findCompInterface(jt));
+					}
+				} else if(this.componentInstance.equals(connection.getServerInstElem())) {
+					connection.setServerIntElem(this.interfaces.get(0).getCompInterface());
 				}
-			} else if(this.componentInstance.equals(connection.getServerInstElem())) {
-				connection.setServerIntElem(this.interfaces.get(0).getCompInterface());
+			} else {
+				toRemove.add(connection);
 			}
 		}
+		connections.removeAll(toRemove); // We remove the failed connections to continue the reconstruction
 	}
 
 	private Interaction findCompInterface(JavaType jt) {

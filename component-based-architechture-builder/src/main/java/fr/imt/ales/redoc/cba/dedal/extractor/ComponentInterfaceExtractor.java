@@ -75,14 +75,13 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 	public Interface mapAsInterface(JavaType jType, InterfaceType interfaceType) throws IOException {
 		List<JavaMethod> methods = new ArrayList<>();
 		methods.addAll(recursivelyGetMethods(jType));
-		if(!methods.isEmpty())
-		{
-			Interface derivedInterface = this.dedalFactory.createInterface();
+		Interface derivedInterface = this.dedalFactory.createInterface();
+//		if(!methods.isEmpty())
+//		{
 			derivedInterface.setName(EcoreUtil.generateUUID().replaceAll("-", ""));
 			derivedInterface.setType(interfaceType);
-			return derivedInterface;
-		}
-		return null;
+//		}
+		return derivedInterface;
 	}
 
 	/**
@@ -92,6 +91,8 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 	 */
 	private Collection<? extends JavaMethod> recursivelyGetMethods(JavaType objectToInspect) throws IOException {
 		List<JavaMethod> methods = new ArrayList<>();
+		if(objectToInspect == null) 
+			System.out.println("STOP");
 		JavaType superclass = objectToInspect.getSuperclass();
 		if(superclass!=null && !(Object.class.getName()).equals(superclass.getFullName()))
 		{

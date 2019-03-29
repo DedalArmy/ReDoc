@@ -136,16 +136,22 @@ public class DedalArchitectureBuilder {
 		for (DedalComponentInstance compInstance : this.dedalArchitecture.getAssembly()) {
 			this.dedalArchitecture.createCompClassIfNotExists(compInstance.getComponentInstance().getInstantiates(), this.factory, compInstance); // complete the description of component classes
 		}
+		List<ClassConnection> toRemove = new ArrayList<>();
 		for (ClassConnection ccon : config.getConfigConnections()) { 
-			for (InstConnection acon : asm.getAssemblyConnections()) {
-				String property = ccon.getProperty().replaceAll("\"", "");
-				String substring = acon.getProperty().substring(acon.getProperty().lastIndexOf('.') + 1);
-				if (property.equals(substring)) {
-					this.dedalArchitecture.setConfigConnectionFromAsmConnection(ccon, acon); // complete the description of class connections
-					break;
+			if(ccon.getProperty()!=null) {
+				for (InstConnection acon : asm.getAssemblyConnections()) {
+					String property = ccon.getProperty().replaceAll("\"", "");
+					String substring = acon.getProperty().substring(acon.getProperty().lastIndexOf('.') + 1);
+					if (property.equals(substring)) {
+						this.dedalArchitecture.setConfigConnectionFromAsmConnection(ccon, acon); // complete the description of class connections
+						break;
+					}
 				}
+			} else {
+				toRemove.add(ccon);
 			}
 		}
+		config.getConfigConnections().removeAll(toRemove);
 		for(DedalComponentClass dcc : this.dedalArchitecture.getConfiguration()) {
 			List<DedalComponentRole> componentRoles = dcc.computeComponentRoles(config.getConfigConnections());
 			for(DedalComponentRole cr : componentRoles) {
@@ -156,14 +162,22 @@ public class DedalArchitectureBuilder {
 		for(ClassConnection ccon : config.getConfigConnections()) {
 			RoleConnection specConn = this.factory.createRoleConnection();
 			CompRole clientRole = ccon.getClientClassElem().getRealizes().get(0);
-			Interface clientInter = this.findInterface(ccon.getClientIntElem(), clientRole);
-			CompRole serverRole = ccon.getServerClassElem().getRealizes().get(0);
-			Interface serverInter = this.findInterface(ccon.getServerIntElem(), serverRole);
-			specConn.setClientCompElem(clientRole);	
-			specConn.setClientIntElem(clientInter);
-			specConn.setServerCompElem(serverRole);
-			specConn.setServerIntElem(serverInter);
-			spec.getSpecConnections().add(specConn);
+			Interface clientInter = null;
+			if(ccon.getClientIntElem()!=null) {
+				clientInter = this.findInterface(ccon.getClientIntElem(), clientRole);
+				if(!ccon.getServerClassElem().getRealizes().isEmpty()) {
+					CompRole serverRole = ccon.getServerClassElem().getRealizes().get(0);
+					Interface serverInter = null;
+					if(ccon.getServerIntElem()!=null) {
+						serverInter = this.findInterface(ccon.getServerIntElem(), serverRole);
+						specConn.setClientCompElem(clientRole);	
+						specConn.setClientIntElem(clientInter);
+						specConn.setServerCompElem(serverRole);
+						specConn.setServerIntElem(serverInter);
+						spec.getSpecConnections().add(specConn);
+					}
+				}
+			}
 		}
 		this.applyOptionsToSpecification(asm, config, spec);
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {

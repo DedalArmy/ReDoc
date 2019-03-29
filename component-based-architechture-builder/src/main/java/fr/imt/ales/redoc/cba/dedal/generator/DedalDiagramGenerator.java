@@ -1,5 +1,6 @@
 package fr.imt.ales.redoc.cba.dedal.generator;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -78,16 +79,19 @@ public class DedalDiagramGenerator {
 		logger.info("Hierarchy built");
 		
 		// Write the extracted UML diagram for comparison purpose
-		try {
+//		try {
 			String out = projectPath + PLANT_UML_REPRESENTATION_UML_TXT;
 			PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
 			logger.info("Hierarchy has been written in PlantUML format.");
-			PlantUMLWritter.generateSVG(out);
+//			PlantUMLWritter.generateSVG(out);
 			logger.info("The UML diagram of the project " + projectPath + " has been generated");
-		} catch (IOException e) {
-			logger.warn("The UML diagram of project " + projectPath + " could not be generated due to I/O Exception.");
-			logger.debug(e);
-		}
+//		} catch (IOException e) {
+//			logger.warn("The UML diagram of project " + projectPath + " could not be generated due to I/O Exception.");
+//			logger.debug(e);
+//		} catch (InterruptedException | IllegalStateException e) {
+//			logger.error("The SVG file could not be generated because the UML diagram is probably too big for graphviz", e);
+//		}
+		logger.info("End of architecture hierarchy reconstruction");
 		
 		// Merge XML Spring deployment descriptors
 		ClassPath cp = new ClassPath(Paths.get(projectPath));
@@ -100,41 +104,33 @@ public class DedalDiagramGenerator {
 			}
 		}
 		
+		//reset previous results
+		String toRmPath = projectPath + "/generated_metrics_results";
+		File toRm = new File(toRmPath);
+		if(toRm.exists()) {
+			File[] files = toRm.listFiles();
+			for(File f : files) {
+				f.delete();
+			}
+			toRm.delete();
+		}
+			
+		
 		// Generate a Dedal Diagram for each merged deployment descriptor
 		for(XMLFile xml : topDescriptions) {
 			Metrics.addNbSpringXML();
-			result.add(generate(projectPath, xml));
-		}
-
-		// Counting stuff about the extracted architecture
-		for(DedalDiagram dedalDiagram : result) {
-			for(ArchitectureDescription arch : dedalDiagram.getArchitectureDescriptions()) {
-				if(arch instanceof Assembly) {
-					Metrics.addNbAssembs();
-					((Assembly)arch).getAssmComponents().forEach(a -> Metrics.addNbCompInst());
-					((Assembly)arch).getAssemblyConnections().forEach(a -> Metrics.addNbConnexions());
-				}
-				if(arch instanceof Configuration) {
-					Metrics.addNbConfs();
-					((Configuration)arch).getConfigComponents().forEach(a -> {
-						Metrics.addNbCompClasses();
-						if(a.getRealizes().size()>1) {
-							Metrics.addNbCompClassMultiRoles();
-						}
-					});
-					DedalDiagramGenerator.compareSpec(((Configuration)arch));
-				}
-				if(arch instanceof Specification) {
-					Metrics.addNbSpecs();
-					((Specification)arch).getSpecComponents().forEach(a -> Metrics.addNbCompRoles());
-				}
+			try {
+				Metrics.resetForNext();
+				result.add(generate(projectPath, xml));
+			} catch (Exception | Error e) {
+				logger.error(xml.getName() + " could not be reconstructed");
+				Metrics.resetForNext();
+				String output = projectPath + "/generated_metrics_results/metrics_"+xml.getName()+".csv";
+				DedalDiagramWriter.exportMetrics(output);
 			}
-		}
-		logger.info(Metrics.print());
-		
+		}		
+
 		DedalDiagramWriter.saveArchitectures(result, projectPath);
-		DedalDiagramWriter.exportMetrics(projectPath);
-		
 		return result;
 	}
 	
@@ -150,7 +146,7 @@ public class DedalDiagramGenerator {
 		for(CompClass cc : arch.getConfigComponents()) {
 			for(CompRole cr : spec.getSpecComponents()) {
 				String name = cr.getName().endsWith("_role")?cr.getName().substring(0, cr.getName().indexOf("_role")):cr.getName();
-				if(cc.getName().endsWith(name)) { // if the first interface has the same type, then both are extracted from exctly the same type
+				if(cc.getName().endsWith(name)) { // if the first interface has the same type, then both are extracted from exactly the same type
 					return Boolean.TRUE;
 				}
 			}
@@ -179,6 +175,32 @@ public class DedalDiagramGenerator {
 				Metrics.addNbSourceCodeClasses();
 			}
 		});
+		// Counting stuff about the extracted architecture
+		for(ArchitectureDescription arch : diagram.getArchitectureDescriptions()) {
+			if(arch instanceof Assembly) {
+				Metrics.addNbAssembs();
+				((Assembly)arch).getAssmComponents().forEach(a -> Metrics.addNbCompInst());
+				((Assembly)arch).getAssemblyConnections().forEach(a -> Metrics.addNbConnexions());
+			}
+			if(arch instanceof Configuration) {
+				Metrics.addNbConfs();
+				((Configuration)arch).getConfigComponents().forEach(a -> {
+					Metrics.addNbCompClasses();
+					if(a.getRealizes().size()>1) {
+						Metrics.addNbCompClassMultiRoles();
+					}
+				});
+				DedalDiagramGenerator.compareSpec(((Configuration)arch));
+			}
+			if(arch instanceof Specification) {
+				Metrics.addNbSpecs();
+				((Specification)arch).getSpecComponents().forEach(a -> Metrics.addNbCompRoles());
+			}
+		}
+		logger.info(Metrics.print());
+		
+		String out = projectPath + "/generated_metrics_results/metrics_"+springXMLFile.getName()+".csv";
+		DedalDiagramWriter.exportMetrics(out);
 		return diagram;
 	}
 }

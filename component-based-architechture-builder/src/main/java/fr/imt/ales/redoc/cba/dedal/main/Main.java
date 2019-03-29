@@ -3,6 +3,10 @@
  */
 package fr.imt.ales.redoc.cba.dedal.main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -14,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.xml.sax.SAXException;
 
 import fr.imt.ales.redoc.cba.dedal.generator.DedalDiagramGenerator;
+import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 
 /**
  * @author Alexandre Le Borgne
@@ -33,35 +38,44 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		if(args.length>0)
-			laucnhReconstruction(args);
+			try {
+				laucnhReconstruction(args);
+			} catch (FileNotFoundException e) {
+				logger.error("The input file could not be found.", e);
+			} catch (IOException e) {
+				logger.error("A line of the input file could not be read.", e);
+			}
 	}
 
-	public static void laucnhReconstruction(String[] args) {
-		
-		new Date();		
-		String path = args[0];
+	public static void laucnhReconstruction(String[] args) throws IOException {
 
-		logger.info("Path = " + path);
-
-		try {
-			DedalDiagramGenerator.generateAll(path);
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(args[0].endsWith("projets.txt")) {
+			File projects = new File(args[0]);
+			String parentDirectory = projects.getParent();
+			BufferedReader br = new BufferedReader(new FileReader(projects));
+			String path;
+			while((path = br.readLine()) != null) {
+				HierarchyBuilderManager.getInstance().init();
+				path = parentDirectory+"/"+path;
+				logger.info("Path = " + path);
+				try {
+					DedalDiagramGenerator.generateAll(path);
+				} catch (Exception | Error e) {
+					logger.error(e);
+				}
+			}
+		} else {
+			try {
+				String path = args[0];
+				logger.info("Path = " + path);
+				DedalDiagramGenerator.generateAll(path);
+			} catch (Exception | Error e) {
+				e.printStackTrace();
+				logger.error(e.getStackTrace().toString());
+			}
 		}
+
 		logger.info("The end");
 	}
-	
+
 }

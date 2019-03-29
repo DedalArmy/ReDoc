@@ -245,10 +245,13 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		logger.trace("exploreHierarchy()");
 		this.loadNecessaryData();
 		int length = getPackages().size();
-		for(int i = 0; i < length; i++)
+		List<JavaPackage> listPackages = new ArrayList<>();
+		listPackages.addAll(this.getPackages());
+		for(JavaPackage pack : listPackages)
 		{
-			JavaPackage pack = getPackages().get(i);
-			for(JavaType type : pack.getJavaTypes())
+			List<JavaType> listJTypes = new ArrayList<JavaType>();
+			listJTypes.addAll(pack.getJavaTypes());
+			for(JavaType type : listJTypes)
 			{
 				if(!(type instanceof CompiledJavaType)) {
 					type.setjImports(this.getImportedJavaTypes(type));
@@ -650,8 +653,8 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			Class<?> clazz = this.jarLoader.loadClass(name);
 			return this.createNewCompiledJavaType(clazz);
 		} catch (ClassNotFoundException e) {
-			logger.error("Something bad happened while finding a JavaType", e);
-			return null;
+			logger.error("Something bad happened while finding a JavaType", e.getCause());
+			return this.findJavaType(Object.class); // to avoid a fail during the redocumentation
 		}
 	}
 

@@ -88,7 +88,7 @@ public class PlantUMLWritter {
 	 * @param out name of the output SVG file
 	 * @throws IOException if an I/O error occurs writing to or creating the file
 	 */
-	public static void generateSVG(String out) throws IOException {
+	public static void generateSVG(String out) throws IOException, InterruptedException, IllegalStateException {
 		String source;
 		logger.info("generateSVG : " + out);
 		source = Files.readString(Paths.get(out));

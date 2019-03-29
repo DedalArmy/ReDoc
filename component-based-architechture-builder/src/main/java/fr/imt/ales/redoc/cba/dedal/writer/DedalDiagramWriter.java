@@ -115,8 +115,7 @@ public class DedalDiagramWriter {
 		}
 	}
 
-	public static void exportMetrics(String projectPath) throws FileNotFoundException, UnsupportedEncodingException {
-		String out = projectPath + "/generated_metrics_results/metrics.csv";
+	public static void exportMetrics(String out) throws FileNotFoundException, UnsupportedEncodingException {
 		new java.io.File(out).getParentFile().mkdirs();
 		PrintWriter writer = new PrintWriter(out, Main.UTF_8);
 		writer.print(Metrics.print());
