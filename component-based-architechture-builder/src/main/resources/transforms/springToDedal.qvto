@@ -195,6 +195,54 @@ mapping SpringModel::Component::toAssemblyConnection(name:String, c:SpringModel:
 	serverInstElem := targetRef;
 }
 
+mapping SpringModel::Component::toAssemblyConnection_set(name:String, r:SpringModel::Reference) : DedalModel::InstConnection {
+	
+	var source := self.name;
+	var sourceRef : CompInstance;
+	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
+	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
+	var target := r.ref.oclAsType(SpringModel::Component).name;
+	var targetRef : CompInstance;
+	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompInstance();
+	clientInstElem := sourceRef;
+	serverInstElem := targetRef;
+}
+
+mapping SpringModel::Component::toAssemblyConnection_set(name:String, c:SpringModel::Component) : DedalModel::InstConnection {
+	
+	var source := self.name;
+	var sourceRef : CompInstance;
+	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
+	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
+	var targetRef := c.map toCompInstance();
+	clientInstElem := sourceRef;
+	serverInstElem := targetRef;
+}
+
+mapping SpringModel::Component::toAssemblyConnection_list(name:String, r:SpringModel::Reference) : DedalModel::InstConnection {
+	
+	var source := self.name;
+	var sourceRef : CompInstance;
+	_property := "list:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
+	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
+	var target := r.ref.oclAsType(SpringModel::Component).name;
+	var targetRef : CompInstance;
+	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompInstance();
+	clientInstElem := sourceRef;
+	serverInstElem := targetRef;
+}
+
+mapping SpringModel::Component::toAssemblyConnection_list(name:String, c:SpringModel::Component) : DedalModel::InstConnection {
+	
+	var source := self.name;
+	var sourceRef : CompInstance;
+	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
+	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
+	var targetRef := c.map toCompInstance();
+	clientInstElem := sourceRef;
+	serverInstElem := targetRef;
+}
+
 //////////////////////////////////////////////////////////////////
 //						ConfigConnection						//
 //////////////////////////////////////////////////////////////////
@@ -387,7 +435,7 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 			if(f2.oclIsTypeOf(SpringModel::Reference))
 			{
 				if(f2.oclAsType(SpringModel::Reference).ref.oclIsKindOf(SpringModel::Component))
-					connections += c.map toAssemblyConnection(name,f2.oclAsType(SpringModel::Reference));
+					connections += c.map toAssemblyConnection_set(name,f2.oclAsType(SpringModel::Reference));
 			}
 			else if(f2.oclIsTypeOf(SpringModel::Component))
 			{
@@ -407,7 +455,7 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 						asm.assmComponents += f2.oclAsType(SpringModel::Component).map toCompInstance();
 					};
 				};
-				connections += c.map toAssemblyConnection(name, f2.oclAsType(SpringModel::Component));
+				connections += c.map toAssemblyConnection_set(name, f2.oclAsType(SpringModel::Component));
 			}
 		}
 	}
@@ -418,7 +466,7 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 			if(f2.oclIsTypeOf(SpringModel::Reference))
 			{
 				if(f2.oclAsType(SpringModel::Reference).ref.oclIsKindOf(SpringModel::Component))
-					connections += c.map toAssemblyConnection(name,f2.oclAsType(SpringModel::Reference));
+					connections += c.map toAssemblyConnection_list(name,f2.oclAsType(SpringModel::Reference));
 			}
 			else if(f2.oclIsTypeOf(SpringModel::Component))
 			{
@@ -438,7 +486,7 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 						asm.assmComponents += f2.oclAsType(SpringModel::Component).map toCompInstance();
 					};
 				};
-				connections += c.map toAssemblyConnection(name, f2.oclAsType(SpringModel::Component));
+				connections += c.map toAssemblyConnection_list(name, f2.oclAsType(SpringModel::Component));
 			}
 		}
 	}
