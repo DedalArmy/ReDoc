@@ -136,17 +136,19 @@ public class DedalDiagramGenerator {
 	
 	private static void compareSpec(Configuration arch) {
 		for(Specification spec : arch.getImplements()) {
-			if(spec.getSpecComponents().size() != arch.getConfigComponents().size() || allDifferent(spec, arch)) {
+			if(spec.getSpecComponents().size() != arch.getConfigComponents().size() || someDifferent(spec, arch)) {
 				Metrics.addNbDiffSpecs();
 			}
 		}
 	}
 
-	private static Boolean allDifferent(Specification spec, Configuration arch) {
+	private static Boolean someDifferent(Specification spec, Configuration arch) {
 		for(CompClass cc : arch.getConfigComponents()) {
-			for(CompRole cr : spec.getSpecComponents()) {
+			for(CompRole cr : cc.getRealizes()) {
+				if(cr.getName().equals("Country"))
+					System.out.println();
 				String name = cr.getName().endsWith("_role")?cr.getName().substring(0, cr.getName().indexOf("_role")):cr.getName();
-				if(cc.getName().endsWith(name)) { // if the first interface has the same type, then both are extracted from exactly the same type
+				if(!cc.getName().endsWith(name)) {
 					return Boolean.TRUE;
 				}
 			}

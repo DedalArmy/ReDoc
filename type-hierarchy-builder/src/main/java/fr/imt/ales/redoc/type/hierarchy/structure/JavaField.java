@@ -14,11 +14,6 @@ public class JavaField {
 		return this.type;
 	}
 
-	public String toGenericString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getName() {
 		return this.name;
 	}

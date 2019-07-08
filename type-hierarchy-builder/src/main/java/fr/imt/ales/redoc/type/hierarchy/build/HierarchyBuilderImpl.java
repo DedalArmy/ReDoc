@@ -6,6 +6,8 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,7 @@ import com.github.javaparser.ast.type.Type;
 import fr.imt.ales.redoc.jarloader.JarLoader;
 import fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer;
 import fr.imt.ales.redoc.type.hierarchy.structure.CompiledJavaType;
+import fr.imt.ales.redoc.type.hierarchy.structure.JavaField;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaNestedType;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaPackage;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
@@ -421,6 +424,29 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 						exploreRelations(pack, type, fd);
 					}
 				}
+				else if(type instanceof CompiledJavaType){
+					for(Field f : ((CompiledJavaType)type).getClazz().getFields()) {
+						exploreRelations(pack, type, f);
+					}
+				}
+			}
+		}
+	}
+
+	private void exploreRelations(JavaPackage pack, JavaType type, Field f) {
+		if(!f.getType().isPrimitive() && f.getType().getTypeParameters().length==0) {
+			JavaType tempJavaType = this.findJavaType(f.getType());
+			if(tempJavaType!=null)
+			{
+				pack.addRelation(new Relation(type, tempJavaType, f.getName()));
+			}
+		} else if(!f.getType().isPrimitive() && f.getType().getTypeParameters().length>0) { //Parameterized types
+			for(TypeVariable<?> paramType : f.getType().getTypeParameters()) {
+				JavaType tempJavaType = this.findJavaType(paramType);
+				if(tempJavaType!=null)
+				{
+					pack.addRelation(new Relation(type, tempJavaType, f.getName()));
+				}
 			}
 		}
 	}
@@ -537,7 +563,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		 */
 		result = findTypeInImports(type, coi);
 		return (result != null)? result : null;
-	}
+	}	
 
 	/**
 	 * This methods finds an imported {@link JavaType} from external sources into default packages.
@@ -683,5 +709,21 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			return jt;
 		// if still there then it means that it is an external dependency which is not loaded yet
 		return this.createNewCompiledJavaType(clazz);
+	}
+
+	@Override
+	public JavaType findJavaType(TypeVariable<?> paramType) {
+		JavaType jt = findExistingJavaType(paramType.getName());
+		if(jt!=null)
+			return jt;
+		if("T".equals(paramType.getName()))
+			return null;
+		// if still there then it means that it is an external dependency which is not loaded yet
+		try {
+			return this.createNewCompiledJavaType(this.jarLoader.loadClass(paramType.getName()));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

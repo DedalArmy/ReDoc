@@ -91,17 +91,6 @@ mapping SpringModel::Component::toCompInstance() : DedalModel::CompInstance {
 	var instanciatedCompClass := resolveone(compClass:dedal::CompClass | compClass.name.=(self._class.getComponentClassName()));
 	instantiates := instanciatedCompClass;
 	
-	
-	var numbId : Integer;
-	numbId := 0;
-	(DedalModel::CompInstance).allInstances()->forEach(ci)
-	{
-		if(ci.instantiates = instantiates)
-		{
-			numbId:=numbId+1;
-		}
-	};
-	
 	if(self.name.<>(null))
 	{
 		name := self.name
@@ -114,7 +103,7 @@ mapping SpringModel::Component::toCompInstance() : DedalModel::CompInstance {
 	{
 		if(self._class._class.oclIsTypeOf(SpringModel::Class))
 		{
-			name := self._class._class.oclAsType(SpringModel::Class).classname + numbId.toString();
+			name := self._class._class.oclAsType(SpringModel::Class).classname;
 		}
 		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
 		{
@@ -190,7 +179,31 @@ mapping SpringModel::Component::toAssemblyConnection(name:String, c:SpringModel:
 	var sourceRef : CompInstance;
 	_property := source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
-	var targetRef := c.map toCompInstance();
+	var tempName : String;
+	if(c.name.<>(null))
+	{
+		tempName := c.name
+	}
+	else if (c.names.length().<>(0))
+	{
+		tempName := c.names->at(0)
+	}
+	else
+	{
+		if(c._class._class.oclIsTypeOf(SpringModel::Class))
+		{
+			tempName := c._class._class.oclAsType(SpringModel::Class).classname;
+		}
+		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
+		{
+			tempName := c._class._class.oclAsType(SpringModel::Factory).factoryBean.name;
+		}
+		else
+		{
+			tempName := "default";
+		}
+	};
+	var targetRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=tempName);//c.map toCompInstance();
 	clientInstElem := sourceRef;
 	serverInstElem := targetRef;
 }
@@ -219,9 +232,8 @@ mapping SpringModel::Component::toConfigConnection(name:String, c:SpringModel::C
 	var sourceRef : CompClass;
 	_property := name;
 	sourceRef := resolveone(compClass:DedalModel::CompClass | compClass.name=source);
-	var targetRef := c.map toCompClass();
 	clientClassElem := sourceRef;
-	serverClassElem := targetRef;
+	serverClassElem := late resolveone(compClass:DedalModel::CompClass | compClass.name=c._class.getComponentClassName());//c.map toCompClass();
 	
 }
 
@@ -282,7 +294,11 @@ query SpringModel::Configuration::getArchitectureDescriptions() : OrderedSet(Ded
 
 query SpringModel::Configuration::getAssmComponents() : Sequence(DedalModel::CompInstance) {
 	var assmComponents : Sequence(DedalModel::CompInstance);
-	assmComponents := self.components -> map toCompInstance();
+	var components = spring.objectsOfType(SpringModel::Component);
+	components->forEach(c)
+	{
+		assmComponents += c.map toCompInstance();
+	};	
 	return assmComponents;
 }
 
@@ -293,7 +309,8 @@ query SpringModel::Configuration::getAssmComponents() : Sequence(DedalModel::Com
 
 query SpringModel::Configuration::getConfigComponents() : Sequence(DedalModel::CompClass) {
 	var configComponents : Sequence(DedalModel::CompClass);
-	self.components->forEach(c)
+	var components = spring.objectsOfType(SpringModel::Component);
+	components->forEach(c)
 	{
 		var s := c._class.getComponentClassName();
 		var cc := resolveone(compClass:DedalModel::CompClass | compClass.name = c._class.getComponentClassName());

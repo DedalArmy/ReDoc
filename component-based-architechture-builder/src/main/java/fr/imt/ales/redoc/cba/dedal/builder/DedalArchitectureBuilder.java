@@ -47,7 +47,7 @@ public class DedalArchitectureBuilder {
 	private String projectPath;
 
 	private InterfaceOption interfaceOption = InterfaceOption.BIGINTERFACES;
-	private AbstractionOption abstractOption = AbstractionOption.MIXED;
+	private AbstractionOption abstractOption = AbstractionOption.ALLCONCRETE;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////// Constructor, init, accessors	////////////////////////////////////////////////////
@@ -115,6 +115,24 @@ public class DedalArchitectureBuilder {
 
 			buildFromSpring(asm, config, spec, repo);
 		}
+		
+		asm.getAssmComponents().forEach(ac -> {
+			ac.getCompInterfaces().forEach(aci -> {
+				aci.setName(aci.getName().replaceAll("\\.", "_"));
+			});
+		});
+		
+		config.getConfigComponents().forEach(cc -> {
+			cc.getCompInterfaces().forEach(cci -> {
+				cci.setName(cci.getName().replaceAll("\\.", "_"));
+			});
+		});
+		
+		spec.getSpecComponents().forEach(cr -> {
+			cr.getCompInterfaces().forEach(cri -> {
+				cri.setName(cri.getName().replaceAll("\\.", "_"));
+			});
+		});
 
 		return dedalDiagram;
 	}

@@ -2,6 +2,7 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.TypeVariable;
 import java.util.List;
 
 import com.github.javaparser.ast.CompilationUnit;
@@ -39,6 +40,8 @@ public interface HierarchyBuilder {
 	JavaType createNewCompiledJavaType(Class<?> class1);
 
 	JavaType findJavaType(Class<?> inter);
+
+	JavaType findJavaType(TypeVariable<?> paramType);
 
 	
 }

@@ -148,13 +148,13 @@ public class CompiledJavaType extends JavaType {
 			str.append("\n\t\t-" + field.getType().getName() + " " + field.getName());
 			break;
 		case Modifier.PROTECTED:
-			str.append("\n\t\t#" + field.getType().getName() + field.getName());
+			str.append("\n\t\t#" + field.getType().getName() + " " +  field.getName());
 			break;
 		case Modifier.PUBLIC:
-			str.append("\n\t\t+" + field.getType().getName() + field.getName());
+			str.append("\n\t\t+" + field.getType().getName() + " " +  field.getName());
 			break;
 		default:
-			str.append("\n\t\t~" + field.getType().getName() + field.getName());
+			str.append("\n\t\t~" + field.getType().getName() + " " +  field.getName());
 			break;
 		}
 	}

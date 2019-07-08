@@ -67,7 +67,6 @@ public class ComponentClassExtractor extends ComponentTypeExtractor {
 	 * @param field
 	 */
 	private void exploreField(JavaField field) {
-		logger.info("\t\t" + field.toGenericString());
 		Attribute tempAttribute = new DedalFactoryImpl().createAttribute();
 		tempAttribute.setName(field.getName());
 		tempAttribute.setType(field.getType());
