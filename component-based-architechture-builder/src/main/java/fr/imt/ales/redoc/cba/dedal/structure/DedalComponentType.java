@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import com.sun.tools.javac.resources.ct;
+
 import dedal.CompType;
 import dedal.Component;
 import dedal.DedalFactory;
@@ -36,6 +38,11 @@ public abstract class DedalComponentType extends DedalType {
 	}
 	
 	public CompType getComponentType() {
+		for(DedalComponentType ct : this.architecture.getTypes()) {
+			if(ct.getjType().getFullName().equals(this.getjType().getFullName())) {
+				return ct.getComponentType();
+			}
+		}
 		if(this.componentType == null) {
 			this.computeComponentType();
 		}

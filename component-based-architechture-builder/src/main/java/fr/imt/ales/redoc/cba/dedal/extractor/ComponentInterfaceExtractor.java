@@ -76,11 +76,8 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 		List<JavaMethod> methods = new ArrayList<>();
 		methods.addAll(recursivelyGetMethods(jType));
 		Interface derivedInterface = this.dedalFactory.createInterface();
-//		if(!methods.isEmpty())
-//		{
 			derivedInterface.setName(EcoreUtil.generateUUID().replaceAll("-", ""));
 			derivedInterface.setType(interfaceType);
-//		}
 		return derivedInterface;
 	}
 
@@ -91,8 +88,9 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 	 */
 	private Collection<? extends JavaMethod> recursivelyGetMethods(JavaType objectToInspect) throws IOException {
 		List<JavaMethod> methods = new ArrayList<>();
-		if(objectToInspect == null) 
-			System.out.println("STOP");
+		if(objectToInspect == null) {
+			return methods;
+		}
 		JavaType superclass = objectToInspect.getSuperclass();
 		if(superclass!=null && !(Object.class.getName()).equals(superclass.getFullName()))
 		{
@@ -126,7 +124,12 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 		List<JavaMethod> methods = new ArrayList<>();
 		methods.addAll(recursivelyGetMethods(jType));
 		InterfaceType result = this.dedalFactory.createInterfaceType();
-		result.setName("I" + jType.getSimpleName());
+		try {
+			result.setName("I" + jType.getSimpleName());
+		}
+		catch (NullPointerException e) {
+			return result;
+		}
 		if(!methods.isEmpty())
 		{
 			result.getSignatures().addAll(this.getSignatures(methods));

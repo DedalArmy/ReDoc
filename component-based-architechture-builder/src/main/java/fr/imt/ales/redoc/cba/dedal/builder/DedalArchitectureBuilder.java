@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
 import dedal.ClassConnection;
+import dedal.CompClass;
 import dedal.CompInstance;
 import dedal.CompRole;
 import dedal.Configuration;
@@ -147,9 +148,11 @@ public class DedalArchitectureBuilder {
 	 */
 	private void buildFromSpring(Assembly asm, Configuration config, Specification spec, Repository repo)
 			throws IOException {
+		this.cleanAnonymousClasses(asm, config);
 		for (CompInstance ci : asm.getAssmComponents()) {
 			this.dedalArchitecture.createCompInstIfNotExists(ci, this.factory, asm.getAssemblyConnections()); // complete the description of the component instances and instance connections
 		}
+		this.ignoreIncompleteAssemblyConnections(asm);
 		this.applyOptionsToAssembly();
 		for (DedalComponentInstance compInstance : this.dedalArchitecture.getAssembly()) {
 			this.dedalArchitecture.createCompClassIfNotExists(compInstance.getComponentInstance().getInstantiates(), this.factory, compInstance); // complete the description of component classes
@@ -170,6 +173,8 @@ public class DedalArchitectureBuilder {
 			}
 		}
 		config.getConfigConnections().removeAll(toRemove);
+		this.ignoreIncompleteConfigConnections(config);
+		this.removeUnnamedCompClasses(config);
 		for(DedalComponentClass dcc : this.dedalArchitecture.getConfiguration()) {
 			List<DedalComponentRole> componentRoles = dcc.computeComponentRoles(config.getConfigConnections());
 			for(DedalComponentRole cr : componentRoles) {
@@ -179,7 +184,7 @@ public class DedalArchitectureBuilder {
 		}
 		for(ClassConnection ccon : config.getConfigConnections()) {
 			RoleConnection specConn = this.factory.createRoleConnection();
-			CompRole clientRole = ccon.getClientClassElem().getRealizes().get(0);
+			CompRole clientRole = !ccon.getClientClassElem().getRealizes().isEmpty()?ccon.getClientClassElem().getRealizes().get(0):null;
 			Interface clientInter = null;
 			if(ccon.getClientIntElem()!=null) {
 				clientInter = this.findInterface(ccon.getClientIntElem(), clientRole);
@@ -197,10 +202,66 @@ public class DedalArchitectureBuilder {
 				}
 			}
 		}
+		this.ignoreIncompleteSpecConnections(spec);
 		this.applyOptionsToSpecification(asm, config, spec);
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
 		}
+	}
+
+
+	private void removeUnnamedCompClasses(Configuration config) {
+		List<CompClass> toRemove = new ArrayList<>();
+		for(CompClass cc : config.getConfigComponents()) {
+			if(cc.getName() == null) 
+				toRemove.add(cc);
+		}
+		config.getConfigComponents().removeAll(toRemove);
+	}
+
+	private void cleanAnonymousClasses(Assembly asm, Configuration config) {
+		List<CompInstance> toRemove = new ArrayList<>();
+		for(CompInstance ci : asm.getAssmComponents()) {
+			if(ci.getInstantiates() != null) {
+				if(ci.getInstantiates().getName() == null) {
+					toRemove.add(ci);
+					config.getConfigComponents().remove(ci.getInstantiates());
+				}
+			} else {
+				toRemove.add(ci);
+			}
+		}
+		asm.getAssmComponents().removeAll(toRemove);
+	}
+
+	private void ignoreIncompleteSpecConnections(Specification spec) {
+		List<RoleConnection> toRemove = new ArrayList<>();
+		for(RoleConnection conn : spec.getSpecConnections()) {
+			if(conn.getClientCompElem() == null || conn.getClientIntElem() == null
+					|| conn.getServerCompElem() == null || conn.getServerIntElem() == null)
+				toRemove.add(conn);
+		}
+		spec.getSpecConnections().removeAll(toRemove);
+	}
+
+	private void ignoreIncompleteConfigConnections(Configuration config) {
+		List<ClassConnection> toRemove = new ArrayList<>();
+		for(ClassConnection conn : config.getConfigConnections()) {
+			if(conn.getClientClassElem() == null || conn.getClientIntElem() == null
+					|| conn.getServerClassElem() == null || conn.getServerIntElem() == null)
+				toRemove.add(conn);
+		}
+		config.getConfigConnections().removeAll(toRemove);
+	}
+
+	private void ignoreIncompleteAssemblyConnections(Assembly asm) {
+		List<InstConnection> toRemove = new ArrayList<>();
+		for(InstConnection conn : asm.getAssemblyConnections()) {
+			if(conn.getClientInstElem() == null || conn.getClientIntElem() == null
+					|| conn.getServerInstElem() == null || conn.getServerIntElem() == null)
+				toRemove.add(conn);
+		}
+		asm.getAssemblyConnections().removeAll(toRemove);
 	}
 
 	private void applyOptionsToSpecification(Assembly asm, Configuration config, Specification spec) {
@@ -225,11 +286,12 @@ public class DedalArchitectureBuilder {
 	}
 
 	private Interface findInterface(Interaction inter, CompRole role) {
-		for(Interaction temp : role.getCompInterfaces()) {
-			if(temp instanceof Interface && ((Interface)temp).getType().equals(((Interface)inter).getType())) {
-				return (Interface) temp;
+		if(role != null && role.getCompInterfaces() != null)
+			for(Interaction temp : role.getCompInterfaces()) {
+				if(temp instanceof Interface && ((Interface)temp).getType().equals(((Interface)inter).getType())) {
+					return (Interface) temp;
+				}
 			}
-		}
 		return null;
 	}
 }

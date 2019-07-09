@@ -137,18 +137,24 @@ public class DedalComponentInstance extends DedalComponentType {
 	}
 
 	private void setSmallestInterface(InstConnection conn) {
-		if(conn.getServerInstElem().equals(this.componentInstance)) {
-			DedalInterfaceType minInterfaceType = this.architecture.findInterfaceType(((Interface)conn.getClientIntElem()).getType());
-			DedalInterfaceType min = this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType());
-			if(!min.getjType().equals(minInterfaceType.getjType())) { //else it means that the smallest interface type is already set
-				for(DedalInterface inter : this.interfaces) {
-					if(!inter.getInterfaceType().getjType().equals(min.getjType()) && min.getjType().isSubtypeOf(inter.getInterfaceType().getjType()) 
-							&& inter.getInterfaceType().getjType().isSubtypeOf(minInterfaceType.getjType())) {
-						min = inter.getInterfaceType();
-						conn.setServerIntElem(inter.getCompInterface());
+		CompInstance serverInstElem = conn.getServerInstElem();
+		try {
+			if(this.componentInstance.equals(serverInstElem)) {
+				DedalInterfaceType minInterfaceType = this.architecture.findInterfaceType(((Interface)conn.getClientIntElem()).getType());
+				DedalInterfaceType min = this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType());
+				if(!min.getjType().equals(minInterfaceType.getjType())) { //else it means that the smallest interface type is already set
+					for(DedalInterface inter : this.interfaces) {
+						if(!inter.getInterfaceType().getjType().equals(min.getjType()) && min.getjType().isSubtypeOf(inter.getInterfaceType().getjType()) 
+								&& inter.getInterfaceType().getjType().isSubtypeOf(minInterfaceType.getjType())) {
+							min = inter.getInterfaceType();
+							conn.setServerIntElem(inter.getCompInterface());
+						}
 					}
 				}
 			}
+		} catch(NullPointerException npe) {
+			npe.printStackTrace();
+			System.out.println();
 		}
 	}
 

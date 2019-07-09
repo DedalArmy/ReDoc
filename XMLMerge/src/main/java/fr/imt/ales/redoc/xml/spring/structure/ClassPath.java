@@ -224,4 +224,12 @@ public class ClassPath {
 		return SpringConfigWriter.writeMergedSpringConfig(path, xml, doc);
 	}
 
+	public XMLFile mergeAll(Path path2, List<XMLFile> xmlFiles) throws SAXException, IOException, TransformerException {
+		Path filePath = Paths.get(path2.toString(), "globalDeployment.xml");
+		XMLFile xml = new XMLFile(filePath.toUri(), builder, this);
+		SpringConfigMerger merger = new SpringConfigMerger(this.builder, xml);
+		Document doc = merger.mergeAll(xmlFiles);
+		return SpringConfigWriter.writeMergedSpringConfig(path, xml, doc);
+	}
+
 }

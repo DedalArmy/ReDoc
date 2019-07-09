@@ -45,6 +45,7 @@ public class Main {
 				for(XMLFile xml : mergeable) {
 					cp.merge(path, xml);
 				}
+				cp.mergeAll(path, cp.getXmlFiles());
 			} catch (ParserConfigurationException e) {
 				logger.fatal("An error occured while constructing the ClassPath object. The Spring deployment descritor discovery could not be executed.", e);
 			} catch (SAXException e) {

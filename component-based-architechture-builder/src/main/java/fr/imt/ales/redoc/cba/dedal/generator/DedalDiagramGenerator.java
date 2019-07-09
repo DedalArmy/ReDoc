@@ -103,6 +103,10 @@ public class DedalDiagramGenerator {
 				topDescriptions.add(xFile);
 			}
 		}
+		XMLFile xFile = cp.mergeAll(Paths.get(projectPath), cp.getXmlFiles());
+		if(xFile != null) {
+			topDescriptions.add(xFile);
+		}
 		
 		//reset previous results
 		String toRmPath = projectPath + "/generated_metrics_results";
@@ -123,7 +127,7 @@ public class DedalDiagramGenerator {
 				Metrics.resetForNext();
 				result.add(generate(projectPath, xml));
 			} catch (Exception | Error e) {
-				logger.error(xml.getName() + " could not be reconstructed");
+				logger.error(xml.getName() + " could not be reconstructed", e);
 				Metrics.resetForNext();
 				String output = projectPath + "/generated_metrics_results/metrics_"+xml.getName()+".csv";
 				DedalDiagramWriter.exportMetrics(output);
@@ -136,7 +140,7 @@ public class DedalDiagramGenerator {
 	
 	private static void compareSpec(Configuration arch) {
 		for(Specification spec : arch.getImplements()) {
-			if(spec.getSpecComponents().size() != arch.getConfigComponents().size() || someDifferent(spec, arch)) {
+			if(someDifferent(spec, arch)) {
 				Metrics.addNbDiffSpecs();
 			}
 		}

@@ -30,7 +30,6 @@ import com.github.javaparser.ast.type.Type;
 import fr.imt.ales.redoc.jarloader.JarLoader;
 import fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer;
 import fr.imt.ales.redoc.type.hierarchy.structure.CompiledJavaType;
-import fr.imt.ales.redoc.type.hierarchy.structure.JavaField;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaNestedType;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaPackage;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
@@ -247,7 +246,6 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	private void exploreHierarchy() {
 		logger.trace("exploreHierarchy()");
 		this.loadNecessaryData();
-		int length = getPackages().size();
 		List<JavaPackage> listPackages = new ArrayList<>();
 		listPackages.addAll(this.getPackages());
 		for(JavaPackage pack : listPackages)
@@ -370,6 +368,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			NodeList<ClassOrInterfaceType> extendedTypes = typeDeclaration.asClassOrInterfaceDeclaration().getExtendedTypes();
 			for(ClassOrInterfaceType et : extendedTypes)
 			{
+				
 				logger.debug(type.getSimpleName() + " --|> " + et);
 				JavaType coi = findClassOrInterface(type, et);
 				if(coi != null)
@@ -510,7 +509,16 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	 * @return the corresponding {@link JavaType}
 	 */
 	private JavaType findClassOrInterface(JavaType type, ClassOrInterfaceType coi) {
-		String name = coi.getName().toString();
+		String name = null;
+		Optional<ClassOrInterfaceType> scope = coi.getScope();
+		if(scope.isPresent())
+		{
+			name = scope.get().toString() + "." + coi.getNameAsExpression().toString();
+		} else
+			name = coi.getNameAsExpression().toString();
+		
+//		if(name.contains("MetadataMBeanInfoAssembler"))
+//			System.out.println();
 		/*
 		 * LOCAL DEPENDENCIES
 		 */

@@ -13,6 +13,7 @@ import dedal.Component;
 import dedal.Configuration;
 import dedal.DIRECTION;
 import dedal.DedalFactory;
+import dedal.Specification;
 import fr.imt.ales.redoc.cba.dedal.extractor.ComponentRoleExtractor;
 
 public class DedalComponentClass extends DedalComponentType {
@@ -29,7 +30,12 @@ public class DedalComponentClass extends DedalComponentType {
 		this.mapInterfaces(componentInstance);
 		this.renameProvidedInterfaces();
 		this.componentClass.setImplements(this.getComponentType());
+		try {
 		((Configuration)this.componentClass.eContainer()).getComptypes().add(componentType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println();
+		}
 		for(DedalInterface inter : this.interfaces) {
 			this.componentClass.getCompInterfaces().add(inter.getCompInterface());
 		}
@@ -93,6 +99,12 @@ public class DedalComponentClass extends DedalComponentType {
 		List<DedalComponentRole> result = new ArrayList<>();
 		ComponentRoleExtractor cre = new ComponentRoleExtractor(this.getjType(), this.getDedalFactory());
 		CompRole compRole = cre.mapComponentRole();
+		for(DedalComponentRole c : this.architecture.getSpecification()) {
+			if(c.getComponentRole().getName().equals(compRole.getName())) {
+				result.add(c);
+				return result ;
+			}
+		}
 		result.add(new DedalComponentRole(this.getProjectPath(), compRole, this.getDedalFactory(), this.architecture, this.componentClass, configConnections, this.componentClass));
 		return result ;
 	}

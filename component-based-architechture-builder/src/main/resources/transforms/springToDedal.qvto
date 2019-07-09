@@ -101,13 +101,17 @@ mapping SpringModel::Component::toCompInstance() : DedalModel::CompInstance {
 	}
 	else
 	{
+		var anonymous : String;
+		anonymous := "_anonymousBean";
 		if(self._class._class.oclIsTypeOf(SpringModel::Class))
 		{
-			name := self._class._class.oclAsType(SpringModel::Class).classname;
+			var tempName := "\"".concat(self._class._class.oclAsType(SpringModel::Class).classname.replaceAll("\"","").concat(anonymous)).concat("\"");
+			name := tempName;
 		}
 		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
 		{
-			name := self._class._class.oclAsType(SpringModel::Factory).factoryBean.name;
+			var tempName := "\"".concat(self._class._class.oclAsType(SpringModel::Factory).factoryBean.name.replaceAll("\"","").concat(anonymous)).concat("\"");
+			name := tempName
 		}
 		else
 		{
@@ -190,13 +194,15 @@ mapping SpringModel::Component::toAssemblyConnection(name:String, c:SpringModel:
 	}
 	else
 	{
+		var anonymous : String;
+		anonymous := "_anonymousBean";
 		if(c._class._class.oclIsTypeOf(SpringModel::Class))
 		{
-			tempName := c._class._class.oclAsType(SpringModel::Class).classname;
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Class).classname.replaceAll("\"","").concat(anonymous)).concat("\"");
 		}
 		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
 		{
-			tempName := c._class._class.oclAsType(SpringModel::Factory).factoryBean.name;
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Factory).factoryBean.name.replaceAll("\"","").concat(anonymous)).concat("\"");
 		}
 		else
 		{
@@ -345,9 +351,46 @@ query SpringModel::Configuration::getAssmComponents() : Sequence(DedalModel::Com
 	var components = spring.objectsOfType(SpringModel::Component);
 	components->forEach(c)
 	{
-		assmComponents += c.map toCompInstance();
+		if(not c.exists()) {
+			assmComponents += c.map toCompInstance();
+		};		
 	};	
 	return assmComponents;
+}
+
+query SpringModel::Component::exists() : Boolean {
+	dedal.objectsOfType(DedalModel::CompInstance) -> forEach(ci) {
+		var tempName : String;
+		if(self.name.<>(null))
+		{
+			tempName := self.name
+		}
+		else if (self.names.length().<>(0))
+		{
+			tempName := self.names->at(0)
+		}
+		else
+		{
+			var anonymous : String;
+			anonymous := "_anonymousBean";
+			if(self._class._class.oclIsTypeOf(SpringModel::Class))
+			{
+				tempName := "\"".concat(self._class._class.oclAsType(SpringModel::Class).classname.replaceAll("\"","").concat(anonymous)).concat("\"");
+			}
+			else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
+			{
+				tempName := "\"".concat(self._class._class.oclAsType(SpringModel::Factory).factoryBean.name.replaceAll("\"","").concat(anonymous)).concat("\"");
+			}
+			else
+			{
+				tempName := "default";
+			}
+		};
+		if(ci.name = tempName) {
+			return true;
+		};
+	};
+	return false;
 }
 
 

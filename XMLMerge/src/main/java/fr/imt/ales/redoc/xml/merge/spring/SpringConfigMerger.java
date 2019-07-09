@@ -1,6 +1,8 @@
 package fr.imt.ales.redoc.xml.merge.spring;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -61,12 +63,16 @@ public class SpringConfigMerger {
 	 * @throws IOException If any I/O errors occur.
 	 * @throws SAXException If any parse errors occur.
 	 */
-	private void appendBeans(XMLFile xml) throws SAXException, IOException {
+	private void appendImportedBeans(XMLFile xml) throws SAXException, IOException {
 		for(XMLFile x : xml.getImports()) {
 			if(!this.xmlFile.equals(x)) {
-				this.appendBeans(x);
+				this.appendImportedBeans(x);
 			}
 		}
+		appendBeans(xml);
+	}
+
+	private void appendBeans(XMLFile xml) throws SAXException, IOException {
 		Element beans = document.getDocumentElement();
 
 		NodeList nodes = xml.getSpringConfigurations().getChildNodes();
@@ -89,7 +95,32 @@ public class SpringConfigMerger {
 		//Create beans tag
 		Element rootElement = document.createElement(BEANS);
 		document.appendChild(rootElement);
-		this.appendBeans(xmlFile);
+		this.appendImportedBeans(xmlFile);
+
+		// we can remove the import tags
+		Element beans = document.getDocumentElement();
+		while(beans.getElementsByTagName(IMPORT).getLength()>0) {
+			beans.removeChild(beans.getElementsByTagName(IMPORT).item(0));
+		}
+		return document;
+	}
+	
+	/**
+	 * Merges all beans of several descriptions
+	 * @return the merged document
+	 * @throws IOException If any I/O errors occur.
+	 * @throws SAXException If any parse errors occur.
+	 */
+	public Document mergeAll(List<XMLFile> xmlfiles) throws SAXException, IOException {
+		this.document = null; // to reset the document
+		this.document = this.builder.newDocument();
+		//Create beans tag
+		Element rootElement = document.createElement(BEANS);
+		document.appendChild(rootElement);
+		for(XMLFile xmlF : xmlfiles) {
+			this.appendBeans(xmlF);
+		}
+		
 
 		// we can remove the import tags
 		Element beans = document.getDocumentElement();

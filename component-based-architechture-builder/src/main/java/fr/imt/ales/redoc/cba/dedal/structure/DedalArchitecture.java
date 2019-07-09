@@ -12,10 +12,8 @@ import dedal.CompInstance;
 import dedal.DedalDiagram;
 import dedal.DedalFactory;
 import dedal.InstConnection;
-import dedal.Interaction;
 import dedal.Interface;
 import dedal.InterfaceType;
-import fr.imt.ales.redoc.cba.dedal.builder.InterfaceOption;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
 public class DedalArchitecture {
@@ -136,7 +134,7 @@ public class DedalArchitecture {
 
 	public DedalComponentInstance createCompInstIfNotExists(CompInstance ci, DedalFactory factory,
 			EList<InstConnection> assemblyConnections) throws IOException {
-		if(!this.compInstExists(ci)) {
+		if(!this.compInstExists(ci) && ci.getInstantiates()!=null) {
 			return new DedalComponentInstance(this.projectPath, ci, factory, assemblyConnections, this);
 
 		} else {
@@ -155,18 +153,13 @@ public class DedalArchitecture {
 
 	public DedalComponentClass createCompClassIfNotExists(CompClass cc, DedalFactory factory,
 			DedalComponentInstance compInstance) throws IOException {
-		if(!this.compClassExists(cc)) {
-			try {
+		if(!this.compClassExists(cc) && cc.eContainer() != null) {
 			return new DedalComponentClass(this.projectPath, cc, factory, this, compInstance);
-			} catch (NullPointerException e) {
-				System.out.println();
-				return null;
-			}
-		} else {
+		} else if(this.compClassExists(cc)) {
 			DedalComponentClass compClass = this.findCompClass(cc);
 			compClass.setInstantiatedBy(compInstance);
 			return compClass;
-		}	
+		} else return null; 
 	}
 
 	public DedalComponentClass findCompClass(CompClass cc) {

@@ -170,7 +170,12 @@ public class DedalComponentRole extends DedalComponentType {
 			for(RoleConnection conn : specConnections) {
 				if(conn.getServerCompElem().equals(this.componentRole)) {
 					minProvidedInterfaces.add(this.architecture.findInterfaceType(((Interface)conn.getClientIntElem()).getType())); //this is the smallest interface to remain substitutable
-					this.providedInterfaces.add(this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType()));
+					try {
+						this.providedInterfaces.add(this.architecture.findInterfaceType(((Interface)conn.getServerIntElem()).getType()));
+					} catch (NullPointerException npe) {
+						npe.printStackTrace();
+						System.out.println();
+					}
 				}
 			}
 			for(DedalInterface inter : this.interfaces) {
