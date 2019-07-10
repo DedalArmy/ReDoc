@@ -171,10 +171,8 @@ mapping SpringModel::Component::toAssemblyConnection(name:String, r:SpringModel:
 	_property := source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
 	var target := r.ref.oclAsType(SpringModel::Component).name;
-	var targetRef : CompInstance;
-	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompInstance();
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=target);
 }
 
 mapping SpringModel::Component::toAssemblyConnection(name:String, c:SpringModel::Component) : DedalModel::InstConnection {
@@ -209,9 +207,8 @@ mapping SpringModel::Component::toAssemblyConnection(name:String, c:SpringModel:
 			tempName := "default";
 		}
 	};
-	var targetRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=tempName);//c.map toCompInstance();
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=tempName);
 }
 
 mapping SpringModel::Component::toAssemblyConnection_set(name:String, r:SpringModel::Reference) : DedalModel::InstConnection {
@@ -221,10 +218,8 @@ mapping SpringModel::Component::toAssemblyConnection_set(name:String, r:SpringMo
 	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
 	var target := r.ref.oclAsType(SpringModel::Component).name;
-	var targetRef : CompInstance;
-	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompInstance();
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=target);
 }
 
 mapping SpringModel::Component::toAssemblyConnection_set(name:String, c:SpringModel::Component) : DedalModel::InstConnection {
@@ -233,9 +228,34 @@ mapping SpringModel::Component::toAssemblyConnection_set(name:String, c:SpringMo
 	var sourceRef : CompInstance;
 	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
-	var targetRef := c.map toCompInstance();
+	var tempName : String;
+	if(c.name.<>(null))
+	{
+		tempName := c.name
+	}
+	else if (c.names.length().<>(0))
+	{
+		tempName := c.names->at(0)
+	}
+	else
+	{
+		var anonymous : String;
+		anonymous := "_anonymousBean";
+		if(c._class._class.oclIsTypeOf(SpringModel::Class))
+		{
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Class).classname.replaceAll("\"","").concat(anonymous)).concat("\"");
+		}
+		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
+		{
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Factory).factoryBean.name.replaceAll("\"","").concat(anonymous)).concat("\"");
+		}
+		else
+		{
+			tempName := "default";
+		}
+	};
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=tempName);
 }
 
 mapping SpringModel::Component::toAssemblyConnection_list(name:String, r:SpringModel::Reference) : DedalModel::InstConnection {
@@ -245,10 +265,8 @@ mapping SpringModel::Component::toAssemblyConnection_list(name:String, r:SpringM
 	_property := "list:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
 	var target := r.ref.oclAsType(SpringModel::Component).name;
-	var targetRef : CompInstance;
-	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompInstance();
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=target);
 }
 
 mapping SpringModel::Component::toAssemblyConnection_list(name:String, c:SpringModel::Component) : DedalModel::InstConnection {
@@ -257,9 +275,34 @@ mapping SpringModel::Component::toAssemblyConnection_list(name:String, c:SpringM
 	var sourceRef : CompInstance;
 	_property := "set:"+source.replaceAll("\"", "")+"."+name.replaceAll("\"", "");
 	sourceRef := resolveone(compInst:DedalModel::CompInstance | compInst.name=source);
-	var targetRef := c.map toCompInstance();
+	var tempName : String;
+	if(c.name.<>(null))
+	{
+		tempName := c.name
+	}
+	else if (c.names.length().<>(0))
+	{
+		tempName := c.names->at(0)
+	}
+	else
+	{
+		var anonymous : String;
+		anonymous := "_anonymousBean";
+		if(c._class._class.oclIsTypeOf(SpringModel::Class))
+		{
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Class).classname.replaceAll("\"","").concat(anonymous)).concat("\"");
+		}
+		else if(self._class._class.oclIsTypeOf(SpringModel::Factory))
+		{
+			tempName := "\"".concat(c._class._class.oclAsType(SpringModel::Factory).factoryBean.name.replaceAll("\"","").concat(anonymous)).concat("\"");
+		}
+		else
+		{
+			tempName := "default";
+		}
+	};
 	clientInstElem := sourceRef;
-	serverInstElem := targetRef;
+	serverInstElem := late resolveone(compInst:DedalModel::CompInstance | compInst.name=tempName);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -273,10 +316,8 @@ mapping SpringModel::Component::toConfigConnection(name:String, r:SpringModel::R
 	_property := name;
 	sourceRef := resolveone(compClass:DedalModel::CompClass | compClass.name=source);
 	var target := r.ref.oclAsType(SpringModel::Component).name;
-	var targetRef : CompClass;
-	targetRef := r.ref.oclAsType(SpringModel::Component).map toCompClass();
 	clientClassElem := sourceRef;
-	serverClassElem := targetRef;
+	serverClassElem := late resolveone(compClass:DedalModel::CompClass | compClass.name = target);
 	
 }
 
@@ -351,7 +392,7 @@ query SpringModel::Configuration::getAssmComponents() : Sequence(DedalModel::Com
 	var components = spring.objectsOfType(SpringModel::Component);
 	components->forEach(c)
 	{
-		if(not c.exists()) {
+		if(not c.exists()) { //org.broadleafcommerce.core.payment.service.workflow.PaymentActivity_anonymousBean
 			assmComponents += c.map toCompInstance();
 		};		
 	};	
@@ -499,18 +540,9 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 			}
 			else if(f2.oclIsTypeOf(SpringModel::Component))
 			{
-				var exists : Boolean;
-				exists := false;
 				dedal.objectsOfType(DedalModel::Assembly)->forEach(asm)
 				{
-					asm.assmComponents->forEach(comp)
-					{
-						if(comp.name = f2.oclAsType(SpringModel::Component)._class.getComponentClassName())
-						{
-							exists := true
-						}
-					};
-					if(not exists)
+					if(not c.exists())
 					{
 						asm.assmComponents += f2.oclAsType(SpringModel::Component).map toCompInstance();
 					};
@@ -530,18 +562,9 @@ query SpringModel::_Collection::getInstConnections(c:SpringModel::Component, nam
 			}
 			else if(f2.oclIsTypeOf(SpringModel::Component))
 			{
-				var exists : Boolean;
-				exists := false;
 				dedal.objectsOfType(DedalModel::Assembly)->forEach(asm)
 				{
-					asm.assmComponents->forEach(comp)
-					{
-						if(comp.name = f2.oclAsType(SpringModel::Component)._class.getComponentClassName())
-						{
-							exists := true
-						}
-					};
-					if(not exists)
+					if(not c.exists())
 					{
 						asm.assmComponents += f2.oclAsType(SpringModel::Component).map toCompInstance();
 					};

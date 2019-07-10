@@ -16,7 +16,7 @@ public class ComponentTypeExtractor extends ArtefactExtractor {
 		if(this.componentType == null)
 		{
 			this.componentType = this.dedalFactory.createCompType();
-			this.componentType.setName(this.getSimpleName().replace('.', '_')+"_Type");
+			this.componentType.setName(this.getFullName().replace('.', '_')+"_Type");
 		}
 		return this.componentType;
 	}
