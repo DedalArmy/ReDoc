@@ -134,6 +134,32 @@ public class DedalArchitectureBuilder {
 				cri.setName(cri.getName().replaceAll("\\.", "_"));
 			});
 		});
+		
+		// dealing with automatic Ids
+		dedalDiagram.getArchitectureDescriptions().forEach(ad -> {
+			if(ad instanceof Assembly) {
+				((Assembly) ad).getAssmComponents().forEach(ac -> ac.setId(ac.getName().replaceAll("\"", "") + "_inst"));
+				((Assembly) ad).getAssemblyConnections().forEach(ac -> ac.setRefID("con_" + ac.getClientInstElem().getName().replaceAll("\"", "") 
+						+ "_" + ac.getServerInstElem().getName().replaceAll("\"", "")));
+			}
+			else if(ad instanceof Configuration) {
+				((Configuration) ad).getConfigComponents().forEach(cc -> cc.setId(cc.getName().replaceAll("\"", "") + "_class"));
+				((Configuration) ad).getComptypes().forEach(ct -> ct.setId(ct.getName().replaceAll("\"", "") + "_type"));
+				((Configuration) ad).getConfigConnections().forEach(cc -> cc.setRefID("con_" + cc.getClientClassElem().getName().replaceAll("\"", "") 
+						+ "_" + cc.getServerClassElem().getName().replaceAll("\"", "")));
+			}
+			else if (ad instanceof Specification) {
+				((Specification) ad).getSpecComponents().forEach(sc -> sc.setId(sc.getName().replaceAll("\"", "") + "_role"));
+				((Specification) ad).getSpecConnections().forEach(sc -> sc.setRefID("con_" + sc.getClientCompElem().getName().replaceAll("\"", "") 
+						+ "_" + sc.getServerCompElem().getName().replaceAll("\"", "")));
+			}
+		});
+		repo.getInterfaceTypes().forEach(it -> {
+			it.getSignatures().forEach(s -> {
+				s.setId(s.getName().replaceAll("\"", ""));
+				s.getParameters().forEach(p -> p.setId(p.getName().replaceAll("\"", "")));
+			});
+		});
 
 		return dedalDiagram;
 	}

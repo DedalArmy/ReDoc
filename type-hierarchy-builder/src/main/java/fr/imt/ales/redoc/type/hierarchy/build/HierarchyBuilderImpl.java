@@ -391,17 +391,17 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		TypeDeclaration<?> typeDeclaration = type.getTypeDeclaration();
 		if(typeDeclaration.isClassOrInterfaceDeclaration())
 		{
-			NodeList<ClassOrInterfaceType> extendedTypes = typeDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
-			for(ClassOrInterfaceType et : extendedTypes)
+			NodeList<ClassOrInterfaceType> implementedTypes = typeDeclaration.asClassOrInterfaceDeclaration().getImplementedTypes();
+			for(ClassOrInterfaceType it : implementedTypes)
 			{
 				if(logger.isDebugEnabled())
 				{
-					logger.debug(type.getSimpleName() + " ..|> " + et);
+					logger.debug(type.getSimpleName() + " ..|> " + it);
 				}
-				JavaType coi = findClassOrInterface(type, et);
+				JavaType coi = findClassOrInterface(type, it);
 				if(coi != null)
 					result.add(coi);
-				else logger.warn("Missing dependency : " + et.asString());
+				else logger.warn("Missing dependency : " + it.asString());
 			}
 		}
 		return result;
@@ -415,8 +415,11 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		for(int i = 0; i < length; i++)
 		{
 			JavaPackage pack = getPackages().get(i);
-			for(JavaType type : pack.getJavaTypes())
+			int lengthJ = pack.getJavaTypes().size();
+			for(int j = 0; j<lengthJ; j++)
+//			for(JavaType type : pack.getJavaTypes())
 			{
+				JavaType type = pack.getJavaTypes().get(j);
 				if((!(type instanceof CompiledJavaType)) && (type instanceof JavaType)) {
 					for(FieldDeclaration fd : type.getTypeDeclaration().getFields())
 					{
@@ -517,8 +520,6 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		} else
 			name = coi.getNameAsExpression().toString();
 		
-//		if(name.contains("MetadataMBeanInfoAssembler"))
-//			System.out.println();
 		/*
 		 * LOCAL DEPENDENCIES
 		 */
@@ -570,8 +571,60 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		 * FIND IN IMPORTS
 		 */
 		result = findTypeInImports(type, coi);
+		if(result != null)
+			return result;
+		
+		/*
+		 * FIND IN LOADED CLASSES IF IT IS A DUMMY DEVELOPPER
+		 */
+		result = catchMeIfYouCan(type, coi);
 		return (result != null)? result : null;
 	}	
+
+	private JavaType catchMeIfYouCan(JavaType type, ClassOrInterfaceType coi) {
+		try {
+			String name = coi.asString();
+			String cName = name;
+			for(String cn : this.jarLoader.getClassNames()) {
+				String substring = (cn.lastIndexOf(".")!=-1)?cn.substring(cn.lastIndexOf(".")+1):cn;
+				if(substring.equals(name)) {
+					cName = cn;
+					break;
+				}
+			}
+			Class<?> clazz = null;
+//			if(coi.getName().toString().contains("."))
+//				clazz = Class.forName(cName.replace("\\."+name, "\\$"+name), false, this.jarLoader);
+//			else
+			clazz = Class.forName(cName, false, this.jarLoader);
+			String simpleName = clazz.getSimpleName();
+			String packageName = clazz.getPackageName();
+			return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+		} catch(ClassNotFoundException e) {
+			try {
+				String name = coi.asString().replaceAll("\\.", "\\$");
+				String cName = name;
+				for(String cn : this.jarLoader.getClassNames()) {
+					String substring = (cn.lastIndexOf(".")!=-1)?cn.substring(cn.lastIndexOf(".")+1):cn;
+					if(substring.equals(name)) {
+						cName = cn;
+						break;
+					}
+				}
+				Class<?> clazz = null;
+//				if(coi.getName().toString().contains("."))
+//					clazz = Class.forName(cName.replace("\\."+name, "\\$"+name), false, this.jarLoader);
+//				else
+				clazz = Class.forName(cName, false, this.jarLoader);
+				String simpleName = clazz.getSimpleName();
+				String packageName = clazz.getPackageName();
+				return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);
+			} catch(ClassNotFoundException e2) {
+				//There is no more hope... =(
+				return null;
+			}
+		}
+	}
 
 	/**
 	 * This methods finds an imported {@link JavaType} from external sources into default packages.
@@ -592,7 +645,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 			else {
 				String cName = JAVA_LANG+"."+name;
 				try { // The class is located into java.lang package
-					Class<?> clazz = Class.forName(cName);
+					Class<?> clazz = Class.forName(cName, false, this.jarLoader);
 					String simpleName = clazz.getSimpleName();
 					String packageName = clazz.getPackageName();
 					return new CompiledJavaType(simpleName, this.getPackage(packageName), null, null, clazz);

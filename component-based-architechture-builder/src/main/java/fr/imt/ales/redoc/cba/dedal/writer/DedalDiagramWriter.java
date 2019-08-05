@@ -111,7 +111,7 @@ public class DedalDiagramWriter {
 		else
 		{
 			Main.logger.error("No architecture were reconstructed.");
-			JOptionPane.showMessageDialog(null, "Ooops! Something wrong happened during the reconstruction...");
+//			JOptionPane.showMessageDialog(null, "Ooops! Something wrong happened during the reconstruction...");
 		}
 	}
 

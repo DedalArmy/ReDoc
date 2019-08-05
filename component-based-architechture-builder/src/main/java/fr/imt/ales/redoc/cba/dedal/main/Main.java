@@ -56,7 +56,7 @@ public class Main {
 			String path;
 			while((path = br.readLine()) != null) {
 				HierarchyBuilderManager.getInstance().init();
-				path = parentDirectory+"/"+path;
+//				path = parentDirectory+"/"+path;
 				logger.info("Path = " + path);
 				try {
 					DedalDiagramGenerator.generateAll(path);

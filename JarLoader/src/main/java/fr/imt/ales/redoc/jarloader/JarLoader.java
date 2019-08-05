@@ -141,7 +141,8 @@ public class JarLoader extends URLClassLoader {
 				}
 				String cannonicalClassNane = (((entry.substring(0, entry.lastIndexOf('.')))
 						.replaceAll("/", "."))
-						.replaceAll("\\$", "."));
+//						.replaceAll("\\$", ".")
+						);
 				this.packageNameToClassNames.putIfAbsent(packageName, new ArrayList<>());
 				this.packageNameToClassNames.get(packageName).add(cannonicalClassNane);
 				this.classNames.add(cannonicalClassNane);
