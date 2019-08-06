@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.Parameter;import jdk.jfr.internal.Type;
+import com.github.javaparser.ast.body.Parameter;
 
 public class JavaMethod implements Serializable {
 	
