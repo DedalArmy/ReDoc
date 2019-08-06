@@ -33,6 +33,7 @@ import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilder;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 import fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter;
 import fr.imt.ales.redoc.type.hierarchy.structure.CompiledJavaType;
+import fr.imt.ales.redoc.type.hierarchy.structure.serializer.BuilderSerializer;
 import fr.imt.ales.redoc.xml.spring.structure.ClassPath;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 
@@ -44,6 +45,7 @@ import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
 public class DedalDiagramGenerator {
 
 	private static final String PLANT_UML_REPRESENTATION_UML_TXT = "/PlantUMLRepresentation/uml.txt";
+	private static final String SERIALIZED_BUILDER = "/generated/serialized/hierarchy.ser";
 	static final Logger logger = LogManager.getLogger(DedalDiagramGenerator.class);
 	
 	/**
@@ -79,18 +81,24 @@ public class DedalDiagramGenerator {
 		logger.info("Hierarchy built");
 		
 		// Write the extracted UML diagram for comparison purpose
-//		try {
-			String out = projectPath + PLANT_UML_REPRESENTATION_UML_TXT;
-			PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
-			logger.info("Hierarchy has been written in PlantUML format.");
-//			PlantUMLWritter.generateSVG(out);
-			logger.info("The UML diagram of the project " + projectPath + " has been generated");
-//		} catch (IOException e) {
-//			logger.warn("The UML diagram of project " + projectPath + " could not be generated due to I/O Exception.");
-//			logger.debug(e);
-//		} catch (InterruptedException | IllegalStateException e) {
-//			logger.error("The SVG file could not be generated because the UML diagram is probably too big for graphviz", e);
-//		}
+		//		try {
+		String out = projectPath + PLANT_UML_REPRESENTATION_UML_TXT;
+		PlantUMLWritter.writeHierarchy(hierarchyBuilder, out);
+		logger.info("Hierarchy has been written in PlantUML format.");
+		//			PlantUMLWritter.generateSVG(out);
+		logger.info("The UML diagram of the project " + projectPath + " has been generated");
+		//		} catch (IOException e) {
+		//			logger.warn("The UML diagram of project " + projectPath + " could not be generated due to I/O Exception.");
+		//			logger.debug(e);
+		//		} catch (InterruptedException | IllegalStateException e) {
+		//			logger.error("The SVG file could not be generated because the UML diagram is probably too big for graphviz", e);
+		//		}
+		
+		//Serialize the current Hierarchy Builder
+		out = projectPath + SERIALIZED_BUILDER;
+		BuilderSerializer.serializePackages(hierarchyBuilder, out);
+		logger.info("Hierarchy builder serialized");
+		
 		logger.info("End of architecture hierarchy reconstruction");
 		
 		// Merge XML Spring deployment descriptors

@@ -23,7 +23,7 @@ public class CompiledJavaType extends JavaType {
 	 */
 	private static final long serialVersionUID = -7709565735073206032L;
 	private static final String LIGHT_GREY = "#LightGrey";
-	private Class<?> clazz;
+	transient private Class<?> clazz;
 
 	/**
 	 * Parameterized constructor

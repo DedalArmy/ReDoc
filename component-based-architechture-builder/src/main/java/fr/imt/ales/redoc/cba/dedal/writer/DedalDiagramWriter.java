@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -93,7 +91,7 @@ public class DedalDiagramWriter {
 		try {
 			resource.save(options);
 		} catch (Exception e) {
-			Main.logger.error("could not generate " + dedalDiagram.getName() +".dedaladl", e);
+			Main.logger.error("could not generate " + dedalDiagram.getName() +".dedaladl" + e.getMessage());
 		}
 	}
 

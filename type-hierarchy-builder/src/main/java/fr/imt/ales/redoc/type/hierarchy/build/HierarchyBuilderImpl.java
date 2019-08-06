@@ -73,7 +73,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	/**
 	 * {@link List} of {@link CompilationUnit}
 	 */
-	private List<CompilationUnit> compilationUnits;
+	transient private List<CompilationUnit> compilationUnits;
 	/**
 	 * {@link List} of {@link JavaPackage}
 	 */
@@ -81,7 +81,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 	/**
 	 * For loading jar/war archives and analyze compiled dependencies
 	 */
-	private JarLoader jarLoader;
+	transient private JarLoader jarLoader;
 
 	private String path;
 
@@ -788,7 +788,7 @@ public class HierarchyBuilderImpl implements HierarchyBuilder {
 		try {
 			return this.createNewCompiledJavaType(this.jarLoader.loadClass(paramType.getName()));
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("Class not found " + e.getMessage());
 			return null;
 		}
 	}

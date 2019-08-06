@@ -8,15 +8,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Date;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.xml.sax.SAXException;
-
 import fr.imt.ales.redoc.cba.dedal.generator.DedalDiagramGenerator;
 import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
 
@@ -51,7 +44,6 @@ public class Main {
 
 		if(args[0].endsWith("projets.txt")) {
 			File projects = new File(args[0]);
-			String parentDirectory = projects.getParent();
 			BufferedReader br = new BufferedReader(new FileReader(projects));
 			String path;
 			while((path = br.readLine()) != null) {
@@ -64,6 +56,7 @@ public class Main {
 					logger.error(e);
 				}
 			}
+			br.close();
 		} else {
 			try {
 				String path = args[0];
@@ -74,7 +67,7 @@ public class Main {
 				logger.error(e.getStackTrace().toString());
 			}
 		}
-
+		
 		logger.info("The end");
 	}
 

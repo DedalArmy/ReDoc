@@ -14,7 +14,6 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.sun.org.slf4j.internal.Logger;
 
 /**
  * A class for representing Java types
@@ -40,11 +39,11 @@ public class JavaType implements Serializable {
 	/**
 	 * The {@link TypeDeclaration} of the {@link JavaType}
 	 */
-	private TypeDeclaration<?> typeDeclaration;
+	transient private TypeDeclaration<?> typeDeclaration;
 	/**
 	 * The {@link CompilationUnit} corresponding to the Java file of the {@link JavaType}
 	 */
-	private CompilationUnit compilationUnit;
+	transient private CompilationUnit compilationUnit;
 	/**
 	 * Imported {@link JavaType}s
 	 */
