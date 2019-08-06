@@ -30,12 +30,7 @@ import fr.imt.ales.redoc.folderloader.FolderLoader;
  * A class for loading java classes from jar/war archives
  * @author Alexandre Le Borgne
  */
-public class JarLoader extends URLClassLoader implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3449500379242568205L;
+public class JarLoader extends URLClassLoader {
 
 	/*
 	 * LOGGER

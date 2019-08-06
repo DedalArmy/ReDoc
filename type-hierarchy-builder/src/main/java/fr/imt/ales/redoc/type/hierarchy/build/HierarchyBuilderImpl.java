@@ -6,6 +6,8 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;

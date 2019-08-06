@@ -44,10 +44,17 @@ public class CompiledJavaType extends JavaType {
 	 * @param simpleName the simple name of the Java type
 	 * @param jPackage the {@link JavaPackage} that is the parent of the current {@link JavaType}
 	 * @param clazz the {@link Class} object
+	 * @throws IOException 
 	 */
-	public CompiledJavaType(String simpleName, JavaPackage jPackage, Class<?> clazz) {
+	public CompiledJavaType(String simpleName, JavaPackage jPackage, Class<?> clazz) throws IOException {
 		super(simpleName, jPackage, null, null);
 		this.clazz = clazz;
+		ArrayList<JavaType> ext = new ArrayList<JavaType>();
+		ext.add(getSuperclass());
+		this.setjExtends(ext);
+		ArrayList<JavaType> imp = new ArrayList<JavaType>();
+		ext.addAll(getInterfaces());
+		this.setjImplements(imp);
 	}
 
 	/**
@@ -57,10 +64,10 @@ public class CompiledJavaType extends JavaType {
 		return clazz;
 	}
 	
-	@Override
-	public String getFullName() {
-		return this.clazz.getCanonicalName();
-	}
+//	@Override
+//	public String getFullName() {
+//		return this.clazz.getCanonicalName();
+//	}
 
 	/**
 	 * @param clazz the clazz to set

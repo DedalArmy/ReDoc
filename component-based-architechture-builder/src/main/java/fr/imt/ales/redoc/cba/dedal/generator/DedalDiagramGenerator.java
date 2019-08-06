@@ -96,7 +96,7 @@ public class DedalDiagramGenerator {
 		
 		//Serialize the current Hierarchy Builder
 		out = projectPath + SERIALIZED_BUILDER;
-		BuilderSerializer.serializePackages(hierarchyBuilder, out);
+		BuilderSerializer.serializeBuilder(hierarchyBuilder, out);
 		logger.info("Hierarchy builder serialized");
 		
 		logger.info("End of architecture hierarchy reconstruction");
