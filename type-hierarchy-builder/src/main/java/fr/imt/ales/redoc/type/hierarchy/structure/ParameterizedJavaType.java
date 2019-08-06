@@ -14,6 +14,11 @@ import com.github.javaparser.ast.type.TypeParameter;
 public class ParameterizedJavaType extends JavaType {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6407513172355009779L;
+
+	/**
 	 * Parameterized constructor
 	 * @param simpleName the simple name of the Java type
 	 * @param jPackage the {@link JavaPackage} that is the parent of the current {@link JavaType}

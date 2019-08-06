@@ -1,6 +1,7 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,11 @@ import fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderManager;
  * @author Alexandre Le Borgne
  *
  */
-public class JavaPackage {
+public class JavaPackage implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4427633709102083487L;
 	/*
 	 * ATTRIBUTES
 	 */

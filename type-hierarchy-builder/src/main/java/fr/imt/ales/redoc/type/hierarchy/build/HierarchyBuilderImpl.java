@@ -42,6 +42,11 @@ import fr.imt.ales.redoc.type.hierarchy.structure.Relation;
  */
 public class HierarchyBuilderImpl implements HierarchyBuilder {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8513593912589726065L;
+
 	/*
 	 * LOGGER
 	 */

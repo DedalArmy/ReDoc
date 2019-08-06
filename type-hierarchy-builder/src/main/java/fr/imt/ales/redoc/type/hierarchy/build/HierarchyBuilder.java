@@ -2,6 +2,7 @@ package fr.imt.ales.redoc.type.hierarchy.build;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import fr.imt.ales.redoc.jarloader.JarLoader;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaPackage;
 import fr.imt.ales.redoc.type.hierarchy.structure.JavaType;
 
-public interface HierarchyBuilder {
+public interface HierarchyBuilder extends Serializable {
 
 	void build();
 

@@ -6,6 +6,7 @@ package fr.imt.ales.redoc.jarloader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -29,7 +30,12 @@ import fr.imt.ales.redoc.folderloader.FolderLoader;
  * A class for loading java classes from jar/war archives
  * @author Alexandre Le Borgne
  */
-public class JarLoader extends URLClassLoader {
+public class JarLoader extends URLClassLoader implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3449500379242568205L;
 
 	/*
 	 * LOGGER

@@ -1,7 +1,13 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
-public class JavaField {
+import java.io.Serializable;
+
+public class JavaField implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6865947420273526746L;
 	String name;
 	String type;
 

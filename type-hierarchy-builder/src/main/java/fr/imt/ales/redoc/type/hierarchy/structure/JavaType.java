@@ -1,6 +1,7 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,11 @@ import com.sun.org.slf4j.internal.Logger;
  * @author Alexandre Le Borgne
  *
  */
-public class JavaType {
+public class JavaType implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5362101759106712287L;
 	/*
 	 * ATTRIBUTES
 	 */

@@ -1,11 +1,17 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+import java.io.Serializable;
+
 /**
  * A class for representing relation between {@link JavaType}s
  * @author Alexandre Le Borgne
  *
  */
-public class Relation {
+public class Relation implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8724403938470507641L;
 	JavaType endA;
 	JavaType endB;
 	String name;

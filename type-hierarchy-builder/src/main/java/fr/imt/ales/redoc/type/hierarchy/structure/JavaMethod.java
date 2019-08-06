@@ -1,5 +1,6 @@
 package fr.imt.ales.redoc.type.hierarchy.structure;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +8,12 @@ import java.util.List;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.Parameter;import jdk.jfr.internal.Type;
 
-public class JavaMethod {
+public class JavaMethod implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8218882848491453557L;
 	private String returnType;
 	private String name;
 	private List<JavaParameter> parameters;

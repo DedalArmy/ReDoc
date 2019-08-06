@@ -9,6 +9,10 @@ import com.github.javaparser.ast.body.TypeDeclaration;
  *
  */
 public class JavaNestedType extends JavaType {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1798467335449864299L;
 	private JavaType parent;
 
 	/**

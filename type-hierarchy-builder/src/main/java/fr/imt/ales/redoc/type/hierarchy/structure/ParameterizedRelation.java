@@ -13,6 +13,10 @@ import com.github.javaparser.ast.type.Type;
  */
 public class ParameterizedRelation extends Relation {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3853833748472871477L;
 	/*
 	 * ATTRIBUTES
 	 */
