@@ -57,8 +57,9 @@ public class SpringConfigWriter {
 		transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		
 		ClassLoader cl = SpringConfigWriter.class.getClassLoader();
-		URL resource = cl.getResource("strip-space.xsl");
-		Transformer transformer = transformerFactory.newTransformer(new StreamSource(resource.getFile()));
+//		URL resource = cl.getResource("strip-space.xsl");
+//		Transformer transformer = transformerFactory.newTransformer(new StreamSource(resource.getFile()));
+		Transformer transformer = transformerFactory.newTransformer(new StreamSource(cl.getResourceAsStream("strip-space.xsl")));
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		
 		DOMSource source = new DOMSource(doc);

@@ -38,11 +38,11 @@ public interface HierarchyBuilder extends Serializable {
 
 	JavaType findJavaType(String name);
 
-	JavaType createNewCompiledJavaType(Class<?> class1);
+	JavaType createNewCompiledJavaType(Class<?> class1) throws IOException;
 
-	JavaType findJavaType(Class<?> inter);
+	JavaType findJavaType(Class<?> inter) throws IOException;
 
-	JavaType findJavaType(TypeVariable<?> paramType);
+	JavaType findJavaType(TypeVariable<?> paramType) throws IOException;
 
 	
 }

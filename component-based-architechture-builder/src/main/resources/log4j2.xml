@@ -10,12 +10,16 @@
 		</Console>
 	</Appenders>
 	<Loggers>
-		<Logger name="fr.imt.ales.redoc.type.hierarchy.main.Main" level="info" />
+	<Logger name="fr.imt.ales.redoc.xml.merge.spring.SpringConfigMerger" level="info" />
+		<Logger name="fr.imt.ales.redoc.xml.merge.spring.SpringConfigWriter" level="info" />
+		<Logger name="fr.imt.ales.redoc.xml.merge.spring.structure.ClassPath" level="debug" />
+		<Logger name="fr.imt.ales.redoc.xml.merge.spring.structure.XMLFile" level="info" />
+		<Logger name="fr.imt.ales.redoc.cba.dedal.main.Main" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.HierarchyBuilderImpl" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.FolderLoader" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter" level="info" />
-		<Root level="info">
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>

@@ -9,4 +9,11 @@
 	</parent>
 	<artifactId>JarLoader</artifactId>
 	<name>JarLoader</name>
+	<build>
+		<resources>
+       		<resource>
+          		<directory>src/main/resources</directory>
+        	</resource>
+      	</resources>
+	</build>
 </project>

@@ -45,7 +45,8 @@ public class ComponentRoleExtractor extends ComponentTypeExtractor {
 	public CompRole mapComponentRole() {
 		if(this.compRole == null) {
 			this.compRole = new DedalFactoryImpl().createCompRole();
-			this.compRole.setName(this.objectToInspect.getSimpleName() + "_role");
+//			this.compRole.setName(this.objectToInspect.getSimpleName() + "_role");
+			this.compRole.setName(this.objectToInspect.getFullName().replaceAll("\\.", "_") + "_role");
 		}
 		return this.compRole;
 	}

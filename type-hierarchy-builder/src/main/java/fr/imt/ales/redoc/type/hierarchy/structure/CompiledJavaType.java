@@ -53,7 +53,7 @@ public class CompiledJavaType extends JavaType {
 		ext.add(getSuperclass());
 		this.setjExtends(ext);
 		ArrayList<JavaType> imp = new ArrayList<JavaType>();
-		ext.addAll(getInterfaces());
+		imp.addAll(getInterfaces());
 		this.setjImplements(imp);
 	}
 

@@ -15,7 +15,7 @@
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.Explorer" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.build.explorer.FolderLoader" level="info" />
 		<Logger name="fr.imt.ales.redoc.type.hierarchy.graph.PlantUMLWritter" level="info" />
-		<Root level="error">
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>

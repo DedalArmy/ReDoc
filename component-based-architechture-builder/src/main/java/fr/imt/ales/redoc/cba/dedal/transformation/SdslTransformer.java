@@ -56,11 +56,14 @@ public class SdslTransformer {
 	public static List<EObject> extractDedalArtifacts(XMLFile deploymentDescriptor) throws URISyntaxException {
 		TransformationExecutor executor;
 		ClassLoader cl = SdslTransformer.class.getClassLoader();
-		URL resource = cl.getResource("springToDedal.qvto");
+//		URL resource = cl.getResource("springToDedal.qvto");
+		URL resource = cl.getResource("transforms/springToDedal.qvto");
+//		URL resource = cl.getResource("classpath:transforms/springToDedal.qvto");
 		logger.debug("RESOURCE : " + resource);
 		java.net.URI uri = resource.toURI();
 		logger.debug("URI : " + uri);
-		String path = uri.getRawPath();
+//		String path = uri.getRawPath();
+		String path = resource.toExternalForm().replaceAll("jar:file:",	"");
 		logger.debug("PATH : " + path);
 		URI uuri = URI.createFileURI(path);
 		executor = new TransformationExecutor(uuri);

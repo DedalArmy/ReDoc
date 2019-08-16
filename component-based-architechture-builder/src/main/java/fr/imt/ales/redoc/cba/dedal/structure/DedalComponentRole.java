@@ -102,7 +102,8 @@ public class DedalComponentRole extends DedalComponentType {
 			CompClass initialComponentClass) throws IOException {
 		List<DedalComponentRole> result = new ArrayList<>();
 		List<JavaType> jTypes = this.getSuperTypes(this.getjType());
-		for(JavaType jt : jTypes) {
+		try{
+			for(JavaType jt : jTypes) {
 			if(jt!=null && !jt.equals(this.getjType())) {
 				DedalComponentRole dcr = this.architecture.getComponentRoleByJavaType(jt);
 				if(dcr != null) {
@@ -113,8 +114,13 @@ public class DedalComponentRole extends DedalComponentType {
 					CompRole component = cre.mapComponentRole();
 					result.add(new DedalComponentRole(this.getProjectPath(), component, this.getDedalFactory(), 
 							this.architecture, this.componentRole, configConnections, initialComponentClass));
+					
 				}
 			}
+		}
+			}catch(StackOverflowError e) {
+			System.out.println(e);
+			System.out.println();
 		}
 		return result;
 	}

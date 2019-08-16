@@ -23,7 +23,7 @@
 		<Logger
 			name="fr.imt.ales.redoc.xml.merge.spring.structure.XMLFile"
 			level="info" />
-		<Root level="error">
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>
