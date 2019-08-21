@@ -22,12 +22,12 @@ import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.xtext.spring.SpringConfigDslStandaloneSetup;
 
 import com.google.inject.Injector;
 
 import dedal.DedalPackage;
 import fr.imt.ales.redoc.xml.spring.structure.XMLFile;
+import fr.imt.ales.springdsl.SpringDSLStandaloneSetup;
 
 /**
  * This class uses SpringDSL language for parsing Spring XML files and then it uses a transformation written in 
@@ -68,7 +68,7 @@ public class SdslTransformer {
 		URI uuri = URI.createFileURI(path);
 		executor = new TransformationExecutor(uuri);
 
-		Injector injector = new SpringConfigDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector injector = new SpringDSLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 		Resource inResource;
 		inResource = resourceSet.getResource(org.eclipse.emf.common.util.URI.createFileURI(deploymentDescriptor.getAbsolutePath()),true);
