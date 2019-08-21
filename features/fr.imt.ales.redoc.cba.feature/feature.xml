@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="fr.imt.ales.redoc.cba.feature"
+      label="Component-Based Architecture Builder"
+      version="1.0.0.qualifier"
+      provider-name="IMT Mines Alès">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="component-based-architechture-builder"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>
