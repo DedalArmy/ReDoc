@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>fr.imt.ales.reverse-engineering</groupId>
 		<artifactId>ReDoc</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>component-based-architechture-builder</artifactId>
 	<name>component-based-architechture-builder</name>
@@ -13,17 +13,17 @@
 		<dependency>
 			<groupId>fr.imt.ales.reverse-engineering</groupId>
 			<artifactId>JarLoader</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.imt.ales.reverse-engineering</groupId>
 			<artifactId>type-hierarchy-builder</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.imt.ales.reverse-engineering</groupId>
 			<artifactId>XMLMerge</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.core</groupId>
