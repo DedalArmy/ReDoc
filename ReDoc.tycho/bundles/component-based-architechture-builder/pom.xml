@@ -1,0 +1,70 @@
+<!--
+  Copyright (C) 2019 IMT Mines Alès
+  
+  This program and the accompanying materials are made
+  available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0/
+  
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>fr.imt.ales.reverse-engineering</groupId>
+		<artifactId>fr.imt.ales.reverse-engineering.bundles</artifactId>
+		<relativePath>../</relativePath>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>component-based-architechture-builder</artifactId>
+	<name>component-based-architechture-builder</name>
+	<packaging>eclipse-plugin</packaging>
+	
+	<build>
+		<resources>
+       		<resource>
+          		<directory>src/main/resources</directory>
+        	</resource>
+       		<resource>
+          		<directory>src/main/resource/transforms</directory>
+        	</resource>
+      	</resources>
+		<plugins>
+		      	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>fr.imt.ales.redoc.cba.dedal.main.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

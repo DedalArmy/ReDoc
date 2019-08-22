@@ -1,0 +1,80 @@
+<!--
+  Copyright (C) 2019 IMT Mines Alès
+  
+  This program and the accompanying materials are made
+  available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0/
+  
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.imt.ales.reverse-engineering</groupId>
+    <artifactId>fr.imt.ales.reverse-engineering.update</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>eclipse-repository</packaging>
+
+    <parent>
+        <groupId>fr.imt.ales.reverse-engineering</groupId>
+        <artifactId>fr.imt.ales.reverse-engineering.releng</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+	 	<relativePath>../</relativePath>
+    </parent>
+
+<build>
+  <extensions>
+   <!-- Enabling the use of FTP -->
+   <extension>
+    <groupId>org.apache.maven.wagon</groupId>
+    <artifactId>wagon-ftp</artifactId>
+    <version>1.0-beta-6</version>
+   </extension>
+  </extensions>
+ </build>
+
+ <profiles>
+  <!-- This profile is used to upload the repo -->
+  <profile>
+   <id>uploadEclipse</id>
+   <properties>
+    <!-- Relative path to the repo being uploaded -->
+    <repo.path>${project.build.directory}/repository/</repo.path>
+   </properties>
+
+   <build>
+    <plugins>
+     <!-- Upload the repo to the server -->
+     <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>wagon-maven-plugin</artifactId>
+      <version>1.0-beta-4</version>
+      <executions>
+       <execution>
+        <id>upload-repo</id>
+        <phase>deploy</phase>
+        <goals>
+         <goal>upload</goal>
+        </goals>
+        <configuration>
+         <fromDir>${repo.path}</fromDir>
+         <includes>**</includes>
+         <toDir>redoc/${eclipse.version}</toDir>
+         <url>${dedal.alexandreleborgne}/p2</url>
+         <serverId>dedal.alexandreleborgne</serverId>
+         <!-- Points to your settings.xml
+         where the connection settings are
+          stored as shown below -->
+         <!-- <server> -->
+         <!-- <id>p2Repo</id> -->
+         <!-- <username>username</username> -->
+         <!-- <password>password</password> -->
+         <!-- </server> -->
+        </configuration>
+       </execution>
+      </executions>
+     </plugin>
+    </plugins>
+   </build>
+  </profile>
+ </profiles>
+</project>

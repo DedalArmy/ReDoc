@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JarLoader_plugin
+Bundle-SymbolicName: fr.imt.ales.reverse-engineering.JarLoader_plugin
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: IMT Mines Alès
+Automatic-Module-Name: JarLoader_plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -1,0 +1,90 @@
+<!--
+  Copyright (C) 2019 IMT Mines Alès
+  
+  This program and the accompanying materials are made
+  available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0/
+  
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.imt.ales.reverse-engineering</groupId>
+    <artifactId>fr.imt.ales.reverse-engineering.mavendeps</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>bundle</packaging>
+    
+    
+    <parent>
+	<groupId>fr.imt.ales.reverse-engineering</groupId>
+	<artifactId>fr.imt.ales.reverse-engineering.Redoc.root</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+	 	<relativePath>../</relativePath>
+    </parent>
+
+		
+	
+    <dependencies>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.logging.log4j</groupId> -->
+<!-- 			<artifactId>log4j-api</artifactId> -->
+<!-- 			<version>2.11.2</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.servlet</groupId> -->
+<!-- 			<artifactId>javax.servlet-api</artifactId> -->
+<!-- 			<version>4.0.1</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>fr.imt.ales.reverse-engineering</groupId> -->
+<!-- 			<artifactId>fr.imt.ales.reverse-engineering.JarLoader</artifactId> -->
+<!-- 			<version>1.0.0-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>fr.imt.ales.reverse-engineering</groupId> -->
+<!-- 			<artifactId>fr.imt.ales.reverse-engineering.type-hierarchy-builder</artifactId> -->
+<!-- 			<version>1.0.0-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>fr.imt.ales.reverse-engineering</groupId> -->
+<!-- 			<artifactId>fr.imt.ales.reverse-engineering.XMLMerge</artifactId> -->
+<!-- 			<version>1.0.0-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.0.1</version>
+                <extensions>true</extensions>
+
+                <configuration>
+                    <instructions>
+                        <Export-Package>*</Export-Package>
+                        <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+                        <Embed-StripGroup>true</Embed-StripGroup>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Import-Package>*</Import-Package>
+                        <Meta-Persistence>META-INF/persistence.xml</Meta-Persistence>
+                        <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>Maven ReDoc dependency bundle</Bundle-Name>
+                        <Bundle-Description>Maven dependencies for ReDoc</Bundle-Description>
+                        <Bundle-Vendor>Apache Felix</Bundle-Vendor>
+                        <Bundle-Version>1.0.0</Bundle-Version>
+                        <Import-Package>org.osgi.framework</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,90 @@
+<!--
+  Copyright (C) 2019 IMT Mines Alès
+  
+  This program and the accompanying materials are made
+  available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0/
+  
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>fr.imt.ales.reverse-engineering</groupId>
+		<artifactId>fr.imt.ales.reverse-engineering.bundles</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>fr.imt.ales.reverse-engineering.XMLMerge_plugin</artifactId>
+	<packaging>eclipse-plugin</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>fr.imt.ales.reverse-engineering</groupId>
+			<artifactId>fr.imt.ales.reverse-engineering.JarLoader</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+       		<resource>
+          		<directory>src/main/resources</directory>
+    			<filtering>true</filtering>
+        	</resource>
+      	</resources>
+		<plugins>
+		
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.3.0</version>
+					</dependency>
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.junit.jupiter</groupId> -->
+<!-- 						<artifactId>junit-jupiter-engine</artifactId> -->
+<!-- 						<version>${junit.version}</version> -->
+<!-- 					</dependency> -->
+				</dependencies>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>fr.imt.ales.redoc.xml.merge.main.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

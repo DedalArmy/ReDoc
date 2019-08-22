@@ -1,0 +1,44 @@
+<!--
+  Copyright (C) 2019 IMT Mines Alès
+  
+  This program and the accompanying materials are made
+  available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0/
+  
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.imt.ales.reverse-engineering</groupId>
+	<artifactId>fr.imt.ales.reverse-engineering.Redoc.tycho</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	
+ <parent>
+   <groupId>fr.imt.ales.reverse-engineering</groupId>
+   <artifactId>fr.imt.ales.reverse-engineering.configuration</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+  <relativePath>./releng/redoc.config/</relativePath>
+ </parent>
+	
+	<modules>
+		<module>bundles</module>
+		<module>features</module>
+		<module>releng</module>
+	</modules>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<show>private</show>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>
