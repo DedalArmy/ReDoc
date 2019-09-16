@@ -315,9 +315,10 @@ mapping SpringModel::Component::toConfigConnection(name:String, r:SpringModel::R
 	var sourceRef : CompClass;
 	_property := name;
 	sourceRef := resolveone(compClass:DedalModel::CompClass | compClass.name=source);
-	var target := r.ref.oclAsType(SpringModel::Component).name;
+	var target := r.ref.oclAsType(SpringModel::Component)._class.getComponentClassName();
 	clientClassElem := sourceRef;
-	serverClassElem := late resolveone(compClass:DedalModel::CompClass | compClass.name = target);
+	serverClassElem := resolveone(compClass:DedalModel::CompClass | compClass.name = target);
+	var coucou : String;
 	
 }
 

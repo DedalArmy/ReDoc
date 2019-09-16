@@ -52,9 +52,11 @@ public abstract class DedalComponentType extends DedalType {
 	private void computeComponentType() {
 		ComponentTypeExtractor cte = new ComponentTypeExtractor(this.getjType(), this.dedalFactory);
 		this.componentType = cte.mapCompType();
+		this.componentType.setId("id_" + this.componentType.getName());
 		for(DedalInterface inter : interfaces) {
 			Interface copiedInter = (Interface) EcoreUtil.copy(inter.getCompInterface());
-			copiedInter.setName(EcoreUtil.generateUUID().replaceAll("-", ""));
+			copiedInter.setName("__" + inter.getCompInterface().getName());
+			copiedInter.setType(inter.getInterfaceType().getInterfaceType());
 			this.componentType.getCompInterfaces().add(copiedInter);
 			
 		}

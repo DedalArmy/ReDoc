@@ -3,24 +3,30 @@ package fr.imt.ales.redoc.cba.dedal.builder;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
+
 import dedal.ArchitectureDescription;
 import dedal.Assembly;
 import dedal.ClassConnection;
 import dedal.CompClass;
 import dedal.CompInstance;
 import dedal.CompRole;
+import dedal.Component;
 import dedal.Configuration;
 import dedal.DedalDiagram;
 import dedal.DedalFactory;
 import dedal.InstConnection;
 import dedal.Interaction;
 import dedal.Interface;
+import dedal.InterfaceType;
 import dedal.Repository;
 import dedal.RoleConnection;
+import dedal.Signature;
 import dedal.Specification;
 import dedal.impl.DedalFactoryImpl;
 import fr.imt.ales.redoc.cba.dedal.structure.DedalArchitecture;
@@ -114,12 +120,19 @@ public class DedalArchitectureBuilder {
 			if (this.dedalArchitecture == null)
 				this.dedalArchitecture = new DedalArchitecture(this.projectPath, dedalDiagram);
 
+//			for(InstConnection instco : asm.getAssemblyConnections()) {
+//				for(ClassConnection cco : config.getConfigConnections()) {
+//					if(cco.getProperty().replaceAll("\"", "").equals(instco.getProperty().substring(instco.getProperty().lastIndexOf('.')+1)) && cco.getServerClassElem() == null)
+//						cco.setServerClassElem(instco.getServerInstElem().getInstantiates());
+//				}
+//			}
+			
 			buildFromSpring(asm, config, spec, repo);
 		}
 		
 		asm.getAssmComponents().forEach(ac -> {
 			ac.getCompInterfaces().forEach(aci -> {
-				aci.setName(aci.getName().replaceAll("\\.", "_"));
+				aci.setName(aci.getName().replaceAll("\\.", "_")+"_inst");
 			});
 		});
 		
@@ -131,7 +144,7 @@ public class DedalArchitectureBuilder {
 		
 		spec.getSpecComponents().forEach(cr -> {
 			cr.getCompInterfaces().forEach(cri -> {
-				cri.setName(cri.getName().replaceAll("\\.", "_"));
+				cri.setName(cri.getName().replaceAll("\\.", "_")+"_spec");
 			});
 		});
 		
@@ -154,12 +167,12 @@ public class DedalArchitectureBuilder {
 						+ "_" + sc.getServerCompElem().getName().replaceAll("\"", "")));
 			}
 		});
-		repo.getInterfaceTypes().forEach(it -> {
-			it.getSignatures().forEach(s -> {
-				s.setId(s.getName().replaceAll("\"", ""));
-				s.getParameters().forEach(p -> p.setId(p.getName().replaceAll("\"", "")));
-			});
-		});
+//		repo.getInterfaceTypes().forEach(it -> {
+//			it.getSignatures().forEach(s -> {
+//				s.setId(s.getName().replaceAll("\"", ""));
+//				s.getParameters().forEach(p -> p.setId(p.getName().replaceAll("\"", "")));
+//			});
+//		});
 
 		return dedalDiagram;
 	}
@@ -230,9 +243,129 @@ public class DedalArchitectureBuilder {
 		}
 		this.ignoreIncompleteSpecConnections(spec);
 		this.applyOptionsToSpecification(asm, config, spec);
+		
 		for (DedalInterfaceType interType : this.dedalArchitecture.getInterfaceTypes()) {
 			repo.getInterfaceTypes().add(interType.getInterfaceType());
 		}
+		
+		List<InterfaceType> itToRemove = new ArrayList<>();
+		for(InterfaceType it1 : repo.getInterfaceTypes()) {
+			for(InterfaceType it2 : repo.getInterfaceTypes()) {
+				if(it1.getName().equals(it2.getName()) && it1!=it2 && !itToRemove.contains(it1) && !itToRemove.contains(it2)) {
+					itToRemove.add(it2);
+				}
+			}
+		}
+		repo.getInterfaceTypes().removeAll(itToRemove);
+		
+		repo.getInterfaceTypes().forEach(it -> {
+			List<Signature> lsToRemove = new ArrayList<Signature>();
+			for(Signature s1 : it.getSignatures()) {
+				for(Signature s2 : it.getSignatures()) {
+					if(s1.getId().equals(s2.getId()) && s1!=s2 && !lsToRemove.contains(s1) && !lsToRemove.contains(s2)) {
+						lsToRemove.add(s2);
+					}
+				}
+			}
+			it.getSignatures().removeAll(lsToRemove);
+		});
+
+		for(InstConnection connect : asm.getAssemblyConnections()) {
+			connect.setRefID("inst" + connect.getProperty() + "_" + connect.getClientInstElem().getName() 
+					+ "___" +connect.getServerInstElem().getName());
+		}
+		List<InstConnection> instConToRemove = new ArrayList<InstConnection>();
+		for(InstConnection connect1 : asm.getAssemblyConnections()) {
+			for(InstConnection connect2 : asm.getAssemblyConnections()) {
+				if(connect1.getRefID().equals(connect2.getRefID()) && connect1!=connect2 && !instConToRemove.contains(connect1) && !instConToRemove.contains(connect2)) {
+					instConToRemove.add(connect2);
+				}
+			}
+		}
+		asm.getAssemblyConnections().removeAll(instConToRemove);
+		asm.getAssmComponents().forEach(ci -> {
+			List<Interaction> interToRemove = new ArrayList<Interaction>();
+			for(Interaction i1 : ci.getCompInterfaces()) {
+				for(Interaction i2 : ci.getCompInterfaces()) {
+					if(i1.getName().equals(i2.getName()) && i1!=i2 && !interToRemove.contains(i1) && !interToRemove.contains(i2)) {
+						interToRemove.add(i2);
+					}
+				}
+			}
+			ci.getCompInterfaces().removeAll(interToRemove);
+		});
+
+		for(ClassConnection connect : config.getConfigConnections()) {
+			connect.setRefID("config" + connect.getProperty() + "_" + connect.getClientClassElem().getName() 
+					+ "___" +connect.getServerClassElem().getName());
+		}
+		List<ClassConnection> classConToRemove = new ArrayList<ClassConnection>();
+		for(ClassConnection connect1 : config.getConfigConnections()) {
+			for(ClassConnection connect2 : config.getConfigConnections()) {
+				if(connect1.getRefID().equals(connect2.getRefID()) && connect1!=connect2 && !classConToRemove.contains(connect1) && !classConToRemove.contains(connect2)) {
+					classConToRemove.add(connect2);
+				}
+			}
+		}
+		config.getConfigConnections().removeAll(classConToRemove);
+		config.getConfigComponents().forEach(cc -> {
+			List<Interaction> interToRemove = new ArrayList<Interaction>();
+			for(Interaction i1 : cc.getCompInterfaces()) {
+				for(Interaction i2 : cc.getCompInterfaces()) {
+					if(i1.getName().equals(i2.getName()) && i1!=i2 && !interToRemove.contains(i1) && !interToRemove.contains(i2)) {
+						interToRemove.add(i2);
+					}
+				}
+			}
+			cc.getCompInterfaces().removeAll(interToRemove);
+		});
+		config.getComptypes().forEach(ct -> {
+			List<Interaction> interToRemove = new ArrayList<Interaction>();
+			for(Interaction i1 : ct.getCompInterfaces()) {
+				for(Interaction i2 : ct.getCompInterfaces()) {
+					if(i1.getName().equals(i2.getName()) && i1!=i2 && !interToRemove.contains(i1) && !interToRemove.contains(i2)) {
+						interToRemove.add(i2);
+					}
+				}
+			}
+			ct.getCompInterfaces().removeAll(interToRemove);
+		});
+
+		for(RoleConnection connect : spec.getSpecConnections()) {
+			connect.setRefID("spec" + connect.getProperty() + "_" + connect.getClientCompElem().getName() 
+					+ "___" +connect.getServerCompElem().getName());
+		}
+		List<RoleConnection> specConToRemove = new ArrayList<RoleConnection>();
+		for(RoleConnection connect1 : spec.getSpecConnections()) {
+			for(RoleConnection connect2 : spec.getSpecConnections()) {
+				if(connect1.getRefID().equals(connect2.getRefID()) && connect1!=connect2 && !specConToRemove.contains(connect1) && !specConToRemove.contains(connect2)) {
+					specConToRemove.add(connect2);
+				}
+			}
+		}
+		spec.getSpecConnections().removeAll(specConToRemove);
+		spec.getSpecComponents().forEach(sc -> {
+			List<Interaction> interToRemove = new ArrayList<Interaction>();
+			for(Interaction i1 : sc.getCompInterfaces()) {
+				for(Interaction i2 : sc.getCompInterfaces()) {
+					if(i1.getName().equals(i2.getName()) && i1!=i2 && !interToRemove.contains(i1) && !interToRemove.contains(i2)) {
+						interToRemove.add(i2);
+					}
+				}
+			}
+			sc.getCompInterfaces().removeAll(interToRemove);
+		});
+		
+		repo.getComponents().addAll(config.getComptypes());
+		List<Component> compToRemove = new ArrayList<Component>();
+		for(Component c1 : repo.getComponents()) {
+			for(Component c2 : repo.getComponents()) {
+				if(c1.getId().equals(c2.getId()) && c1!=c2 && !compToRemove.contains(c1) && !compToRemove.contains(c2)) {
+					compToRemove.add(c2);
+				}
+			}
+		}
+		repo.getComponents().removeAll(compToRemove);
 	}
 
 

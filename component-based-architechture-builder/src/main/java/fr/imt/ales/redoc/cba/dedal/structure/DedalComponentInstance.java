@@ -34,6 +34,9 @@ public class DedalComponentInstance extends DedalComponentType {
 		for(DedalInterface inter : this.interfaces) {
 			this.componentInstance.getCompInterfaces().add(inter.getCompInterface());
 		}
+
+		if(componentInstance.getName().contains("org.springframework.jndi.JndiObjectFactoryBean_anonymousBean"))
+			System.out.println();
 	}
 
 	@Override
@@ -54,7 +57,7 @@ public class DedalComponentInstance extends DedalComponentType {
 	 */
 	protected void mapInterfaces() throws IOException {
 		DedalInterface inter = new DedalInterface(this.getProjectPath(), this.getDedalFactory(), this.getjType(), this.architecture);
-		String name = this.componentInstance.getName()+".prov"+inter.getCompInterface().getType().getName();
+		String name = this.componentInstance.getName()+".prov"+inter.getCompInterface().getType().getName()+"_inst";
 		inter.getCompInterface().setName(name);
 		this.interfaces.add(inter);
 	}
@@ -133,7 +136,9 @@ public class DedalComponentInstance extends DedalComponentType {
 				inter.getCompInterface().setName(name);
 			}
 		}
-		
+
+		if(componentInstance.getName().contains("org.springframework.jndi.JndiObjectFactoryBean_anonymousBean"))
+			System.out.println();
 	}
 
 	private void setSmallestInterface(InstConnection conn) {

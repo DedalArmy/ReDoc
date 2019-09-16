@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 		if(!methods.isEmpty())
 		{
 			Interface derivedInterface = this.dedalFactory.createInterface();
-			derivedInterface.setName(EcoreUtil.generateUUID().replaceAll("-", ""));
+			derivedInterface.setName("inter" + jType.getSimpleName());
 			derivedInterface.setType(this.mapInterfaceType(jType));
 			return derivedInterface;
 		}
@@ -76,7 +77,7 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 		List<JavaMethod> methods = new ArrayList<>();
 		methods.addAll(recursivelyGetMethods(jType));
 		Interface derivedInterface = this.dedalFactory.createInterface();
-			derivedInterface.setName(EcoreUtil.generateUUID().replaceAll("-", ""));
+			derivedInterface.setName("inter" + jType.getSimpleName());
 			derivedInterface.setType(interfaceType);
 		return derivedInterface;
 	}
@@ -133,6 +134,12 @@ public class ComponentInterfaceExtractor extends ArtefactExtractor {
 		if(!methods.isEmpty())
 		{
 			result.getSignatures().addAll(this.getSignatures(methods));
+			result.getSignatures().forEach(s -> {
+				s.setId(result.getName() + "_" + s.getName());
+				s.getParameters().forEach(p -> {
+					p.setId(s.getId() + "_" + p.getName());
+				});
+			});
 		}
 		return result ;
 	}
