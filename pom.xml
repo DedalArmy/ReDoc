@@ -12,7 +12,7 @@
 	<properties>
 		<junit.version>5.3.2</junit.version>
 		<jackson.version>2.9.7</jackson.version>
-		<log4j2.version>2.11.2</log4j2.version>
+		<log4j2.version>2.16.0</log4j2.version>
 	</properties>
 	<modules>
 		<module>type-hierarchy-builder</module>
